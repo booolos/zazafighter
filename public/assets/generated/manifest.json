@@ -1,0 +1,946 @@
+{
+  "version": "0.2.0",
+  "game": "Slap Street: Ink District",
+  "theme": "Pattaya nightlife / degen Thailand, fictional and game-safe",
+  "sourceDir": "/Users/booolos/.codex/generated_images/019dd4e2-ec06-7012-9e8e-747387534165",
+  "backgrounds": [
+    {
+      "key": "foundation-composite",
+      "path": "assets/generated/backgrounds/tattoo-weed-street-2048x720.jpg",
+      "role": "approved first composite"
+    },
+    {
+      "key": "level1-pattaya-far",
+      "path": "assets/generated/backgrounds/level1-pattaya-far-2048x720.jpg",
+      "role": "far parallax"
+    },
+    {
+      "key": "level1-pattaya-storefronts",
+      "path": "assets/generated/backgrounds/level1-pattaya-storefronts-2048x720.jpg",
+      "role": "midground storefronts"
+    },
+    {
+      "key": "level1-pattaya-play-lane",
+      "path": "assets/generated/backgrounds/level1-pattaya-play-lane.jpg",
+      "role": "play lane texture"
+    }
+  ],
+  "characters": [
+    {
+      "key": "kiko",
+      "kind": "foundation",
+      "path": "assets/generated/characters/kiko.png",
+      "width": 257,
+      "height": 455
+    },
+    {
+      "key": "big-ink",
+      "kind": "foundation",
+      "path": "assets/generated/characters/big-ink.png",
+      "width": 214,
+      "height": 455
+    },
+    {
+      "key": "weed-vendor",
+      "kind": "foundation",
+      "path": "assets/generated/characters/npcs/weed-vendor.png",
+      "width": 205,
+      "height": 455
+    },
+    {
+      "key": "street-punk",
+      "kind": "foundation",
+      "path": "assets/generated/characters/enemies/street-punk.png",
+      "width": 238,
+      "height": 455
+    },
+    {
+      "key": "thai-tattoo-artist",
+      "kind": "npc-enemy",
+      "path": "assets/generated/characters/npcs/thai-tattoo-artist.png",
+      "width": 175,
+      "height": 455
+    },
+    {
+      "key": "indian-lounge-manager",
+      "kind": "npc-enemy",
+      "path": "assets/generated/characters/npcs/indian-lounge-manager.png",
+      "width": 184,
+      "height": 455
+    },
+    {
+      "key": "bar-promoter",
+      "kind": "npc-enemy",
+      "path": "assets/generated/characters/npcs/bar-promoter.png",
+      "width": 198,
+      "height": 455
+    },
+    {
+      "key": "street-food-vendor",
+      "kind": "npc-enemy",
+      "path": "assets/generated/characters/npcs/street-food-vendor.png",
+      "width": 166,
+      "height": 455
+    },
+    {
+      "key": "scooter-mechanic",
+      "kind": "npc-enemy",
+      "path": "assets/generated/characters/npcs/scooter-mechanic.png",
+      "width": 168,
+      "height": 455
+    },
+    {
+      "key": "rival-artist",
+      "kind": "npc-enemy",
+      "path": "assets/generated/characters/enemies/rival-artist.png",
+      "width": 196,
+      "height": 455
+    },
+    {
+      "key": "scooter-punk",
+      "kind": "npc-enemy",
+      "path": "assets/generated/characters/enemies/scooter-punk.png",
+      "width": 212,
+      "height": 455
+    },
+    {
+      "key": "corrupt-bouncer",
+      "kind": "npc-enemy",
+      "path": "assets/generated/characters/enemies/corrupt-bouncer.png",
+      "width": 209,
+      "height": 455
+    },
+    {
+      "key": "soi-dog",
+      "kind": "companion",
+      "path": "assets/generated/characters/companions/soi-dog.png",
+      "width": 256,
+      "height": 256
+    }
+  ],
+  "props": [
+    {
+      "key": "red-scooter",
+      "path": "assets/generated/props/red-scooter.png",
+      "width": 385,
+      "height": 448
+    },
+    {
+      "key": "green-scooter",
+      "path": "assets/generated/props/green-scooter.png",
+      "width": 447,
+      "height": 369
+    },
+    {
+      "key": "traffic-cone",
+      "path": "assets/generated/props/traffic-cone.png",
+      "width": 260,
+      "height": 400
+    },
+    {
+      "key": "sticker-chair",
+      "path": "assets/generated/props/sticker-chair.png",
+      "width": 339,
+      "height": 448
+    },
+    {
+      "key": "weed-sandwich-board",
+      "path": "assets/generated/props/weed-sandwich-board.png",
+      "width": 316,
+      "height": 448
+    },
+    {
+      "key": "tattoo-sandwich-board",
+      "path": "assets/generated/props/tattoo-sandwich-board.png",
+      "width": 329,
+      "height": 443
+    },
+    {
+      "key": "street-food-cart",
+      "path": "assets/generated/props/street-food-cart.png",
+      "width": 448,
+      "height": 390
+    },
+    {
+      "key": "beer-neon-sign",
+      "path": "assets/generated/props/beer-neon-sign.png",
+      "width": 448,
+      "height": 436
+    },
+    {
+      "key": "potted-plant",
+      "path": "assets/generated/props/potted-plant.png",
+      "width": 377,
+      "height": 446
+    },
+    {
+      "key": "cable-bundle",
+      "path": "assets/generated/props/cable-bundle.png",
+      "width": 448,
+      "height": 345
+    },
+    {
+      "key": "trash-bin",
+      "path": "assets/generated/props/trash-bin.png",
+      "width": 316,
+      "height": 310
+    },
+    {
+      "key": "puddle-decal",
+      "path": "assets/generated/props/puddle-decal.png",
+      "width": 448,
+      "height": 132
+    },
+    {
+      "key": "baht-coin",
+      "path": "assets/generated/props/baht-coin.png",
+      "width": 356,
+      "height": 356
+    },
+    {
+      "key": "energy-soda",
+      "path": "assets/generated/props/energy-soda.png",
+      "width": 131,
+      "height": 275
+    },
+    {
+      "key": "ink-bottle",
+      "path": "assets/generated/props/ink-bottle.png",
+      "width": 129,
+      "height": 323
+    },
+    {
+      "key": "rolling-shutter",
+      "path": "assets/generated/props/rolling-shutter.png",
+      "width": 448,
+      "height": 314
+    }
+  ],
+  "ui": [
+    {
+      "key": "health-bar-frame",
+      "path": "assets/generated/ui/health-bar-frame.png",
+      "width": 448,
+      "height": 80
+    },
+    {
+      "key": "slap-meter-frame",
+      "path": "assets/generated/ui/slap-meter-frame.png",
+      "width": 448,
+      "height": 65
+    },
+    {
+      "key": "portrait-ring",
+      "path": "assets/generated/ui/portrait-ring.png",
+      "width": 448,
+      "height": 390
+    },
+    {
+      "key": "pause-button",
+      "path": "assets/generated/ui/pause-button.png",
+      "width": 361,
+      "height": 388
+    },
+    {
+      "key": "attack-button",
+      "path": "assets/generated/ui/attack-button.png",
+      "width": 405,
+      "height": 426
+    },
+    {
+      "key": "dodge-button",
+      "path": "assets/generated/ui/dodge-button.png",
+      "width": 401,
+      "height": 410
+    },
+    {
+      "key": "jump-button",
+      "path": "assets/generated/ui/jump-button.svg",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "key": "super-button",
+      "path": "assets/generated/ui/super-button.png",
+      "width": 423,
+      "height": 448
+    },
+    {
+      "key": "joystick-ring",
+      "path": "assets/generated/ui/joystick-ring.png",
+      "width": 431,
+      "height": 448
+    },
+    {
+      "key": "coin-icon",
+      "path": "assets/generated/ui/coin-icon.png",
+      "width": 212,
+      "height": 259
+    },
+    {
+      "key": "objective-chip-frame",
+      "path": "assets/generated/ui/objective-chip-frame.png",
+      "width": 448,
+      "height": 209
+    },
+    {
+      "key": "character-panel-frame",
+      "path": "assets/generated/ui/character-panel-frame.png",
+      "width": 448,
+      "height": 166
+    },
+    {
+      "key": "dialogue-box-frame",
+      "path": "assets/generated/ui/dialogue-box-frame.png",
+      "width": 448,
+      "height": 214
+    },
+    {
+      "key": "rotate-overlay-frame",
+      "path": "assets/generated/ui/rotate-overlay-frame.png",
+      "width": 448,
+      "height": 442
+    },
+    {
+      "key": "dang-portrait-button",
+      "path": "assets/generated/ui/dang-portrait-button.png",
+      "width": 256,
+      "height": 256
+    }
+  ],
+  "fx": [
+    {
+      "key": "super-slap",
+      "path": "assets/generated/fx/super-slap-8x256.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameMeta": [
+        {
+          "frame": 0,
+          "width": 167,
+          "height": 190
+        },
+        {
+          "frame": 1,
+          "width": 216,
+          "height": 190
+        },
+        {
+          "frame": 2,
+          "width": 160,
+          "height": 190
+        },
+        {
+          "frame": 3,
+          "width": 155,
+          "height": 190
+        },
+        {
+          "frame": 4,
+          "width": 165,
+          "height": 190
+        },
+        {
+          "frame": 5,
+          "width": 193,
+          "height": 190
+        },
+        {
+          "frame": 6,
+          "width": 165,
+          "height": 190
+        },
+        {
+          "frame": 7,
+          "width": 132,
+          "height": 190
+        }
+      ]
+    },
+    {
+      "key": "hit-impact",
+      "path": "assets/generated/fx/hit-impact-6x256.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameMeta": [
+        {
+          "frame": 0,
+          "width": 220,
+          "height": 166
+        },
+        {
+          "frame": 1,
+          "width": 195,
+          "height": 190
+        },
+        {
+          "frame": 2,
+          "width": 220,
+          "height": 188
+        },
+        {
+          "frame": 3,
+          "width": 152,
+          "height": 190
+        },
+        {
+          "frame": 4,
+          "width": 178,
+          "height": 190
+        },
+        {
+          "frame": 5,
+          "width": 133,
+          "height": 190
+        }
+      ]
+    },
+    {
+      "key": "dust-step",
+      "path": "assets/generated/fx/dust-step-6x256.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameMeta": [
+        {
+          "frame": 0,
+          "width": 220,
+          "height": 70
+        },
+        {
+          "frame": 1,
+          "width": 220,
+          "height": 147
+        },
+        {
+          "frame": 2,
+          "width": 220,
+          "height": 186
+        },
+        {
+          "frame": 3,
+          "width": 220,
+          "height": 178
+        },
+        {
+          "frame": 4,
+          "width": 220,
+          "height": 117
+        },
+        {
+          "frame": 5,
+          "width": 220,
+          "height": 159
+        }
+      ]
+    },
+    {
+      "key": "scooter-destruction",
+      "path": "assets/generated/fx/destructibles/scooter-destruction-6x256.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "key": "street-clutter-destruction",
+      "path": "assets/generated/fx/destructibles/street-clutter-destruction-6x256.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "key": "plant-chair-destruction",
+      "path": "assets/generated/fx/destructibles/plant-chair-destruction-6x256.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    }
+  ],
+  "animations": [
+    {
+      "character": "kiko",
+      "action": "idle",
+      "path": "assets/generated/animations/kiko/idle.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "kiko",
+      "action": "walk",
+      "path": "assets/generated/animations/kiko/walk.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "kiko",
+      "action": "attack",
+      "path": "assets/generated/animations/kiko/attack.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "kiko",
+      "action": "hurt",
+      "path": "assets/generated/animations/kiko/hurt.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "kiko",
+      "action": "death",
+      "path": "assets/generated/animations/kiko/death.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "kiko",
+      "action": "super-slap",
+      "path": "assets/generated/animations/kiko/super-slap.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "big-ink",
+      "action": "idle",
+      "path": "assets/generated/animations/big-ink/idle.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "big-ink",
+      "action": "walk",
+      "path": "assets/generated/animations/big-ink/walk.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "big-ink",
+      "action": "attack",
+      "path": "assets/generated/animations/big-ink/attack.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "big-ink",
+      "action": "hurt",
+      "path": "assets/generated/animations/big-ink/hurt.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "big-ink",
+      "action": "death",
+      "path": "assets/generated/animations/big-ink/death.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "big-ink",
+      "action": "super-slap",
+      "path": "assets/generated/animations/big-ink/super-slap.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "soi-dog",
+      "action": "idle",
+      "path": "assets/generated/animations/soi-dog/idle.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "soi-dog",
+      "action": "walk",
+      "path": "assets/generated/animations/soi-dog/walk.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "soi-dog",
+      "action": "special-attack",
+      "path": "assets/generated/animations/soi-dog/special-attack.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "street-punk",
+      "action": "idle",
+      "path": "assets/generated/animations/street-punk/idle.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "street-punk",
+      "action": "walk",
+      "path": "assets/generated/animations/street-punk/walk.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "street-punk",
+      "action": "attack",
+      "path": "assets/generated/animations/street-punk/attack.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "street-punk",
+      "action": "hurt",
+      "path": "assets/generated/animations/street-punk/hurt.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "street-punk",
+      "action": "death",
+      "path": "assets/generated/animations/street-punk/death.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "rival-artist",
+      "action": "idle",
+      "path": "assets/generated/animations/rival-artist/idle.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "rival-artist",
+      "action": "walk",
+      "path": "assets/generated/animations/rival-artist/walk.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "rival-artist",
+      "action": "attack",
+      "path": "assets/generated/animations/rival-artist/attack.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "rival-artist",
+      "action": "hurt",
+      "path": "assets/generated/animations/rival-artist/hurt.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "rival-artist",
+      "action": "death",
+      "path": "assets/generated/animations/rival-artist/death.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "scooter-punk",
+      "action": "idle",
+      "path": "assets/generated/animations/scooter-punk/idle.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "scooter-punk",
+      "action": "walk",
+      "path": "assets/generated/animations/scooter-punk/walk.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "scooter-punk",
+      "action": "attack",
+      "path": "assets/generated/animations/scooter-punk/attack.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "scooter-punk",
+      "action": "hurt",
+      "path": "assets/generated/animations/scooter-punk/hurt.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "scooter-punk",
+      "action": "death",
+      "path": "assets/generated/animations/scooter-punk/death.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "corrupt-bouncer",
+      "action": "idle",
+      "path": "assets/generated/animations/corrupt-bouncer/idle.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "corrupt-bouncer",
+      "action": "walk",
+      "path": "assets/generated/animations/corrupt-bouncer/walk.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "corrupt-bouncer",
+      "action": "attack",
+      "path": "assets/generated/animations/corrupt-bouncer/attack.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "corrupt-bouncer",
+      "action": "hurt",
+      "path": "assets/generated/animations/corrupt-bouncer/hurt.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "corrupt-bouncer",
+      "action": "death",
+      "path": "assets/generated/animations/corrupt-bouncer/death.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "weed-vendor",
+      "action": "idle",
+      "path": "assets/generated/animations/weed-vendor/idle.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "weed-vendor",
+      "action": "talk",
+      "path": "assets/generated/animations/weed-vendor/talk.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "weed-vendor",
+      "action": "walk",
+      "path": "assets/generated/animations/weed-vendor/walk.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "weed-vendor",
+      "action": "react",
+      "path": "assets/generated/animations/weed-vendor/react.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "thai-tattoo-artist",
+      "action": "idle",
+      "path": "assets/generated/animations/thai-tattoo-artist/idle.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "thai-tattoo-artist",
+      "action": "talk",
+      "path": "assets/generated/animations/thai-tattoo-artist/talk.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "thai-tattoo-artist",
+      "action": "walk",
+      "path": "assets/generated/animations/thai-tattoo-artist/walk.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "thai-tattoo-artist",
+      "action": "react",
+      "path": "assets/generated/animations/thai-tattoo-artist/react.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "indian-lounge-manager",
+      "action": "idle",
+      "path": "assets/generated/animations/indian-lounge-manager/idle.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "indian-lounge-manager",
+      "action": "talk",
+      "path": "assets/generated/animations/indian-lounge-manager/talk.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "indian-lounge-manager",
+      "action": "walk",
+      "path": "assets/generated/animations/indian-lounge-manager/walk.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "indian-lounge-manager",
+      "action": "react",
+      "path": "assets/generated/animations/indian-lounge-manager/react.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "bar-promoter",
+      "action": "idle",
+      "path": "assets/generated/animations/bar-promoter/idle.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "bar-promoter",
+      "action": "talk",
+      "path": "assets/generated/animations/bar-promoter/talk.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "bar-promoter",
+      "action": "walk",
+      "path": "assets/generated/animations/bar-promoter/walk.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "bar-promoter",
+      "action": "react",
+      "path": "assets/generated/animations/bar-promoter/react.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "street-food-vendor",
+      "action": "idle",
+      "path": "assets/generated/animations/street-food-vendor/idle.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "street-food-vendor",
+      "action": "talk",
+      "path": "assets/generated/animations/street-food-vendor/talk.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "street-food-vendor",
+      "action": "walk",
+      "path": "assets/generated/animations/street-food-vendor/walk.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "street-food-vendor",
+      "action": "react",
+      "path": "assets/generated/animations/street-food-vendor/react.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "scooter-mechanic",
+      "action": "idle",
+      "path": "assets/generated/animations/scooter-mechanic/idle.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "scooter-mechanic",
+      "action": "talk",
+      "path": "assets/generated/animations/scooter-mechanic/talk.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "scooter-mechanic",
+      "action": "walk",
+      "path": "assets/generated/animations/scooter-mechanic/walk.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "scooter-mechanic",
+      "action": "react",
+      "path": "assets/generated/animations/scooter-mechanic/react.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    }
+  ],
+  "standards": {
+    "characterSeed": "512x512 PNG alpha, facing right, bottom-center baseline",
+    "animationSheet": "256x256 slots, PNG alpha",
+    "vfxSheet": "256x256 slots, PNG alpha",
+    "environment": "2048x720 JPG/PNG runtime layer plus original source"
+  },
+  "notes": [
+    "Animation sheets are deterministic normalized sprint placeholders made from approved seed cutouts to prevent AI identity drift.",
+    "Replace placeholder animation sheets with final hand-approved AI/edit strips when available, keeping the same paths and frame dimensions.",
+    "Baht coin pickup was replaced with a deterministic BAHT coin icon after QA rejected a generated crypto-style symbol."
+  ]
+}

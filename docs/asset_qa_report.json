@@ -1,0 +1,1042 @@
+[
+  {
+    "key": "foundation-composite",
+    "path": "assets/generated/backgrounds/tattoo-weed-street.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "alpha": false
+  },
+  {
+    "key": "level1-pattaya-far",
+    "path": "assets/generated/backgrounds/level1-pattaya-far-2048x720.jpg",
+    "size": [
+      2048,
+      720
+    ],
+    "mode": "RGB",
+    "alpha": false
+  },
+  {
+    "key": "level1-pattaya-storefronts",
+    "path": "assets/generated/backgrounds/level1-pattaya-storefronts-2048x720.jpg",
+    "size": [
+      2048,
+      720
+    ],
+    "mode": "RGB",
+    "alpha": false
+  },
+  {
+    "key": "level1-pattaya-play-lane",
+    "path": "assets/generated/backgrounds/level1-pattaya-play-lane.jpg",
+    "size": [
+      2048,
+      720
+    ],
+    "mode": "RGB",
+    "alpha": false
+  },
+  {
+    "key": "kiko",
+    "path": "assets/generated/characters/kiko.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "big-ink",
+    "path": "assets/generated/characters/big-ink.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "weed-vendor",
+    "path": "assets/generated/characters/npcs/weed-vendor.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "street-punk",
+    "path": "assets/generated/characters/enemies/street-punk.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "thai-tattoo-artist",
+    "path": "assets/generated/characters/npcs/thai-tattoo-artist.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "indian-lounge-manager",
+    "path": "assets/generated/characters/npcs/indian-lounge-manager.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "bar-promoter",
+    "path": "assets/generated/characters/npcs/bar-promoter.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "street-food-vendor",
+    "path": "assets/generated/characters/npcs/street-food-vendor.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "scooter-mechanic",
+    "path": "assets/generated/characters/npcs/scooter-mechanic.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "rival-artist",
+    "path": "assets/generated/characters/enemies/rival-artist.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "scooter-punk",
+    "path": "assets/generated/characters/enemies/scooter-punk.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "corrupt-bouncer",
+    "path": "assets/generated/characters/enemies/corrupt-bouncer.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "red-scooter",
+    "path": "assets/generated/props/red-scooter.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "green-scooter",
+    "path": "assets/generated/props/green-scooter.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "traffic-cone",
+    "path": "assets/generated/props/traffic-cone.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "sticker-chair",
+    "path": "assets/generated/props/sticker-chair.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "weed-sandwich-board",
+    "path": "assets/generated/props/weed-sandwich-board.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "tattoo-sandwich-board",
+    "path": "assets/generated/props/tattoo-sandwich-board.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "street-food-cart",
+    "path": "assets/generated/props/street-food-cart.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "beer-neon-sign",
+    "path": "assets/generated/props/beer-neon-sign.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "potted-plant",
+    "path": "assets/generated/props/potted-plant.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "cable-bundle",
+    "path": "assets/generated/props/cable-bundle.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "trash-bin",
+    "path": "assets/generated/props/trash-bin.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "puddle-decal",
+    "path": "assets/generated/props/puddle-decal.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "baht-coin",
+    "path": "assets/generated/props/baht-coin.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "energy-soda",
+    "path": "assets/generated/props/energy-soda.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "ink-bottle",
+    "path": "assets/generated/props/ink-bottle.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "rolling-shutter",
+    "path": "assets/generated/props/rolling-shutter.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "health-bar-frame",
+    "path": "assets/generated/ui/health-bar-frame.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "slap-meter-frame",
+    "path": "assets/generated/ui/slap-meter-frame.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "portrait-ring",
+    "path": "assets/generated/ui/portrait-ring.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "pause-button",
+    "path": "assets/generated/ui/pause-button.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "attack-button",
+    "path": "assets/generated/ui/attack-button.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "dodge-button",
+    "path": "assets/generated/ui/dodge-button.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "super-button",
+    "path": "assets/generated/ui/super-button.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "joystick-ring",
+    "path": "assets/generated/ui/joystick-ring.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "coin-icon",
+    "path": "assets/generated/ui/coin-icon.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "objective-chip-frame",
+    "path": "assets/generated/ui/objective-chip-frame.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "character-panel-frame",
+    "path": "assets/generated/ui/character-panel-frame.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "dialogue-box-frame",
+    "path": "assets/generated/ui/dialogue-box-frame.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "rotate-overlay-frame",
+    "path": "assets/generated/ui/rotate-overlay-frame.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "super-slap",
+    "path": "assets/generated/fx/super-slap-8x256.png",
+    "size": [
+      2048,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "hit-impact",
+    "path": "assets/generated/fx/hit-impact-6x256.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "dust-step",
+    "path": "assets/generated/fx/dust-step-6x256.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "kiko:idle",
+    "path": "assets/generated/animations/kiko/idle.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "kiko:walk",
+    "path": "assets/generated/animations/kiko/walk.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "kiko:attack",
+    "path": "assets/generated/animations/kiko/attack.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "kiko:hurt",
+    "path": "assets/generated/animations/kiko/hurt.png",
+    "size": [
+      512,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "kiko:death",
+    "path": "assets/generated/animations/kiko/death.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "kiko:super-slap",
+    "path": "assets/generated/animations/kiko/super-slap.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "big-ink:idle",
+    "path": "assets/generated/animations/big-ink/idle.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "big-ink:walk",
+    "path": "assets/generated/animations/big-ink/walk.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "big-ink:attack",
+    "path": "assets/generated/animations/big-ink/attack.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "big-ink:hurt",
+    "path": "assets/generated/animations/big-ink/hurt.png",
+    "size": [
+      512,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "big-ink:death",
+    "path": "assets/generated/animations/big-ink/death.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "big-ink:super-slap",
+    "path": "assets/generated/animations/big-ink/super-slap.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "street-punk:idle",
+    "path": "assets/generated/animations/street-punk/idle.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "street-punk:walk",
+    "path": "assets/generated/animations/street-punk/walk.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "street-punk:attack",
+    "path": "assets/generated/animations/street-punk/attack.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "street-punk:hurt",
+    "path": "assets/generated/animations/street-punk/hurt.png",
+    "size": [
+      512,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "street-punk:death",
+    "path": "assets/generated/animations/street-punk/death.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "rival-artist:idle",
+    "path": "assets/generated/animations/rival-artist/idle.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "rival-artist:walk",
+    "path": "assets/generated/animations/rival-artist/walk.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "rival-artist:attack",
+    "path": "assets/generated/animations/rival-artist/attack.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "rival-artist:hurt",
+    "path": "assets/generated/animations/rival-artist/hurt.png",
+    "size": [
+      512,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "rival-artist:death",
+    "path": "assets/generated/animations/rival-artist/death.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "scooter-punk:idle",
+    "path": "assets/generated/animations/scooter-punk/idle.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "scooter-punk:walk",
+    "path": "assets/generated/animations/scooter-punk/walk.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "scooter-punk:attack",
+    "path": "assets/generated/animations/scooter-punk/attack.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "scooter-punk:hurt",
+    "path": "assets/generated/animations/scooter-punk/hurt.png",
+    "size": [
+      512,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "scooter-punk:death",
+    "path": "assets/generated/animations/scooter-punk/death.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "corrupt-bouncer:idle",
+    "path": "assets/generated/animations/corrupt-bouncer/idle.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "corrupt-bouncer:walk",
+    "path": "assets/generated/animations/corrupt-bouncer/walk.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "corrupt-bouncer:attack",
+    "path": "assets/generated/animations/corrupt-bouncer/attack.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "corrupt-bouncer:hurt",
+    "path": "assets/generated/animations/corrupt-bouncer/hurt.png",
+    "size": [
+      512,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "corrupt-bouncer:death",
+    "path": "assets/generated/animations/corrupt-bouncer/death.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "weed-vendor:idle",
+    "path": "assets/generated/animations/weed-vendor/idle.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "weed-vendor:talk",
+    "path": "assets/generated/animations/weed-vendor/talk.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "weed-vendor:walk",
+    "path": "assets/generated/animations/weed-vendor/walk.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "weed-vendor:react",
+    "path": "assets/generated/animations/weed-vendor/react.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "thai-tattoo-artist:idle",
+    "path": "assets/generated/animations/thai-tattoo-artist/idle.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "thai-tattoo-artist:talk",
+    "path": "assets/generated/animations/thai-tattoo-artist/talk.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "thai-tattoo-artist:walk",
+    "path": "assets/generated/animations/thai-tattoo-artist/walk.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "thai-tattoo-artist:react",
+    "path": "assets/generated/animations/thai-tattoo-artist/react.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "indian-lounge-manager:idle",
+    "path": "assets/generated/animations/indian-lounge-manager/idle.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "indian-lounge-manager:talk",
+    "path": "assets/generated/animations/indian-lounge-manager/talk.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "indian-lounge-manager:walk",
+    "path": "assets/generated/animations/indian-lounge-manager/walk.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "indian-lounge-manager:react",
+    "path": "assets/generated/animations/indian-lounge-manager/react.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "bar-promoter:idle",
+    "path": "assets/generated/animations/bar-promoter/idle.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "bar-promoter:talk",
+    "path": "assets/generated/animations/bar-promoter/talk.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "bar-promoter:walk",
+    "path": "assets/generated/animations/bar-promoter/walk.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "bar-promoter:react",
+    "path": "assets/generated/animations/bar-promoter/react.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "street-food-vendor:idle",
+    "path": "assets/generated/animations/street-food-vendor/idle.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "street-food-vendor:talk",
+    "path": "assets/generated/animations/street-food-vendor/talk.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "street-food-vendor:walk",
+    "path": "assets/generated/animations/street-food-vendor/walk.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "street-food-vendor:react",
+    "path": "assets/generated/animations/street-food-vendor/react.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "scooter-mechanic:idle",
+    "path": "assets/generated/animations/scooter-mechanic/idle.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "scooter-mechanic:talk",
+    "path": "assets/generated/animations/scooter-mechanic/talk.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "scooter-mechanic:walk",
+    "path": "assets/generated/animations/scooter-mechanic/walk.png",
+    "size": [
+      1536,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  },
+  {
+    "key": "scooter-mechanic:react",
+    "path": "assets/generated/animations/scooter-mechanic/react.png",
+    "size": [
+      1024,
+      256
+    ],
+    "mode": "RGBA",
+    "alpha": true
+  }
+]

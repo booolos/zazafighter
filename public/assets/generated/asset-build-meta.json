@@ -1,0 +1,139 @@
+{
+  "generated_source_dir": "/Users/booolos/.codex/generated_images/019dd4e2-ec06-7012-9e8e-747387534165",
+  "characters": [
+    {
+      "key": "kiko",
+      "source_box": [
+        39,
+        149,
+        444,
+        828
+      ],
+      "width": 271,
+      "height": 454
+    },
+    {
+      "key": "big-ink",
+      "source_box": [
+        485,
+        72,
+        870,
+        836
+      ],
+      "width": 229,
+      "height": 455
+    },
+    {
+      "key": "weed-vendor",
+      "source_box": [
+        901,
+        101,
+        1258,
+        832
+      ],
+      "width": 222,
+      "height": 454
+    },
+    {
+      "key": "street-punk",
+      "source_box": [
+        1249,
+        140,
+        1633,
+        830
+      ],
+      "width": 253,
+      "height": 455
+    }
+  ],
+  "fx_frames": [
+    {
+      "frame": 0,
+      "bbox": [
+        45,
+        297,
+        188,
+        459
+      ],
+      "width": 158,
+      "height": 180
+    },
+    {
+      "frame": 1,
+      "bbox": [
+        2,
+        271,
+        256,
+        494
+      ],
+      "width": 205,
+      "height": 180
+    },
+    {
+      "frame": 2,
+      "bbox": [
+        0,
+        230,
+        256,
+        533
+      ],
+      "width": 152,
+      "height": 180
+    },
+    {
+      "frame": 3,
+      "bbox": [
+        0,
+        224,
+        256,
+        537
+      ],
+      "width": 147,
+      "height": 180
+    },
+    {
+      "frame": 4,
+      "bbox": [
+        0,
+        234,
+        256,
+        528
+      ],
+      "width": 156,
+      "height": 180
+    },
+    {
+      "frame": 5,
+      "bbox": [
+        0,
+        266,
+        232,
+        494
+      ],
+      "width": 183,
+      "height": 180
+    },
+    {
+      "frame": 6,
+      "bbox": [
+        23,
+        261,
+        237,
+        506
+      ],
+      "width": 157,
+      "height": 180
+    },
+    {
+      "frame": 7,
+      "bbox": [
+        44,
+        272,
+        202,
+        499
+      ],
+      "width": 125,
+      "height": 180
+    }
+  ]
+}

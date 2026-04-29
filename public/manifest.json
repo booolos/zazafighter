@@ -1,0 +1,9 @@
+{
+  "name": "Slap Street: Ink District",
+  "short_name": "Slap Street",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#07080c",
+  "theme_color": "#07080c",
+  "start_url": "./"
+}

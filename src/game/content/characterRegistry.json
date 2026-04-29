@@ -1,0 +1,1340 @@
+{
+  "characters": [
+    {
+      "id": "kiko",
+      "displayName": "Kiko",
+      "handle": "Green Cap",
+      "role": "player",
+      "faction": "heroes",
+      "seed": {
+        "key": "character:kiko:seed",
+        "path": "assets/generated/characters/kiko.png"
+      },
+      "render": {
+        "scale": 0.46,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 110,
+        "speed": 310,
+        "attackDamage": 22,
+        "superDamage": 68,
+        "weight": 0.85
+      },
+      "physics": {
+        "bodyWidth": 120,
+        "bodyHeight": 210,
+        "bodyOffsetX": 68,
+        "bodyOffsetY": 24
+      },
+      "combat": {
+        "canUseSuperSlap": true,
+        "hitboxProfile": "quick-slap",
+        "hurtboxProfile": "human-medium",
+        "aiProfile": "player"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:kiko:idle",
+          "file": "assets/generated/animations/kiko/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:kiko:walk",
+          "file": "assets/generated/animations/kiko/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 10,
+          "repeat": -1
+        },
+        "dodge": {
+          "key": "anim:kiko:dodge",
+          "file": "assets/generated/animations/kiko/dodge.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 14,
+          "repeat": 0
+        },
+        "jump": {
+          "key": "anim:kiko:jump",
+          "file": "assets/generated/animations/kiko/jump.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 10,
+          "repeat": 0
+        },
+        "attack": {
+          "key": "anim:kiko:attack",
+          "file": "assets/generated/animations/kiko/attack.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 14,
+          "repeat": 0
+        },
+        "hurt": {
+          "key": "anim:kiko:hurt",
+          "file": "assets/generated/animations/kiko/hurt.png",
+          "frames": 2,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 10,
+          "repeat": 0
+        },
+        "stunned": {
+          "key": "anim:kiko:stunned",
+          "file": "assets/generated/animations/kiko/stunned.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "knockdown": {
+          "key": "anim:kiko:knockdown",
+          "file": "assets/generated/animations/kiko/knockdown.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "get-up": {
+          "key": "anim:kiko:get-up",
+          "file": "assets/generated/animations/kiko/get-up.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "death": {
+          "key": "anim:kiko:death",
+          "file": "assets/generated/animations/kiko/death.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": 0
+        },
+        "super-slap": {
+          "key": "anim:kiko:super-slap",
+          "file": "assets/generated/animations/kiko/super-slap.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 14,
+          "repeat": 0
+        },
+        "victory": {
+          "key": "anim:kiko:victory",
+          "file": "assets/generated/animations/kiko/victory.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        }
+      }
+    },
+    {
+      "id": "big-ink",
+      "displayName": "Casey",
+      "handle": "Big Ink",
+      "role": "player",
+      "faction": "heroes",
+      "seed": {
+        "key": "character:big-ink:seed",
+        "path": "assets/generated/characters/big-ink.png"
+      },
+      "render": {
+        "scale": 0.53,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 145,
+        "speed": 235,
+        "attackDamage": 32,
+        "superDamage": 82,
+        "weight": 1.25
+      },
+      "physics": {
+        "bodyWidth": 128,
+        "bodyHeight": 222,
+        "bodyOffsetX": 64,
+        "bodyOffsetY": 18
+      },
+      "combat": {
+        "canUseSuperSlap": true,
+        "hitboxProfile": "heavy-slap",
+        "hurtboxProfile": "human-heavy",
+        "aiProfile": "player"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:big-ink:idle",
+          "file": "assets/generated/animations/big-ink/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 5,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:big-ink:walk",
+          "file": "assets/generated/animations/big-ink/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "dodge": {
+          "key": "anim:big-ink:dodge",
+          "file": "assets/generated/animations/big-ink/dodge.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 14,
+          "repeat": 0
+        },
+        "jump": {
+          "key": "anim:big-ink:jump",
+          "file": "assets/generated/animations/big-ink/jump.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "attack": {
+          "key": "anim:big-ink:attack",
+          "file": "assets/generated/animations/big-ink/attack.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 12,
+          "repeat": 0
+        },
+        "hurt": {
+          "key": "anim:big-ink:hurt",
+          "file": "assets/generated/animations/big-ink/hurt.png",
+          "frames": 2,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "stunned": {
+          "key": "anim:big-ink:stunned",
+          "file": "assets/generated/animations/big-ink/stunned.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "knockdown": {
+          "key": "anim:big-ink:knockdown",
+          "file": "assets/generated/animations/big-ink/knockdown.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "get-up": {
+          "key": "anim:big-ink:get-up",
+          "file": "assets/generated/animations/big-ink/get-up.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "death": {
+          "key": "anim:big-ink:death",
+          "file": "assets/generated/animations/big-ink/death.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": 0
+        },
+        "super-slap": {
+          "key": "anim:big-ink:super-slap",
+          "file": "assets/generated/animations/big-ink/super-slap.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 13,
+          "repeat": 0
+        },
+        "victory": {
+          "key": "anim:big-ink:victory",
+          "file": "assets/generated/animations/big-ink/victory.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        }
+      }
+    },
+    {
+      "id": "weed-vendor",
+      "displayName": "Arjun",
+      "handle": "Weed Shop Vendor",
+      "role": "npc",
+      "faction": "locals",
+      "seed": {
+        "key": "character:weed-vendor:seed",
+        "path": "assets/generated/characters/npcs/weed-vendor.png"
+      },
+      "render": {
+        "scale": 0.46,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 80,
+        "speed": 70,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 0.9
+      },
+      "physics": {
+        "bodyWidth": 88,
+        "bodyHeight": 190,
+        "bodyOffsetX": 84,
+        "bodyOffsetY": 38
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-medium",
+        "aiProfile": "talking-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:weed-vendor:idle",
+          "file": "assets/generated/animations/weed-vendor/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:weed-vendor:talk",
+          "file": "assets/generated/animations/weed-vendor/talk.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:weed-vendor:walk",
+          "file": "assets/generated/animations/weed-vendor/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:weed-vendor:react",
+          "file": "assets/generated/animations/weed-vendor/react.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:weed-vendor:cheer",
+          "file": "assets/generated/animations/weed-vendor/cheer.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:weed-vendor:panic",
+          "file": "assets/generated/animations/weed-vendor/panic.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        }
+      }
+    },
+    {
+      "id": "thai-tattoo-artist",
+      "displayName": "Niran",
+      "handle": "Tattoo Artist",
+      "role": "npc",
+      "faction": "ink-district",
+      "seed": {
+        "key": "character:thai-tattoo-artist:seed",
+        "path": "assets/generated/characters/npcs/thai-tattoo-artist.png"
+      },
+      "render": {
+        "scale": 0.46,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 90,
+        "speed": 80,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 1
+      },
+      "physics": {
+        "bodyWidth": 88,
+        "bodyHeight": 190,
+        "bodyOffsetX": 84,
+        "bodyOffsetY": 38
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-medium",
+        "aiProfile": "idle-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:thai-tattoo-artist:idle",
+          "file": "assets/generated/animations/thai-tattoo-artist/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:thai-tattoo-artist:talk",
+          "file": "assets/generated/animations/thai-tattoo-artist/talk.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:thai-tattoo-artist:walk",
+          "file": "assets/generated/animations/thai-tattoo-artist/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:thai-tattoo-artist:react",
+          "file": "assets/generated/animations/thai-tattoo-artist/react.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:thai-tattoo-artist:cheer",
+          "file": "assets/generated/animations/thai-tattoo-artist/cheer.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:thai-tattoo-artist:panic",
+          "file": "assets/generated/animations/thai-tattoo-artist/panic.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        }
+      }
+    },
+    {
+      "id": "indian-lounge-manager",
+      "displayName": "Vikram",
+      "handle": "Lounge Manager",
+      "role": "npc",
+      "faction": "locals",
+      "seed": {
+        "key": "character:indian-lounge-manager:seed",
+        "path": "assets/generated/characters/npcs/indian-lounge-manager.png"
+      },
+      "render": {
+        "scale": 0.46,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 95,
+        "speed": 75,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 1
+      },
+      "physics": {
+        "bodyWidth": 88,
+        "bodyHeight": 190,
+        "bodyOffsetX": 84,
+        "bodyOffsetY": 38
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-medium",
+        "aiProfile": "talking-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:indian-lounge-manager:idle",
+          "file": "assets/generated/animations/indian-lounge-manager/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:indian-lounge-manager:talk",
+          "file": "assets/generated/animations/indian-lounge-manager/talk.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:indian-lounge-manager:walk",
+          "file": "assets/generated/animations/indian-lounge-manager/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:indian-lounge-manager:react",
+          "file": "assets/generated/animations/indian-lounge-manager/react.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:indian-lounge-manager:cheer",
+          "file": "assets/generated/animations/indian-lounge-manager/cheer.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:indian-lounge-manager:panic",
+          "file": "assets/generated/animations/indian-lounge-manager/panic.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        }
+      }
+    },
+    {
+      "id": "bar-promoter",
+      "displayName": "Mali",
+      "handle": "Bar Promoter",
+      "role": "npc",
+      "faction": "nightlife",
+      "seed": {
+        "key": "character:bar-promoter:seed",
+        "path": "assets/generated/characters/npcs/bar-promoter.png"
+      },
+      "render": {
+        "scale": 0.46,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 70,
+        "speed": 80,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 0.85
+      },
+      "physics": {
+        "bodyWidth": 78,
+        "bodyHeight": 184,
+        "bodyOffsetX": 89,
+        "bodyOffsetY": 42
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-light",
+        "aiProfile": "idle-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:bar-promoter:idle",
+          "file": "assets/generated/animations/bar-promoter/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:bar-promoter:talk",
+          "file": "assets/generated/animations/bar-promoter/talk.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:bar-promoter:walk",
+          "file": "assets/generated/animations/bar-promoter/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:bar-promoter:react",
+          "file": "assets/generated/animations/bar-promoter/react.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:bar-promoter:cheer",
+          "file": "assets/generated/animations/bar-promoter/cheer.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:bar-promoter:panic",
+          "file": "assets/generated/animations/bar-promoter/panic.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        }
+      }
+    },
+    {
+      "id": "street-food-vendor",
+      "displayName": "Somchai",
+      "handle": "Street Food Vendor",
+      "role": "npc",
+      "faction": "locals",
+      "seed": {
+        "key": "character:street-food-vendor:seed",
+        "path": "assets/generated/characters/npcs/street-food-vendor.png"
+      },
+      "render": {
+        "scale": 0.42,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 100,
+        "speed": 55,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 1.2
+      },
+      "physics": {
+        "bodyWidth": 132,
+        "bodyHeight": 185,
+        "bodyOffsetX": 62,
+        "bodyOffsetY": 44
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-heavy",
+        "aiProfile": "idle-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:street-food-vendor:idle",
+          "file": "assets/generated/animations/street-food-vendor/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:street-food-vendor:talk",
+          "file": "assets/generated/animations/street-food-vendor/talk.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:street-food-vendor:walk",
+          "file": "assets/generated/animations/street-food-vendor/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:street-food-vendor:react",
+          "file": "assets/generated/animations/street-food-vendor/react.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:street-food-vendor:cheer",
+          "file": "assets/generated/animations/street-food-vendor/cheer.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:street-food-vendor:panic",
+          "file": "assets/generated/animations/street-food-vendor/panic.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        }
+      }
+    },
+    {
+      "id": "scooter-mechanic",
+      "displayName": "Lek",
+      "handle": "Scooter Mechanic",
+      "role": "npc",
+      "faction": "locals",
+      "seed": {
+        "key": "character:scooter-mechanic:seed",
+        "path": "assets/generated/characters/npcs/scooter-mechanic.png"
+      },
+      "render": {
+        "scale": 0.46,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 90,
+        "speed": 85,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 1
+      },
+      "physics": {
+        "bodyWidth": 88,
+        "bodyHeight": 190,
+        "bodyOffsetX": 84,
+        "bodyOffsetY": 38
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-medium",
+        "aiProfile": "idle-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:scooter-mechanic:idle",
+          "file": "assets/generated/animations/scooter-mechanic/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:scooter-mechanic:talk",
+          "file": "assets/generated/animations/scooter-mechanic/talk.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:scooter-mechanic:walk",
+          "file": "assets/generated/animations/scooter-mechanic/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:scooter-mechanic:react",
+          "file": "assets/generated/animations/scooter-mechanic/react.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:scooter-mechanic:cheer",
+          "file": "assets/generated/animations/scooter-mechanic/cheer.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:scooter-mechanic:panic",
+          "file": "assets/generated/animations/scooter-mechanic/panic.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        }
+      }
+    },
+    {
+      "id": "soi-dog",
+      "displayName": "Dang",
+      "handle": "Soi Dog",
+      "role": "companion",
+      "faction": "heroes",
+      "seed": {
+        "key": "character:soi-dog:seed",
+        "path": "assets/generated/characters/companions/soi-dog.png"
+      },
+      "render": {
+        "scale": 0.32,
+        "originX": 0.5,
+        "originY": 0.88
+      },
+      "stats": {
+        "maxHp": 55,
+        "speed": 330,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 0.42
+      },
+      "physics": {
+        "bodyWidth": 100,
+        "bodyHeight": 72,
+        "bodyOffsetX": 78,
+        "bodyOffsetY": 134
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "dog-small",
+        "aiProfile": "companion-follow"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:soi-dog:idle",
+          "file": "assets/generated/animations/soi-dog/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:soi-dog:walk",
+          "file": "assets/generated/animations/soi-dog/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 10,
+          "repeat": -1
+        },
+        "special-attack": {
+          "key": "anim:soi-dog:special-attack",
+          "file": "assets/generated/animations/soi-dog/special-attack.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 12,
+          "repeat": 0
+        }
+      }
+    },
+    {
+      "id": "street-punk",
+      "displayName": "Rival Punk",
+      "handle": "Street Enemy",
+      "role": "enemy",
+      "faction": "rivals",
+      "seed": {
+        "key": "character:street-punk:seed",
+        "path": "assets/generated/characters/enemies/street-punk.png"
+      },
+      "render": {
+        "scale": 0.46,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 72,
+        "speed": 155,
+        "attackDamage": 12,
+        "superDamage": 0,
+        "weight": 0.95
+      },
+      "physics": {
+        "bodyWidth": 105,
+        "bodyHeight": 195,
+        "bodyOffsetX": 76,
+        "bodyOffsetY": 34
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "basic-punch",
+        "hurtboxProfile": "human-medium",
+        "aiProfile": "street-rusher"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:street-punk:idle",
+          "file": "assets/generated/animations/street-punk/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:street-punk:walk",
+          "file": "assets/generated/animations/street-punk/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": -1
+        },
+        "attack": {
+          "key": "anim:street-punk:attack",
+          "file": "assets/generated/animations/street-punk/attack.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 12,
+          "repeat": 0
+        },
+        "hurt": {
+          "key": "anim:street-punk:hurt",
+          "file": "assets/generated/animations/street-punk/hurt.png",
+          "frames": 2,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 10,
+          "repeat": 0
+        },
+        "stunned": {
+          "key": "anim:street-punk:stunned",
+          "file": "assets/generated/animations/street-punk/stunned.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "knockdown": {
+          "key": "anim:street-punk:knockdown",
+          "file": "assets/generated/animations/street-punk/knockdown.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "get-up": {
+          "key": "anim:street-punk:get-up",
+          "file": "assets/generated/animations/street-punk/get-up.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "death": {
+          "key": "anim:street-punk:death",
+          "file": "assets/generated/animations/street-punk/death.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": 0
+        }
+      }
+    },
+    {
+      "id": "rival-artist",
+      "displayName": "Rival Artist",
+      "handle": "Red Apron",
+      "role": "enemy",
+      "faction": "rivals",
+      "seed": {
+        "key": "character:rival-artist:seed",
+        "path": "assets/generated/characters/enemies/rival-artist.png"
+      },
+      "render": {
+        "scale": 0.46,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 88,
+        "speed": 135,
+        "attackDamage": 16,
+        "superDamage": 0,
+        "weight": 1.05
+      },
+      "physics": {
+        "bodyWidth": 105,
+        "bodyHeight": 195,
+        "bodyOffsetX": 76,
+        "bodyOffsetY": 34
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "wide-swing",
+        "hurtboxProfile": "human-medium",
+        "aiProfile": "cautious-rival"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:rival-artist:idle",
+          "file": "assets/generated/animations/rival-artist/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:rival-artist:walk",
+          "file": "assets/generated/animations/rival-artist/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": -1
+        },
+        "attack": {
+          "key": "anim:rival-artist:attack",
+          "file": "assets/generated/animations/rival-artist/attack.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 11,
+          "repeat": 0
+        },
+        "hurt": {
+          "key": "anim:rival-artist:hurt",
+          "file": "assets/generated/animations/rival-artist/hurt.png",
+          "frames": 2,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 10,
+          "repeat": 0
+        },
+        "stunned": {
+          "key": "anim:rival-artist:stunned",
+          "file": "assets/generated/animations/rival-artist/stunned.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "knockdown": {
+          "key": "anim:rival-artist:knockdown",
+          "file": "assets/generated/animations/rival-artist/knockdown.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "get-up": {
+          "key": "anim:rival-artist:get-up",
+          "file": "assets/generated/animations/rival-artist/get-up.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "death": {
+          "key": "anim:rival-artist:death",
+          "file": "assets/generated/animations/rival-artist/death.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": 0
+        }
+      }
+    },
+    {
+      "id": "scooter-punk",
+      "displayName": "Scooter Punk",
+      "handle": "Helmet Bruiser",
+      "role": "enemy",
+      "faction": "rivals",
+      "seed": {
+        "key": "character:scooter-punk:seed",
+        "path": "assets/generated/characters/enemies/scooter-punk.png"
+      },
+      "render": {
+        "scale": 0.46,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 82,
+        "speed": 185,
+        "attackDamage": 14,
+        "superDamage": 0,
+        "weight": 0.9
+      },
+      "physics": {
+        "bodyWidth": 100,
+        "bodyHeight": 190,
+        "bodyOffsetX": 78,
+        "bodyOffsetY": 38
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "quick-slap",
+        "hurtboxProfile": "human-light",
+        "aiProfile": "scooter-punk"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:scooter-punk:idle",
+          "file": "assets/generated/animations/scooter-punk/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:scooter-punk:walk",
+          "file": "assets/generated/animations/scooter-punk/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 10,
+          "repeat": -1
+        },
+        "attack": {
+          "key": "anim:scooter-punk:attack",
+          "file": "assets/generated/animations/scooter-punk/attack.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 13,
+          "repeat": 0
+        },
+        "hurt": {
+          "key": "anim:scooter-punk:hurt",
+          "file": "assets/generated/animations/scooter-punk/hurt.png",
+          "frames": 2,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 10,
+          "repeat": 0
+        },
+        "stunned": {
+          "key": "anim:scooter-punk:stunned",
+          "file": "assets/generated/animations/scooter-punk/stunned.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "knockdown": {
+          "key": "anim:scooter-punk:knockdown",
+          "file": "assets/generated/animations/scooter-punk/knockdown.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "get-up": {
+          "key": "anim:scooter-punk:get-up",
+          "file": "assets/generated/animations/scooter-punk/get-up.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "death": {
+          "key": "anim:scooter-punk:death",
+          "file": "assets/generated/animations/scooter-punk/death.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": 0
+        }
+      }
+    },
+    {
+      "id": "corrupt-bouncer",
+      "displayName": "Corrupt Bouncer",
+      "handle": "Soi Heavy",
+      "role": "boss",
+      "faction": "rivals",
+      "seed": {
+        "key": "character:corrupt-bouncer:seed",
+        "path": "assets/generated/characters/enemies/corrupt-bouncer.png"
+      },
+      "render": {
+        "scale": 0.52,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 180,
+        "speed": 110,
+        "attackDamage": 24,
+        "superDamage": 0,
+        "weight": 1.6
+      },
+      "physics": {
+        "bodyWidth": 128,
+        "bodyHeight": 220,
+        "bodyOffsetX": 64,
+        "bodyOffsetY": 20
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "boss-heavy",
+        "hurtboxProfile": "human-heavy",
+        "aiProfile": "heavy-bouncer"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:corrupt-bouncer:idle",
+          "file": "assets/generated/animations/corrupt-bouncer/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 5,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:corrupt-bouncer:walk",
+          "file": "assets/generated/animations/corrupt-bouncer/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "attack": {
+          "key": "anim:corrupt-bouncer:attack",
+          "file": "assets/generated/animations/corrupt-bouncer/attack.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 10,
+          "repeat": 0
+        },
+        "hurt": {
+          "key": "anim:corrupt-bouncer:hurt",
+          "file": "assets/generated/animations/corrupt-bouncer/hurt.png",
+          "frames": 2,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "stunned": {
+          "key": "anim:corrupt-bouncer:stunned",
+          "file": "assets/generated/animations/corrupt-bouncer/stunned.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "knockdown": {
+          "key": "anim:corrupt-bouncer:knockdown",
+          "file": "assets/generated/animations/corrupt-bouncer/knockdown.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "get-up": {
+          "key": "anim:corrupt-bouncer:get-up",
+          "file": "assets/generated/animations/corrupt-bouncer/get-up.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "death": {
+          "key": "anim:corrupt-bouncer:death",
+          "file": "assets/generated/animations/corrupt-bouncer/death.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": 0
+        }
+      }
+    }
+  ]
+}
