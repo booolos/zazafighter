@@ -116,6 +116,48 @@
       "path": "assets/generated/characters/companions/soi-dog.png",
       "width": 256,
       "height": 256
+    },
+    {
+      "key": "soi-six-ruby",
+      "kind": "ambient-npc",
+      "path": "assets/generated/characters/npcs/soi-six-ruby.png",
+      "width": 149,
+      "height": 455
+    },
+    {
+      "key": "soi-six-nina",
+      "kind": "ambient-npc",
+      "path": "assets/generated/characters/npcs/soi-six-nina.png",
+      "width": 128,
+      "height": 455
+    },
+    {
+      "key": "npc-girl-red",
+      "role": "npc",
+      "path": "assets/generated/characters/npcs/npc-girl-red.png",
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "key": "npc-girl-black",
+      "role": "npc",
+      "path": "assets/generated/characters/npcs/npc-girl-black.png",
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "key": "npc-girl-denim",
+      "role": "npc",
+      "path": "assets/generated/characters/npcs/npc-girl-denim.png",
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "key": "npc-girl-silver",
+      "role": "npc",
+      "path": "assets/generated/characters/npcs/npc-girl-silver.png",
+      "frameWidth": 256,
+      "frameHeight": 256
     }
   ],
   "props": [
@@ -930,6 +972,294 @@
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 256
+    },
+    {
+      "character": "soi-six-ruby",
+      "action": "idle",
+      "path": "assets/generated/animations/soi-six-ruby/idle.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "soi-six-ruby",
+      "action": "talk",
+      "path": "assets/generated/animations/soi-six-ruby/talk.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "soi-six-ruby",
+      "action": "walk",
+      "path": "assets/generated/animations/soi-six-ruby/walk.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "soi-six-ruby",
+      "action": "react",
+      "path": "assets/generated/animations/soi-six-ruby/react.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "soi-six-ruby",
+      "action": "cheer",
+      "path": "assets/generated/animations/soi-six-ruby/cheer.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "soi-six-ruby",
+      "action": "panic",
+      "path": "assets/generated/animations/soi-six-ruby/panic.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "soi-six-nina",
+      "action": "idle",
+      "path": "assets/generated/animations/soi-six-nina/idle.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "soi-six-nina",
+      "action": "talk",
+      "path": "assets/generated/animations/soi-six-nina/talk.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "soi-six-nina",
+      "action": "walk",
+      "path": "assets/generated/animations/soi-six-nina/walk.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "soi-six-nina",
+      "action": "react",
+      "path": "assets/generated/animations/soi-six-nina/react.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "soi-six-nina",
+      "action": "cheer",
+      "path": "assets/generated/animations/soi-six-nina/cheer.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "soi-six-nina",
+      "action": "panic",
+      "path": "assets/generated/animations/soi-six-nina/panic.png",
+      "frames": 4,
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "character": "npc-girl-red",
+      "action": "idle",
+      "path": "assets/generated/animations/npc-girl-red/idle.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-red",
+      "action": "talk",
+      "path": "assets/generated/animations/npc-girl-red/talk.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-red",
+      "action": "walk",
+      "path": "assets/generated/animations/npc-girl-red/walk.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-red",
+      "action": "react",
+      "path": "assets/generated/animations/npc-girl-red/react.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-red",
+      "action": "cheer",
+      "path": "assets/generated/animations/npc-girl-red/cheer.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-red",
+      "action": "panic",
+      "path": "assets/generated/animations/npc-girl-red/panic.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-black",
+      "action": "idle",
+      "path": "assets/generated/animations/npc-girl-black/idle.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-black",
+      "action": "talk",
+      "path": "assets/generated/animations/npc-girl-black/talk.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-black",
+      "action": "walk",
+      "path": "assets/generated/animations/npc-girl-black/walk.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-black",
+      "action": "react",
+      "path": "assets/generated/animations/npc-girl-black/react.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-black",
+      "action": "cheer",
+      "path": "assets/generated/animations/npc-girl-black/cheer.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-black",
+      "action": "panic",
+      "path": "assets/generated/animations/npc-girl-black/panic.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-denim",
+      "action": "idle",
+      "path": "assets/generated/animations/npc-girl-denim/idle.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-denim",
+      "action": "talk",
+      "path": "assets/generated/animations/npc-girl-denim/talk.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-denim",
+      "action": "walk",
+      "path": "assets/generated/animations/npc-girl-denim/walk.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-denim",
+      "action": "react",
+      "path": "assets/generated/animations/npc-girl-denim/react.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-denim",
+      "action": "cheer",
+      "path": "assets/generated/animations/npc-girl-denim/cheer.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-denim",
+      "action": "panic",
+      "path": "assets/generated/animations/npc-girl-denim/panic.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-silver",
+      "action": "idle",
+      "path": "assets/generated/animations/npc-girl-silver/idle.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-silver",
+      "action": "talk",
+      "path": "assets/generated/animations/npc-girl-silver/talk.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-silver",
+      "action": "walk",
+      "path": "assets/generated/animations/npc-girl-silver/walk.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-silver",
+      "action": "react",
+      "path": "assets/generated/animations/npc-girl-silver/react.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-silver",
+      "action": "cheer",
+      "path": "assets/generated/animations/npc-girl-silver/cheer.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "npc-girl-silver",
+      "action": "panic",
+      "path": "assets/generated/animations/npc-girl-silver/panic.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
     }
   ],
   "standards": {

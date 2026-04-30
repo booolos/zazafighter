@@ -10,6 +10,9 @@ export type HudSnapshot = {
   maxMeter: number;
   score: number;
   enemiesLeft: number;
+  levelTitle: string;
+  levelIndex: number;
+  levelTotal: number;
   objective: string;
   paused: boolean;
   rushReady: boolean;

@@ -42,7 +42,10 @@ export function setupDomHud() {
             <span class="bar meter"><i data-meter-bar></i></span>
           </div>
         </div>
-        <div class="objective-chip" data-objective>Clear the street</div>
+        <div class="objective-chip">
+          <span data-level-kicker>STREET 1/1</span>
+          <strong data-objective>Clear the street</strong>
+        </div>
         <button class="pause-button" data-action="pause" type="button" aria-label="Pause">
           <img class="pause-art" src="${uiAsset('pause-button.png')}" alt="" aria-hidden="true" draggable="false" />
         </button>
@@ -180,6 +183,7 @@ function renderHud(root: HTMLElement, hud: HudSnapshot) {
   if (!hudIsActive) setHudActive(root, true);
   root.querySelector<HTMLElement>('[data-player-name]')!.textContent = hud.playerName;
   root.querySelector<HTMLElement>('[data-player-handle]')!.textContent = hud.handle;
+  root.querySelector<HTMLElement>('[data-level-kicker]')!.textContent = `STREET ${hud.levelIndex}/${hud.levelTotal}`;
   root.querySelector<HTMLElement>('[data-objective]')!.textContent = hud.objective;
   root.querySelector<HTMLElement>('[data-hp-bar]')!.style.width = `${hp * 100}%`;
   root.querySelector<HTMLElement>('[data-meter-bar]')!.style.width = `${meter * 100}%`;

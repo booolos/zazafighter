@@ -24,14 +24,33 @@ export type LevelEnemySpawn = {
   engageDelay: number;
 };
 
+export type LevelAmbientNpcDefinition = {
+  id: string;
+  x: number;
+  y: number;
+  flipX?: boolean;
+  action?: string;
+};
+
+export type LevelThemeDefinition = {
+  accent: number;
+  haze: number;
+  signText: string;
+  signColor: number;
+};
+
 export type LevelDefinition = {
   id: string;
   title: string;
+  briefing: string;
   exitLabel: string;
   clearTitle: string;
+  theme: LevelThemeDefinition;
   playerStart: { x: number; y: number };
   vendor: { id: string; x: number; y: number; flipX?: boolean };
   exit: { x: number; y: number };
+  backgroundKey?: string;
+  ambientNpcs?: LevelAmbientNpcDefinition[];
   enemyStarts: LevelEnemySpawn[];
   props: LevelPropDefinition[];
 };
@@ -159,18 +178,26 @@ export const levels: LevelDefinition[] = [
   {
     id: 'tattoo-weed-street',
     title: 'Tattoo Weed Street',
-    exitLabel: 'TATTOO',
+    briefing: 'Tattoo shop across from the weed shop. Clear the block and reach the ink door.',
+    exitLabel: 'NEXT',
     clearTitle: 'SHOP CLEAR',
+    theme: { accent: 0x00dfff, haze: 0x1b0f2d, signText: 'TATTOO  |  ZAZA', signColor: 0xef2b2d },
     playerStart: { x: 520, y: 584 },
     vendor: { id: 'weed-vendor', x: 1095, y: 570, flipX: true },
-    exit: { x: 315, y: 560 },
+    exit: { x: 2075, y: 560 },
+    ambientNpcs: [
+      { id: 'soi-six-nina', x: 285, y: 598, flipX: false, action: 'idle' },
+      { id: 'soi-six-ruby', x: 785, y: 606, flipX: true, action: 'talk' },
+      { id: 'npc-girl-red', x: 450, y: 595, flipX: false, action: 'idle' },
+      { id: 'npc-girl-black', x: 950, y: 600, flipX: true, action: 'idle' }
+    ],
     enemyStarts: [
       { id: 'street-punk', x: 1325, y: 585, engageDelay: 0 },
       { id: 'rival-artist', x: 1510, y: 612, engageDelay: 2.4 },
       { id: 'corrupt-bouncer', x: 1740, y: 568, engageDelay: 4.8 }
     ],
     props: [
-      shutter(200, 488), neon(405, 372), plant(460, 660), cone(690, 654), cart(870, 648),
+      neon(405, 372), plant(460, 660), cone(690, 654), cart(870, 648),
       scooter(1180, 660, false, true), sign(360, 666), bin(1390, 658),
       { key: assetKeys.propCableBundle, x: 1570, y: 472, scale: 0.55, depth: -6 },
       scooter(1660, 658, true), sign(1820, 666, true), ink(1980, 654), plant(2080, 666, 0.42), chair(1305, 660)
@@ -179,11 +206,20 @@ export const levels: LevelDefinition[] = [
   {
     id: 'walking-street-neon',
     title: 'Walking Street Neon Alley',
+    briefing: 'Neon signs, bar barkers, and trouble spilling out of the side alley.',
     exitLabel: 'NEON',
     clearTitle: 'ALLEY CLEAR',
+    theme: { accent: 0xff2e9a, haze: 0x241035, signText: 'WALKING STREET', signColor: 0xff2e9a },
     playerStart: { x: 440, y: 594 },
     vendor: { id: 'bar-promoter', x: 910, y: 586, flipX: true },
     exit: { x: 1980, y: 560 },
+    backgroundKey: assetKeys.backgroundWalkingStreet,
+    ambientNpcs: [
+      { id: 'soi-six-ruby', x: 635, y: 594, flipX: false, action: 'cheer' },
+      { id: 'soi-six-nina', x: 830, y: 606, flipX: true, action: 'idle' },
+      { id: 'npc-girl-denim', x: 500, y: 600, flipX: true, action: 'idle' },
+      { id: 'npc-girl-silver', x: 1050, y: 595, flipX: false, action: 'idle' }
+    ],
     enemyStarts: [
       { id: 'street-punk', x: 1150, y: 590, engageDelay: 0 },
       { id: 'scooter-punk', x: 1370, y: 624, engageDelay: 1.4 },
@@ -191,18 +227,26 @@ export const levels: LevelDefinition[] = [
       { id: 'corrupt-bouncer', x: 1870, y: 606, engageDelay: 5.2 }
     ],
     props: [
-      shutter(250, 492), neon(520, 360), sign(700, 664, true), scooter(980, 660, false),
+      neon(520, 360), sign(700, 664, true), scooter(980, 660, false),
       cone(1215, 654), bin(1430, 660), scooter(1560, 658, true, true), chair(1760, 662), plant(2050, 666, 0.38)
     ]
   },
   {
     id: 'soi-buakhao-back-row',
     title: 'Soi Buakhao Back Row',
+    briefing: 'Back-row scooters and late-night repair stalls. Keep moving through the soi.',
     exitLabel: 'SOI',
     clearTitle: 'SOI CLEAR',
+    theme: { accent: 0xffca3a, haze: 0x2b1907, signText: 'SOI BUAKHAO', signColor: 0xffca3a },
     playerStart: { x: 450, y: 600 },
     vendor: { id: 'scooter-mechanic', x: 1030, y: 596, flipX: true },
     exit: { x: 2050, y: 560 },
+    backgroundKey: assetKeys.backgroundSoiBuakhao,
+    ambientNpcs: [
+      { id: 'soi-six-nina', x: 630, y: 604, flipX: true, action: 'talk' },
+      { id: 'npc-girl-red', x: 850, y: 600, flipX: false, action: 'idle' },
+      { id: 'npc-girl-silver', x: 1250, y: 605, flipX: true, action: 'idle' }
+    ],
     enemyStarts: [
       { id: 'scooter-punk', x: 1175, y: 588, engageDelay: 0 },
       { id: 'street-punk', x: 1395, y: 625, engageDelay: 1.6 },
@@ -217,11 +261,19 @@ export const levels: LevelDefinition[] = [
   {
     id: 'indian-lounge-block',
     title: 'Indian Lounge Block',
+    briefing: 'Lounge row is packed with loud shirts, bare feet, and stubborn door crews.',
     exitLabel: 'LOUNGE',
     clearTitle: 'LOUNGE CLEAR',
+    theme: { accent: 0x75ff43, haze: 0x082816, signText: 'INDIAN LOUNGE', signColor: 0x75ff43 },
     playerStart: { x: 430, y: 590 },
-    vendor: { id: 'indian-lounge-manager', x: 1040, y: 575, flipX: true },
+    vendor: { id: 'street-food-vendor', x: 1040, y: 575, flipX: true },
     exit: { x: 2040, y: 560 },
+    ambientNpcs: [
+      { id: 'soi-six-ruby', x: 650, y: 602, flipX: false, action: 'idle' },
+      { id: 'soi-six-nina', x: 860, y: 620, flipX: true, action: 'cheer' },
+      { id: 'npc-girl-black', x: 550, y: 600, flipX: false, action: 'idle' },
+      { id: 'npc-girl-denim', x: 950, y: 605, flipX: true, action: 'idle' }
+    ],
     enemyStarts: [
       { id: 'corrupt-bouncer', x: 1160, y: 590, engageDelay: 0 },
       { id: 'street-punk', x: 1390, y: 618, engageDelay: 1.8 },
@@ -236,11 +288,19 @@ export const levels: LevelDefinition[] = [
   {
     id: 'night-market-spillover',
     title: 'Night Market Spillover',
+    briefing: 'Food carts, plastic chairs, and market clutter turn every slap into chaos.',
     exitLabel: 'MARKET',
     clearTitle: 'MARKET CLEAR',
+    theme: { accent: 0x00dfff, haze: 0x0c2430, signText: 'NIGHT MARKET', signColor: 0x00dfff },
     playerStart: { x: 460, y: 604 },
     vendor: { id: 'street-food-vendor', x: 920, y: 590, flipX: true },
     exit: { x: 2050, y: 560 },
+    ambientNpcs: [
+      { id: 'soi-six-nina', x: 650, y: 594, flipX: false, action: 'idle' },
+      { id: 'soi-six-ruby', x: 790, y: 604, flipX: true, action: 'talk' },
+      { id: 'npc-girl-silver', x: 500, y: 600, flipX: false, action: 'idle' },
+      { id: 'npc-girl-red', x: 1150, y: 605, flipX: true, action: 'idle' }
+    ],
     enemyStarts: [
       { id: 'street-punk', x: 1080, y: 620, engageDelay: 0 },
       { id: 'rival-artist', x: 1300, y: 585, engageDelay: 1.2 },
@@ -255,11 +315,17 @@ export const levels: LevelDefinition[] = [
   {
     id: 'beach-road-scooter-strip',
     title: 'Beach Road Scooter Strip',
+    briefing: 'Beach Road traffic is jammed with scooters. Smash through and reach the strip.',
     exitLabel: 'BEACH',
     clearTitle: 'STRIP CLEAR',
+    theme: { accent: 0xa02cff, haze: 0x1c1633, signText: 'BEACH ROAD', signColor: 0xa02cff },
     playerStart: { x: 440, y: 592 },
     vendor: { id: 'weed-vendor', x: 970, y: 584, flipX: true },
     exit: { x: 2035, y: 560 },
+    backgroundKey: assetKeys.backgroundBeachRoad,
+    ambientNpcs: [
+      { id: 'soi-six-ruby', x: 620, y: 606, flipX: true, action: 'cheer' }
+    ],
     enemyStarts: [
       { id: 'scooter-punk', x: 1110, y: 588, engageDelay: 0 },
       { id: 'scooter-punk', x: 1340, y: 624, engageDelay: 1.5 },
@@ -282,3 +348,10 @@ export function getNextLevelId(id: string): string | undefined {
   return index >= 0 ? levels[index + 1]?.id : undefined;
 }
 
+export function getLevelProgress(id: string) {
+  const index = levels.findIndex((level) => level.id === id);
+  return {
+    index: index >= 0 ? index + 1 : 1,
+    total: levels.length
+  };
+}

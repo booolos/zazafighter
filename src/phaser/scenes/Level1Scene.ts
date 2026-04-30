@@ -1,43 +1,21 @@
 import Phaser from 'phaser';
 import { playCharacterAnimation } from '../../game/assets/loaders';
 import { assetKeys } from '../../game/assets/manifest';
-import { getCharacter, getPlayerCharacter, hasAnimation, type CharacterDefinition, type PlayerId } from '../../game/content/characters';
-import {
-  getAiProfile,
-  getHitboxProfile,
-  getHurtboxProfile,
-  type AiProfile,
-  type HitboxProfile
-} from '../../game/content/combatProfiles';
-import { getLevelDefinition, getNextLevelId, type LevelDefinition, type PickupKind } from '../../game/content/levels';
+import { getCharacter, getCharactersByRole, getPlayerCharacter, hasAnimation, type CharacterDefinition, type PlayerId } from '../../game/content/characters';
+import { getLevelDefinition, getLevelProgress, getNextLevelId, type LevelDefinition, type PickupKind } from '../../game/content/levels';
 import { clearMomentaryActions, touchState } from '../../game/input/actions';
 import { createSessionState, type GameSessionState, type HudSnapshot } from '../../game/simulation/state';
 import { createCharacterSprite, type ArcadeCharacterSprite } from '../factories/characterFactory';
-
-type Enemy = {
-  sprite: ArcadeCharacterSprite;
-  character: CharacterDefinition;
-  hp: number;
-  maxHp: number;
-  cooldown: number;
-  stunned: number;
-  knockback: number;
-  engageDelay: number;
-  bar: Phaser.GameObjects.Graphics;
-  active: boolean;
-};
-
-type Companion = {
-  sprite: ArcadeCharacterSprite;
-  character: CharacterDefinition;
-  shadow: Phaser.GameObjects.Image;
-  specialCooldown: number;
-  specialRush: number;
-  supportRush: number;
-  specialDirection: number;
-  hitEnemies: Set<Enemy>;
-  actionLockedUntil: number;
-};
+import { HitStopManager } from '../systems/HitStopManager';
+import { PlayerController } from '../entities/PlayerController';
+import { EnemyController } from '../entities/EnemyController';
+import { CompanionController } from '../entities/CompanionController';
+import { type HitboxProfile, getHurtboxProfile } from '../../game/content/combatProfiles';
+import {
+  WORLD_WIDTH, WORLD_HEIGHT, LANE_TOP, LANE_BOTTOM, LARGE_PROP_DEPTH, KEY_CAPTURE,
+  SOI_DOG_ID, SOI_DOG_BUTTON_PORTRAIT, SOI_DOG_FOLLOW_OFFSET_X, SOI_DOG_FOLLOW_OFFSET_Y,
+  SOI_DOG_SPECIAL_COOLDOWN_SECONDS, PICKUP_COLLECT_DISTANCE, PLAYER_DODGE_COOLDOWN_SECONDS, KNOCKBACK_COAST_SECONDS
+} from '../../game/constants';
 
 type DestructibleProp = {
   sprite: Phaser.GameObjects.Image;
@@ -57,11 +35,6 @@ type Pickup = {
   collected: boolean;
 };
 
-type StoredVelocity = {
-  x: number;
-  y: number;
-};
-
 type KeyboardControls = {
   left: Phaser.Input.Keyboard.Key[];
   right: Phaser.Input.Keyboard.Key[];
@@ -77,84 +50,36 @@ type KeyboardControls = {
   menu: Phaser.Input.Keyboard.Key[];
 };
 
-const WORLD_WIDTH = 2200;
-const WORLD_HEIGHT = 720;
-const LANE_TOP = 505;
-const LANE_BOTTOM = 640;
-const LARGE_PROP_DEPTH = LANE_TOP - 10;
-const KEY_CAPTURE = 'W,A,S,D,UP,DOWN,LEFT,RIGHT,SPACE,J,C,I,SHIFT,K,U,O,E,L,P,R,ESC';
-const PLAYER_DODGE_SECONDS = 0.48;
-const PLAYER_DODGE_COOLDOWN_SECONDS = 5;
-const PLAYER_DODGE_INVULN_SECONDS = 0.46;
-const PLAYER_DODGE_SPEED = 1160;
-const RUSH_DAMAGE = 4;
-const RUSH_KNOCKBACK = 620;
-const RUSH_STUN_SECONDS = 0.28;
-const PLAYER_JUMP_SECONDS = 0.46;
-const PLAYER_JUMP_COOLDOWN_SECONDS = 0.58;
-const PLAYER_JUMP_HEIGHT = 164;
-const PLAYER_JUMP_PEAK_MIN = 0.24;
-const PLAYER_JUMP_PEAK_MAX = 0.78;
-const KNOCKBACK_COAST_SECONDS = 0.14;
-const MAX_ADVANCING_ENEMIES = 2;
-const MAX_ATTACKING_ENEMIES = 1;
-const SOI_DOG_ID = 'soi-dog';
-const SOI_DOG_BUTTON_PORTRAIT = 'assets/generated/ui/dang-portrait-button.png';
-const SOI_DOG_FOLLOW_OFFSET_X = 118;
-const SOI_DOG_FOLLOW_OFFSET_Y = 24;
-const SOI_DOG_SPECIAL_COOLDOWN_SECONDS = 5;
-const SOI_DOG_SPECIAL_SECONDS = 0.62;
-const SOI_DOG_SPECIAL_SPEED = 980;
-const SOI_DOG_SPECIAL_DAMAGE = 10;
-const SOI_DOG_SPECIAL_KNOCKBACK = 520;
-const SOI_DOG_SPECIAL_STUN_SECONDS = 0.32;
-const SOI_DOG_SPECIAL_LOCK_MS = 640;
-const SOI_DOG_CATCHUP_DISTANCE = 320;
-const PICKUP_COLLECT_DISTANCE = 72;
-
 export class Level1Scene extends Phaser.Scene {
-  private player!: ArcadeCharacterSprite;
-  private playerDef!: CharacterDefinition;
-  private playerId!: PlayerId;
-  private level!: LevelDefinition;
-  private state!: GameSessionState;
-  private enemies: Enemy[] = [];
-  private destructibleProps: DestructibleProp[] = [];
-  private pickups: Pickup[] = [];
-  private companion?: Companion;
-  private facing = 1;
-  private attackCooldown = 0;
-  private dodgeCooldown = 0;
-  private jumpCooldown = 0;
-  private superCooldown = 0;
-  private playerJump = 0;
-  private playerBaseDisplayOriginY = 0;
-  private playerDodge = 0;
-  private playerStunned = 0;
-  private playerKnockback = 0;
-  private playerInvuln = 0;
-  private playerActionLockedUntil = 0;
-  private hitStopUntil = 0;
-  private hitStopVelocities = new Map<ArcadeCharacterSprite, StoredVelocity>();
-  private winText?: Phaser.GameObjects.Container;
-  private koText?: Phaser.GameObjects.Container;
-  private pauseOverlay?: Phaser.GameObjects.Container;
-  private exitGlow?: Phaser.GameObjects.Graphics;
-  private debugHitboxes = false;
-  private keyboardControls?: KeyboardControls;
-  private restartingLevel = false;
-  private leavingLevel = false;
-  private playerDefeatedPose = false;
-  private playerVictoryPose = false;
-  private rushedEnemies = new Set<Enemy>();
-  private playerShadow?: Phaser.GameObjects.Image;
-  private dustStepDistance = 0;
+  playerController!: PlayerController;
+  level!: LevelDefinition;
+  state!: GameSessionState;
+  enemies: EnemyController[] = [];
+  ambientNpcs: ArcadeCharacterSprite[] = [];
+  destructibleProps: DestructibleProp[] = [];
+  pickups: Pickup[] = [];
+  companion?: CompanionController;
+  
+  hitStopManager!: HitStopManager;
+  winText?: Phaser.GameObjects.Container;
+  koText?: Phaser.GameObjects.Container;
+  pauseOverlay?: Phaser.GameObjects.Container;
+  levelIntro?: Phaser.GameObjects.Container;
+  exitGlow?: Phaser.GameObjects.Graphics;
+  debugHitboxes = false;
+  keyboardControls?: KeyboardControls;
+  restartingLevel = false;
+  leavingLevel = false;
+  playerDefeatedPose = false;
+  playerVictoryPose = false;
+  playerShadow?: Phaser.GameObjects.Image;
 
   constructor() {
     super('Level1Scene');
   }
 
   create() {
+    this.hitStopManager = new HitStopManager(this);
     this.resetRuntimeFields();
     this.restartingLevel = false;
     this.leavingLevel = false;
@@ -173,7 +98,8 @@ export class Level1Scene extends Phaser.Scene {
     this.createWorld();
     this.createActors();
 
-    this.cameras.main.startFollow(this.player, true, 0.09, 0.08, 0, 56);
+    this.cameras.main.startFollow(this.playerController.sprite, true, 0.09, 0.08, 0, 56);
+    this.showLevelIntro();
     this.sendHud();
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
@@ -190,34 +116,21 @@ export class Level1Scene extends Phaser.Scene {
 
   private resetRuntimeFields() {
     this.enemies = [];
+    this.ambientNpcs = [];
     this.destructibleProps = [];
     this.pickups = [];
-    this.facing = 1;
-    this.attackCooldown = 0;
-    this.dodgeCooldown = 0;
-    this.jumpCooldown = 0;
-    this.superCooldown = 0;
-    this.playerJump = 0;
-    this.playerBaseDisplayOriginY = 0;
-    this.playerDodge = 0;
-    this.playerStunned = 0;
-    this.playerKnockback = 0;
-    this.playerInvuln = 0;
-    this.playerActionLockedUntil = 0;
-    this.hitStopUntil = 0;
-    this.hitStopVelocities.clear();
+    this.hitStopManager?.reset();
     this.winText = undefined;
     this.koText = undefined;
     this.pauseOverlay = undefined;
+    this.levelIntro = undefined;
     this.exitGlow = undefined;
     this.keyboardControls = undefined;
     this.leavingLevel = false;
     this.playerDefeatedPose = false;
     this.playerVictoryPose = false;
-    this.rushedEnemies.clear();
     this.playerShadow = undefined;
     this.companion = undefined;
-    this.dustStepDistance = 0;
     clearMomentaryActions();
   }
 
@@ -229,20 +142,13 @@ export class Level1Scene extends Phaser.Scene {
       return;
     }
 
-    if (this.updateHitStop()) {
+    if (this.hitStopManager.update()) {
       this.sendHud();
       clearMomentaryActions();
       return;
     }
 
-    this.attackCooldown = Math.max(0, this.attackCooldown - dt);
-    this.dodgeCooldown = Math.max(0, this.dodgeCooldown - dt);
-    this.jumpCooldown = Math.max(0, this.jumpCooldown - dt);
-    this.superCooldown = Math.max(0, this.superCooldown - dt);
-    this.playerDodge = Math.max(0, this.playerDodge - dt);
-    this.playerStunned = Math.max(0, this.playerStunned - dt);
-    this.playerKnockback = Math.max(0, this.playerKnockback - dt);
-    this.playerInvuln = Math.max(0, this.playerInvuln - dt);
+    this.playerController.updateCooldowns(dt);
 
     if (this.state.hp <= 0) {
       this.state.paused = false;
@@ -275,9 +181,19 @@ export class Level1Scene extends Phaser.Scene {
     }
 
     this.hidePauseOverlay();
-    this.updatePlayer(dt);
-    this.updateEnemies(dt);
-    this.updateCompanion(dt);
+    
+    const { moveX, moveY } = this.getMoveInput();
+    this.playerController.update(dt, moveX, moveY, this.wantsJump(), this.wantsDodge(), this.wantsAttack(), this.wantsSuper());
+    
+    const pressureOrder = this.getEnemyPressureOrder();
+    for (const enemy of this.enemies) {
+      enemy.update(dt, this.playerController.sprite.x, this.playerController.sprite.y, pressureOrder.indexOf(enemy));
+    }
+    
+    if (this.companion) {
+      this.companion.update(dt, this.wantsCompanionAttack(), this.playerController.sprite.x, this.playerController.sprite.y, this.playerController.facing);
+    }
+
     this.updatePickups(dt);
     this.updateDepths();
     this.checkWin();
@@ -285,63 +201,23 @@ export class Level1Scene extends Phaser.Scene {
     clearMomentaryActions();
   }
 
-  private updateHitStop() {
-    if (this.hitStopUntil <= 0) return false;
-    if (this.time.now < this.hitStopUntil) {
-      this.freezeHitStopActors();
-      return true;
-    }
-    this.restoreHitStopVelocities();
-    this.hitStopUntil = 0;
-    return false;
-  }
-
-  private startHitStop(durationMs: number) {
-    const duration = Phaser.Math.Clamp(durationMs, 0, 150);
-    if (duration <= 0) return;
-    if (this.hitStopUntil <= this.time.now) {
-      this.captureHitStopVelocities();
-    }
-    this.hitStopUntil = Math.max(this.hitStopUntil, this.time.now + duration);
-    this.freezeHitStopActors();
-  }
-
-  private captureHitStopVelocities() {
-    this.hitStopVelocities.clear();
-    this.captureSpriteVelocity(this.player);
-    if (this.companion) this.captureSpriteVelocity(this.companion.sprite);
+  startHitStop(durationMs: number) {
+    const actors = [this.playerController.sprite];
+    if (this.companion) actors.push(this.companion.sprite);
     for (const enemy of this.enemies) {
-      if (enemy.active) this.captureSpriteVelocity(enemy.sprite);
+      if (enemy.active) actors.push(enemy.sprite);
     }
-  }
-
-  private captureSpriteVelocity(sprite: ArcadeCharacterSprite) {
-    if (!sprite.body.enable) return;
-    this.hitStopVelocities.set(sprite, {
-      x: sprite.body.velocity.x,
-      y: sprite.body.velocity.y
-    });
-  }
-
-  private freezeHitStopActors() {
-    for (const sprite of this.hitStopVelocities.keys()) {
-      if (sprite.body.enable) sprite.setVelocity(0, 0);
-    }
-  }
-
-  private restoreHitStopVelocities() {
-    for (const [sprite, velocity] of this.hitStopVelocities) {
-      if (sprite.body.enable) sprite.setVelocity(velocity.x, velocity.y);
-    }
-    this.hitStopVelocities.clear();
+    this.hitStopManager.startHitStop(durationMs, actors);
   }
 
   private createWorld() {
     this.add.image(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, assetKeys.backgroundFar)
       .setDisplaySize(WORLD_WIDTH, WORLD_HEIGHT)
-      .setDepth(-20)
-      .setScrollFactor(0.25);
-    const bg = this.add.image(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, assetKeys.background)
+      .setScrollFactor(0.2)
+      .setDepth(-20);
+
+    const bgKey = this.level.backgroundKey ?? assetKeys.background;
+    const bg = this.add.image(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, bgKey)
       .setDisplaySize(WORLD_WIDTH, WORLD_HEIGHT)
       .setDepth(-15)
       .setScrollFactor(0.65);
@@ -349,6 +225,7 @@ export class Level1Scene extends Phaser.Scene {
 
     this.add.rectangle(WORLD_WIDTH / 2, 610, WORLD_WIDTH, 150, 0x050506, 0.16).setDepth(-5);
     this.add.rectangle(WORLD_WIDTH / 2, 492, WORLD_WIDTH, 4, 0x00dfff, 0.14).setDepth(-4);
+    this.createLevelDressing();
 
     for (const p of this.level.props) {
       const img = this.add.image(p.x, p.y, p.key).setOrigin(0.5, 1).setScale(p.scale);
@@ -381,7 +258,7 @@ export class Level1Scene extends Phaser.Scene {
     this.exitGlow.strokeRoundedRect(exit.x - 82, exit.y - 140, 164, 180, 8);
 
     this.add.text(exit.x, exit.y - 156, this.level.exitLabel, {
-      color: '#ff4d4d',
+      color: '#ffca3a',
       fontFamily: 'Impact, Arial Black, sans-serif',
       fontSize: '28px',
       stroke: '#07080c',
@@ -389,10 +266,41 @@ export class Level1Scene extends Phaser.Scene {
     }).setOrigin(0.5).setDepth(4);
   }
 
+  private createLevelDressing() {
+    const { accent, haze, signText, signColor } = this.level.theme;
+    this.add.rectangle(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, WORLD_WIDTH, WORLD_HEIGHT, haze, 0.2)
+      .setDepth(-14)
+      .setBlendMode(Phaser.BlendModes.MULTIPLY);
+    this.add.rectangle(WORLD_WIDTH / 2, 490, WORLD_WIDTH, 3, accent, 0.32)
+      .setDepth(-3)
+      .setBlendMode(Phaser.BlendModes.ADD);
+    this.add.rectangle(WORLD_WIDTH / 2, 635, WORLD_WIDTH, 2, accent, 0.18)
+      .setDepth(-3)
+      .setBlendMode(Phaser.BlendModes.ADD);
+
+    const sign = this.add.text(WORLD_WIDTH / 2, 118, signText, {
+      color: Phaser.Display.Color.IntegerToColor(signColor).rgba,
+      fontFamily: 'Impact, Arial Black, sans-serif',
+      fontSize: '42px',
+      stroke: '#050506',
+      strokeThickness: 9
+    }).setOrigin(0.5).setDepth(-2).setAlpha(0.9);
+    sign.setShadow(0, 0, Phaser.Display.Color.IntegerToColor(signColor).rgba, 18, true, true);
+
+    this.tweens.add({
+      targets: sign,
+      alpha: 0.62,
+      duration: 760,
+      yoyo: true,
+      repeat: -1,
+      ease: 'Sine.inOut'
+    });
+  }
+
   private createActors() {
-    this.playerDef = getPlayerCharacter(this.registry.get('selectedPlayer'));
-    this.playerId = this.playerDef.id as PlayerId;
-    this.state = createSessionState(this.playerId, this.playerDef.stats.maxHp);
+    const playerDef = getPlayerCharacter(this.registry.get('selectedPlayer'));
+    const playerId = playerDef.id as PlayerId;
+    this.state = createSessionState(playerId, playerDef.stats.maxHp);
 
     const vendorDef = getCharacter(this.level.vendor.id);
     const vendor = createCharacterSprite(this, vendorDef, this.level.vendor.x, this.level.vendor.y, {
@@ -410,26 +318,86 @@ export class Level1Scene extends Phaser.Scene {
       ease: 'Sine.inOut'
     });
 
-    this.player = createCharacterSprite(this, this.playerDef, this.level.playerStart.x, this.level.playerStart.y, {
+    this.createAmbientNpcs();
+
+    const playerSprite = createCharacterSprite(this, playerDef, this.level.playerStart.x, this.level.playerStart.y, {
       action: 'idle',
       collideWorldBounds: true,
       drag: 1200
     });
-    this.playerBaseDisplayOriginY = this.player.displayOriginY;
+    this.playerController = new PlayerController(this, playerSprite, playerDef, playerId);
 
-    this.playerShadow = this.add.image(this.player.x, this.level.playerStart.y + 6, assetKeys.propPuddleDecal)
+    this.playerShadow = this.add.image(playerSprite.x, this.level.playerStart.y + 6, assetKeys.propPuddleDecal)
       .setOrigin(0.5, 0.5)
       .setScale(0.42)
       .setAlpha(0.55)
-      .setDepth(this.player.y - 1);
+      .setDepth(playerSprite.y - 1);
 
     this.createCompanion();
     this.enemies = this.level.enemyStarts.map((spawn) => this.makeEnemy(spawn.id, spawn.x, spawn.y, spawn.engageDelay));
   }
 
+  private createAmbientNpcs() {
+    const configuredNpcs = this.level.ambientNpcs ?? [];
+    const girlPool = getCharactersByRole('npc')
+      .filter((character) => character.id.startsWith('soi-six-') || character.id.startsWith('npc-girl-'));
+    const randomGirlCount = Phaser.Math.Between(4, 8);
+    const randomGirlNpcs = this.pickAmbientGirls(girlPool, randomGirlCount);
+    const ambientNpcs = [...configuredNpcs.filter((ambient) => !this.isAmbientGirlId(ambient.id)), ...randomGirlNpcs];
+
+    for (const ambient of ambientNpcs) {
+      const character = getCharacter(ambient.id);
+      const action = ambient.action ?? 'idle';
+      const sprite = createCharacterSprite(this, character, ambient.x, ambient.y, {
+        action: hasAnimation(character.id, action) ? action : 'idle',
+        immovable: true,
+        flipX: ambient.flipX
+      });
+      sprite.body.enable = false;
+      sprite.setAlpha(0.92);
+      sprite.setDepth(sprite.y - 16);
+      this.ambientNpcs.push(sprite);
+      
+      if (this.isAmbientGirlId(ambient.id) && sprite.anims.currentAnim) {
+        sprite.anims.timeScale = Phaser.Math.FloatBetween(0.84, 1.16);
+      }
+    }
+  }
+
+  private pickAmbientGirls(girlPool: CharacterDefinition[], count: number) {
+    if (girlPool.length === 0) return [];
+    const actions = ['idle', 'talk', 'cheer'];
+    const chosen: Array<{ id: string; x: number; y: number; flipX: boolean; action: string }> = [];
+    const xMin = Math.max(290, this.level.playerStart.x - 230);
+    const xMax = Math.min(WORLD_WIDTH - 260, this.level.exit.x - 170);
+    const laneYs = [590, 598, 606, 614];
+    const shuffled = Phaser.Utils.Array.Shuffle([...girlPool]);
+
+    for (let i = 0; i < count; i++) {
+      const character = shuffled[i % shuffled.length];
+      const spacing = (xMax - xMin) / Math.max(count - 1, 1);
+      const baseX = count === 1 ? (xMin + xMax) / 2 : xMin + spacing * i;
+      const x = Phaser.Math.Clamp(baseX + Phaser.Math.Between(-92, 92), xMin, xMax);
+      const action = Phaser.Utils.Array.GetRandom(actions);
+      chosen.push({
+        id: character.id,
+        x,
+        y: Phaser.Utils.Array.GetRandom(laneYs),
+        flipX: Phaser.Math.Between(0, 1) === 1,
+        action: hasAnimation(character.id, action) ? action : 'idle'
+      });
+    }
+
+    return Phaser.Utils.Array.Shuffle(chosen);
+  }
+
+  private isAmbientGirlId(id: string) {
+    return id.startsWith('soi-six-') || id.startsWith('npc-girl-');
+  }
+
   private createCompanion() {
     const character = getCharacter(SOI_DOG_ID);
-    const x = this.level.playerStart.x - this.facing * SOI_DOG_FOLLOW_OFFSET_X;
+    const x = this.level.playerStart.x - this.playerController.facing * SOI_DOG_FOLLOW_OFFSET_X;
     const y = Phaser.Math.Clamp(this.level.playerStart.y + SOI_DOG_FOLLOW_OFFSET_Y, LANE_TOP, LANE_BOTTOM);
     const sprite = createCharacterSprite(this, character, x, y, {
       action: 'idle',
@@ -442,561 +410,44 @@ export class Level1Scene extends Phaser.Scene {
       .setAlpha(0.38)
       .setDepth(sprite.y - 2);
 
-    this.companion = {
-      sprite,
-      character,
-      shadow,
-      specialCooldown: 0,
-      specialRush: 0,
-      supportRush: 0,
-      specialDirection: 1,
-      hitEnemies: new Set<Enemy>(),
-      actionLockedUntil: 0
-    };
+    this.companion = new CompanionController(this, sprite, character, shadow);
   }
 
-  private makeEnemy(characterId: string, x: number, y: number, engageDelay: number): Enemy {
+  private makeEnemy(characterId: string, x: number, y: number, engageDelay: number): EnemyController {
     const character = getCharacter(characterId);
-    const enemy = createCharacterSprite(this, character, x, y, {
+    const sprite = createCharacterSprite(this, character, x, y, {
       action: 'idle',
       collideWorldBounds: true,
       drag: 900,
       flipX: true
     });
     const bar = this.add.graphics().setDepth(20);
-    const wrapped: Enemy = {
-      sprite: enemy,
-      character,
-      hp: character.stats.maxHp,
-      maxHp: character.stats.maxHp,
-      cooldown: Phaser.Math.FloatBetween(1.1, 1.8) + engageDelay * 0.25,
-      stunned: 0,
-      knockback: 0,
-      engageDelay,
-      bar,
-      active: true
-    };
-    this.drawEnemyBar(wrapped);
-    return wrapped;
-  }
-
-  private updatePlayer(dt: number) {
-    const { moveX, moveY } = this.getMoveInput();
-    const jumping = this.updatePlayerJump(dt);
-
-    if (this.playerKnockback <= 0 && this.playerStunned <= 0 && this.playerDodge <= 0) {
-      if (moveX < -0.08) this.facing = -1;
-      if (moveX > 0.08) this.facing = 1;
-    }
-    this.player.setFlipX(this.facing < 0);
-
-    if (this.playerKnockback > 0) {
-      this.cancelPlayerJump();
-      this.clampPlayerToLane();
-      this.updatePlayerInvulnAlpha();
-      return;
-    }
-
-    if (this.playerStunned > 0) {
-      this.cancelPlayerJump();
-      this.player.setVelocity(0, 0);
-      if (!this.player.anims.isPlaying) {
-        this.playOptionalCharacterAnimation(this.player, this.playerId, 'stunned', true, 'hurt');
-      }
-      this.clampPlayerToLane();
-      this.updatePlayerInvulnAlpha();
-      return;
-    }
-
-    if (this.playerDodge > 0) {
-      this.resolveRushHits();
-      this.clampPlayerToLane();
-      this.updatePlayerInvulnAlpha();
-      return;
-    }
-
-    if (this.wantsJump() && this.jumpCooldown <= 0 && !jumping) {
-      this.jump(moveX);
-    }
-
-    if (this.wantsDodge() && this.dodgeCooldown <= 0) {
-      this.cancelPlayerJump();
-      this.dodge(moveX, moveY);
-      this.clampPlayerToLane();
-      this.updatePlayerInvulnAlpha();
-      return;
-    }
-
-    this.player.setVelocity(moveX * this.playerDef.stats.speed, moveY * this.playerDef.stats.speed * 0.42);
-    this.clampPlayerToLane();
-
-    if (this.wantsAttack() && this.attackCooldown <= 0) {
-      this.basicAttack();
-    }
-
-    if (this.wantsSuper() && this.superCooldown <= 0 && this.state.meter >= this.state.maxMeter) {
-      this.superSlap();
-    }
-
-    // Spawn dust puff every ~80px of horizontal travel while grounded
-    if (this.playerJump <= 0 && this.playerKnockback <= 0 && this.playerStunned <= 0) {
-      const speedX = Math.abs(this.player.body.velocity.x);
-      if (speedX > 60) {
-        this.dustStepDistance += speedX * dt;
-        if (this.dustStepDistance > 80) {
-          this.dustStepDistance = 0;
-          const dust = this.add.sprite(this.player.x - this.facing * 18, this.player.y + 4, assetKeys.dustStepFx)
-            .setScale(0.55)
-            .setAlpha(0.7)
-            .setDepth(this.player.y - 2);
-          dust.play('fx:dust-step:puff');
-          dust.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => dust.destroy());
-        }
-      } else {
-        this.dustStepDistance = Math.max(0, this.dustStepDistance - dt * 60);
-      }
-    }
-
-    const moving = Math.abs(moveX) + Math.abs(moveY) > 0.08;
-    if (this.time.now > this.playerActionLockedUntil) {
-      playCharacterAnimation(this.player, this.playerId, moving ? 'walk' : 'idle');
-    }
-
-    this.updatePlayerInvulnAlpha();
-    this.updatePlayerShadow();
-
-    if (dt > 0) {
-      this.clampPlayerToLane();
-    }
-  }
-
-  private updatePlayerShadow() {
-    if (!this.playerShadow) return;
-    this.playerShadow.setPosition(this.player.x, this.player.y + 6);
-    this.playerShadow.setDepth(this.player.y - 1);
-    const lift = this.playerJump > 0 ? 1 - (this.playerJump / PLAYER_JUMP_SECONDS) : 0;
-    const liftCurve = Math.sin(lift * Math.PI);
-    this.playerShadow.setScale(0.42 * (1 - liftCurve * 0.45));
-    this.playerShadow.setAlpha(0.55 * (1 - liftCurve * 0.5));
-  }
-
-  private updateCompanion(dt: number) {
-    if (!this.companion) return;
-    const { sprite, character } = this.companion;
-
-    this.companion.specialCooldown = Math.max(0, this.companion.specialCooldown - dt);
-    this.companion.specialRush = Math.max(0, this.companion.specialRush - dt);
-    this.companion.supportRush = Math.max(0, this.companion.supportRush - dt);
-
-    if (this.wantsCompanionAttack() && this.companion.specialCooldown <= 0) {
-      this.startCompanionSpecial();
-    }
-
-    if (this.companion.specialRush > 0) {
-      const direction = this.companion.specialDirection || this.facing || 1;
-      sprite.setFlipX(direction < 0);
-      sprite.setVelocity(direction * SOI_DOG_SPECIAL_SPEED, 0);
-      this.resolveCompanionSpecialHits();
-      this.updateCompanionShadow();
-      return;
-    }
-
-    if (this.companion.supportRush > 0) {
-      const direction = this.facing || 1;
-      const targetY = Phaser.Math.Clamp(this.player.y + SOI_DOG_FOLLOW_OFFSET_Y, LANE_TOP, LANE_BOTTOM);
-      sprite.setFlipX(direction < 0);
-      sprite.setVelocity(direction * PLAYER_DODGE_SPEED * 0.96, (targetY - sprite.y) * 8);
-      playCharacterAnimation(sprite, character.id, 'walk');
-      this.updateCompanionShadow();
-      return;
-    }
-
-    if (this.time.now < this.companion.actionLockedUntil) {
-      sprite.setVelocity(0, 0);
-      this.updateCompanionShadow();
-      return;
-    }
-
-    const targetX = Phaser.Math.Clamp(this.player.x - this.facing * SOI_DOG_FOLLOW_OFFSET_X, 120, WORLD_WIDTH - 120);
-    const targetY = Phaser.Math.Clamp(this.player.y + SOI_DOG_FOLLOW_OFFSET_Y, LANE_TOP, LANE_BOTTOM);
-    const dx = targetX - sprite.x;
-    const dy = targetY - sprite.y;
-    const distance = Math.hypot(dx, dy);
-
-    if (distance > 8 && dt > 0) {
-      const speed = distance > SOI_DOG_CATCHUP_DISTANCE
-        ? character.stats.speed * 1.55
-        : character.stats.speed;
-      sprite.setVelocity((dx / distance) * speed, (dy / distance) * speed * 0.65);
-    } else {
-      sprite.setVelocity(0, 0);
-      sprite.setPosition(targetX, targetY);
-    }
-
-    const moving = distance > 18 || Math.abs(sprite.body.velocity.x) > 24 || Math.abs(sprite.body.velocity.y) > 18;
-    const facing = moving && Math.abs(dx) > 4 ? Math.sign(dx) : this.facing;
-    sprite.setFlipX(facing < 0);
-    sprite.y = Phaser.Math.Clamp(sprite.y, LANE_TOP, LANE_BOTTOM);
-    playCharacterAnimation(sprite, character.id, moving ? 'walk' : 'idle');
-    this.updateCompanionShadow();
-  }
-
-  private startCompanionSpecial() {
-    if (!this.companion) return;
-    const { sprite, character } = this.companion;
-    const direction = this.facing || 1;
-    this.companion.specialCooldown = SOI_DOG_SPECIAL_COOLDOWN_SECONDS;
-    this.companion.specialRush = SOI_DOG_SPECIAL_SECONDS;
-    this.companion.supportRush = 0;
-    this.companion.specialDirection = direction;
-    this.companion.hitEnemies.clear();
-    this.companion.actionLockedUntil = this.time.now + SOI_DOG_SPECIAL_LOCK_MS;
-    sprite.setFlipX(direction < 0);
-    this.playOptionalCharacterAnimation(sprite, character.id, 'special-attack', false, 'idle');
-    sprite.setVelocity(direction * SOI_DOG_SPECIAL_SPEED, 0);
-    this.flashHit(sprite.x + direction * 42, sprite.y - 44, 0xffca3a, 16);
-  }
-
-  private startCompanionSupportRush(direction: number) {
-    if (!this.companion || this.companion.specialRush > 0) return;
-    const { sprite, character } = this.companion;
-    if (Math.abs(sprite.x - this.player.x) > 260) {
-      sprite.setPosition(this.player.x - direction * SOI_DOG_FOLLOW_OFFSET_X, this.player.y + SOI_DOG_FOLLOW_OFFSET_Y);
-    }
-    this.companion.supportRush = PLAYER_DODGE_SECONDS;
-    this.companion.actionLockedUntil = Math.max(this.companion.actionLockedUntil, this.time.now + PLAYER_DODGE_SECONDS * 1000);
-    sprite.setFlipX(direction < 0);
-    playCharacterAnimation(sprite, character.id, 'walk');
-  }
-
-  private resolveCompanionSpecialHits() {
-    if (!this.companion) return;
-    const { sprite } = this.companion;
-    const direction = this.companion.specialDirection || 1;
-    const biteRect = new Phaser.Geom.Rectangle(
-      sprite.x + direction * 72 - 84,
-      sprite.y - 82,
-      168,
-      82
-    );
-    this.drawAttackDebug(biteRect, 0xffca3a);
-
-    for (const enemy of this.enemies) {
-      if (!enemy.active || this.companion.hitEnemies.has(enemy)) continue;
-      if (Math.abs(enemy.sprite.y - sprite.y) > 64) continue;
-      if (!Phaser.Geom.Intersects.RectangleToRectangle(biteRect, this.getHurtboxRect(enemy.sprite, enemy.character))) continue;
-      this.companion.hitEnemies.add(enemy);
-      this.damageEnemy(enemy, SOI_DOG_SPECIAL_DAMAGE, SOI_DOG_SPECIAL_KNOCKBACK, SOI_DOG_SPECIAL_STUN_SECONDS, direction);
-      this.flashHit(enemy.sprite.x, enemy.sprite.y - 86, 0xffca3a, 24);
-      this.cameras.main.shake(80, 0.004);
-      this.startHitStop(55);
-    }
-    this.hitDestructibleProps(biteRect, 2, direction);
-  }
-
-  private updateCompanionShadow() {
-    if (!this.companion) return;
-    const { sprite, shadow } = this.companion;
-    shadow.setPosition(sprite.x, sprite.y + 3);
-    shadow.setDepth(sprite.y - 2);
-  }
-
-  private clampPlayerToLane() {
-    this.player.x = Phaser.Math.Clamp(this.player.x, 120, WORLD_WIDTH - 120);
-    this.player.y = Phaser.Math.Clamp(this.player.y, LANE_TOP, LANE_BOTTOM);
-  }
-
-  private updatePlayerInvulnAlpha() {
-    if (this.playerInvuln > 0) {
-      this.player.setAlpha(this.time.now % 120 < 60 ? 0.58 : 1);
-    } else {
-      this.player.setAlpha(1);
-    }
-  }
-
-  private updateEnemies(dt: number) {
-    const pressureOrder = this.getEnemyPressureOrder();
-
-    for (const enemy of this.enemies) {
-      if (!enemy.active) continue;
-      enemy.cooldown = Math.max(0, enemy.cooldown - dt);
-      enemy.stunned = Math.max(0, enemy.stunned - dt);
-      enemy.knockback = Math.max(0, enemy.knockback - dt);
-
-      const dx = this.player.x - enemy.sprite.x;
-      const dy = this.player.y - enemy.sprite.y;
-      const distance = Math.hypot(dx, dy);
-      const ai = getAiProfile(enemy.character.combat.aiProfile);
-      const attack = getHitboxProfile(enemy.character.combat.hitboxProfile);
-
-      enemy.sprite.setFlipX(dx < 0);
-      enemy.sprite.y = Phaser.Math.Clamp(enemy.sprite.y, LANE_TOP, LANE_BOTTOM);
-
-      if (enemy.engageDelay > 0) {
-        enemy.engageDelay = Math.max(0, enemy.engageDelay - dt);
-        enemy.sprite.setVelocity(0, 0);
-        playCharacterAnimation(enemy.sprite, enemy.character.id, 'idle');
-        this.drawEnemyBar(enemy);
-        continue;
-      }
-
-      if (enemy.knockback > 0) {
-        this.drawEnemyBar(enemy);
-        continue;
-      }
-
-      if (enemy.stunned > 0) {
-        enemy.sprite.setVelocity(0, 0);
-        if (!enemy.sprite.anims.isPlaying) {
-          this.playOptionalCharacterAnimation(enemy.sprite, enemy.character.id, 'stunned', true, 'hurt');
-        }
-        this.drawEnemyBar(enemy);
-        continue;
-      }
-
-      const pressureRank = pressureOrder.indexOf(enemy);
-      const canAdvance = pressureRank >= 0 && pressureRank < MAX_ADVANCING_ENEMIES;
-      const canAttack = pressureRank >= 0 && pressureRank < MAX_ATTACKING_ENEMIES;
-
-      if (distance < ai.aggroRange) {
-        const direction = Math.sign(dx) || 1;
-        const supportRange = pressureRank > 0 ? 64 * pressureRank : 0;
-        const preferredRange = ai.preferredRange + supportRange;
-        const shouldAdvance = canAdvance && Math.abs(dx) > preferredRange;
-        const shouldBackOff = pressureRank > 0 && Math.abs(dx) < preferredRange - 26;
-        const xSpeed = shouldAdvance
-          ? direction * enemy.character.stats.speed * (pressureRank === 0 ? 1 : 0.72)
-          : shouldBackOff
-            ? -direction * enemy.character.stats.speed * 0.45
-            : 0;
-        const ySpeed = Phaser.Math.Clamp(dy * 3.2 * ai.laneSpeedMultiplier, -85, 85);
-        enemy.sprite.setVelocity(xSpeed, canAdvance ? ySpeed : 0);
-        playCharacterAnimation(enemy.sprite, enemy.character.id, shouldAdvance ? 'walk' : 'idle');
-      } else {
-        enemy.sprite.setVelocity(0, 0);
-        playCharacterAnimation(enemy.sprite, enemy.character.id, 'idle');
-      }
-
-      enemy.sprite.y = Phaser.Math.Clamp(enemy.sprite.y, LANE_TOP, LANE_BOTTOM);
-
-      if (canAttack && attack.range > 0 && enemy.cooldown <= 0 && this.profileHitsPlayer(enemy, attack)) {
-        this.enemyAttack(enemy, attack, ai);
-      }
-
-      this.drawEnemyBar(enemy);
-    }
+    return new EnemyController(this, sprite, character, engageDelay, bar);
   }
 
   private getEnemyPressureOrder() {
     return this.enemies
       .filter((enemy) => enemy.active && enemy.engageDelay <= 0)
       .sort((a, b) => {
-        const aDistance = Phaser.Math.Distance.Between(this.player.x, this.player.y, a.sprite.x, a.sprite.y);
-        const bDistance = Phaser.Math.Distance.Between(this.player.x, this.player.y, b.sprite.x, b.sprite.y);
+        const aDistance = Phaser.Math.Distance.Between(this.playerController.sprite.x, this.playerController.sprite.y, a.sprite.x, a.sprite.y);
+        const bDistance = Phaser.Math.Distance.Between(this.playerController.sprite.x, this.playerController.sprite.y, b.sprite.x, b.sprite.y);
         return aDistance - bDistance;
       });
   }
 
-  private basicAttack() {
-    const profile = getHitboxProfile(this.playerDef.combat.hitboxProfile);
-
-    this.attackCooldown = profile.cooldownMs / 1000;
-    this.playerActionLockedUntil = this.time.now + 260;
-    playCharacterAnimation(this.player, this.playerId, 'attack', false);
-
-    const attackRect = this.getAttackRect(this.player.x, this.player.y, profile, this.facing);
-    this.drawAttackDebug(attackRect, 0xef2b2d);
-    const propHits = this.hitDestructibleProps(attackRect, 1, this.facing);
-
-    const targets = this.getForwardTargets(profile);
-    if (targets.length === 0 && propHits === 0) {
-      this.state.meter = Math.min(this.state.maxMeter, this.state.meter + profile.meterGainOnWhiff);
-      return;
-    }
-
-    for (const enemy of targets) {
-      const hurtbox = getHurtboxProfile(enemy.character.combat.hurtboxProfile);
-      const damage = this.playerDef.stats.attackDamage * profile.damageMultiplier * hurtbox.damageTakenMultiplier;
-      const knockback = profile.knockback * hurtbox.knockbackMultiplier;
-      this.damageEnemy(enemy, damage, knockback, profile.stun, this.facing);
-      this.playImpact(profile, enemy.sprite.x, enemy.sprite.y - 118, 0xef2b2d);
-      this.state.score += 125;
-      this.state.meter = Math.min(this.state.maxMeter, this.state.meter + profile.meterGain);
-    }
-    this.startHitStop(profile.hitStopMs);
-  }
-
-  private dodge(moveX: number, moveY: number) {
-    this.dodgeCooldown = PLAYER_DODGE_COOLDOWN_SECONDS;
-    this.playerDodge = PLAYER_DODGE_SECONDS;
-    this.rushedEnemies.clear();
-    this.playerInvuln = Math.max(this.playerInvuln, PLAYER_DODGE_INVULN_SECONDS);
-    this.playerActionLockedUntil = Math.max(this.playerActionLockedUntil, this.time.now + PLAYER_DODGE_SECONDS * 1000);
-    const dir = Math.abs(moveX) > 0.2 ? Math.sign(moveX) : this.facing || 1;
-    this.facing = dir;
-    this.player.setFlipX(this.facing < 0);
-    this.player.setVelocity(dir * PLAYER_DODGE_SPEED, Phaser.Math.Clamp(moveY, -1, 1) * 175);
-    this.playOptionalCharacterAnimation(this.player, this.playerId, 'dodge', false, 'walk');
-    this.startCompanionSupportRush(dir);
-    this.cameras.main.shake(70, 0.003);
-    this.flashHit(this.player.x - dir * 22, this.player.y - 92, 0x00dfff);
-    this.resolveRushHits();
-  }
-
-  private resolveRushHits() {
-    const rushRect = new Phaser.Geom.Rectangle(
-      this.player.x + this.facing * 92 - 132,
-      this.player.y - 164,
-      264,
-      138
-    );
-    this.drawAttackDebug(rushRect, 0x00dfff);
-
-    for (const enemy of this.enemies) {
-      if (!enemy.active || this.rushedEnemies.has(enemy)) continue;
-      if (Math.abs(enemy.sprite.y - this.player.y) > 58) continue;
-      if (!Phaser.Geom.Intersects.RectangleToRectangle(rushRect, this.getHurtboxRect(enemy.sprite, enemy.character))) continue;
-      this.rushedEnemies.add(enemy);
-      this.damageEnemy(enemy, RUSH_DAMAGE, RUSH_KNOCKBACK, RUSH_STUN_SECONDS, this.facing);
-      this.flashHit(enemy.sprite.x, enemy.sprite.y - 110, 0x00dfff, 28);
-      this.cameras.main.shake(90, 0.006);
-      this.startHitStop(55);
-      this.state.meter = Math.min(this.state.maxMeter, this.state.meter + 4);
-    }
-    this.hitDestructibleProps(rushRect, 2, this.facing);
-  }
-
-  private jump(moveX: number) {
-    this.jumpCooldown = PLAYER_JUMP_COOLDOWN_SECONDS;
-    this.playerJump = PLAYER_JUMP_SECONDS;
-    this.playerActionLockedUntil = Math.max(this.playerActionLockedUntil, this.time.now + PLAYER_JUMP_SECONDS * 1000);
-    if (Math.abs(moveX) > 0.2) {
-      this.facing = Math.sign(moveX);
-      this.player.setFlipX(this.facing < 0);
-    }
-    this.playJumpAnimation();
-    this.flashHit(this.player.x, this.player.y - 22, 0xffca3a, 18);
-    this.applyPlayerJumpVisual();
-  }
-
-  private updatePlayerJump(dt: number) {
-    if (this.playerJump <= 0) {
-      this.resetPlayerJumpVisual();
-      return false;
-    }
-    this.playerJump = Math.max(0, this.playerJump - dt);
-    this.applyPlayerJumpVisual();
-    return this.playerJump > 0;
-  }
-
-  private applyPlayerJumpVisual() {
-    if (this.playerJump <= 0) {
-      this.resetPlayerJumpVisual();
-      return;
-    }
-    const progress = 1 - this.playerJump / PLAYER_JUMP_SECONDS;
-    const lift = Math.sin(progress * Math.PI) * PLAYER_JUMP_HEIGHT;
-    const scaleY = Math.max(Math.abs(this.player.scaleY), 0.001);
-    this.player.setDisplayOrigin(this.player.displayOriginX, this.playerBaseDisplayOriginY + lift / scaleY);
-  }
-
-  private cancelPlayerJump() {
-    this.playerJump = 0;
-    this.resetPlayerJumpVisual();
-  }
-
-  private resetPlayerJumpVisual() {
-    if (!this.player || this.playerBaseDisplayOriginY <= 0) return;
-    this.player.setDisplayOrigin(this.player.displayOriginX, this.playerBaseDisplayOriginY);
-  }
-
-  private playJumpAnimation() {
-    const fallback = hasAnimation(this.playerId, 'dodge')
-      ? 'dodge'
-      : hasAnimation(this.playerId, 'walk')
-        ? 'walk'
-        : 'idle';
-    this.playOptionalCharacterAnimation(this.player, this.playerId, 'jump', false, fallback);
-  }
-
-  private isPlayerJumpEvadingGroundHit() {
-    if (this.playerJump <= 0) return false;
-    const progress = 1 - this.playerJump / PLAYER_JUMP_SECONDS;
-    return progress >= PLAYER_JUMP_PEAK_MIN && progress <= PLAYER_JUMP_PEAK_MAX;
-  }
-
-  private superSlap() {
-    if (!this.playerDef.combat.canUseSuperSlap) return;
-    const profile = getHitboxProfile('super-slap-wave');
-
-    this.superCooldown = profile.cooldownMs / 1000;
-    this.state.meter = 0;
-    this.playerActionLockedUntil = this.time.now + 430;
-    playCharacterAnimation(this.player, this.playerId, 'super-slap', false);
-    this.cameras.main.shake(230, 0.012);
-    this.cameras.main.flash(85, 20, 210, 255, false);
-
-    const fx = this.add.sprite(this.player.x + this.facing * 170, this.player.y - 132, assetKeys.superSlapFx)
-      .setScale(1.35)
-      .setFlipX(this.facing < 0)
-      .setDepth(60);
-    fx.play('fx:super-slap:burst');
-    fx.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => fx.destroy());
-
-    this.tweens.add({
-      targets: this.player,
-      x: this.player.x + this.facing * 42,
-      duration: 90,
-      yoyo: true,
-      ease: 'Cubic.out'
-    });
-
-    const attackRect = this.getAttackRect(this.player.x, this.player.y, profile, this.facing);
-    this.drawAttackDebug(attackRect, 0x00dfff);
-    this.hitDestructibleProps(attackRect, 3, this.facing);
-
-    const targets = this.getForwardTargets(profile);
-    for (const enemy of targets) {
-      const hurtbox = getHurtboxProfile(enemy.character.combat.hurtboxProfile);
-      const damage = this.playerDef.stats.superDamage * profile.damageMultiplier * hurtbox.damageTakenMultiplier;
-      const knockback = profile.knockback * hurtbox.knockbackMultiplier;
-      this.damageEnemy(enemy, damage, knockback, profile.stun, this.facing);
-      this.flashHit(enemy.sprite.x, enemy.sprite.y - 120, 0x00dfff, 44);
-      this.state.score += 400;
-    }
-    if (targets.length > 0) this.startHitStop(profile.hitStopMs);
-  }
-
-  private enemyAttack(enemy: Enemy, profile: HitboxProfile, ai: AiProfile) {
-    enemy.cooldown = Phaser.Math.FloatBetween(ai.attackCooldownMin, ai.attackCooldownMax);
-    enemy.stunned = 0.08;
-    const direction = Math.sign(this.player.x - enemy.sprite.x) || 1;
-
-    playCharacterAnimation(enemy.sprite, enemy.character.id, 'attack', false);
-    this.tweens.add({
-      targets: enemy.sprite,
-      x: enemy.sprite.x + direction * 18,
-      duration: 70,
-      yoyo: true
-    });
-
-    this.drawAttackDebug(this.getAttackRect(enemy.sprite.x, enemy.sprite.y, profile, direction), 0xffca3a);
-    if (this.isPlayerJumpEvadingGroundHit()) return;
-    if (this.playerInvuln > 0) return;
-    if (!this.profileHitsPlayer(enemy, profile)) return;
-
-    const hurtbox = getHurtboxProfile(this.playerDef.combat.hurtboxProfile);
-    const damage = enemy.character.stats.attackDamage * profile.damageMultiplier * hurtbox.damageTakenMultiplier;
+  applyDamageToPlayer(amount: number, profile: HitboxProfile, direction: number) {
+    const hurtbox = getHurtboxProfile(this.playerController.def.combat.hurtboxProfile);
+    const damage = amount * profile.damageMultiplier * hurtbox.damageTakenMultiplier;
     this.state.hp = Math.max(0, this.state.hp - damage);
-    this.playerInvuln = 0.42;
-    this.playerDodge = 0;
-    this.playerKnockback = Math.max(this.playerKnockback, Math.min(Math.max(profile.stun, 0.12), KNOCKBACK_COAST_SECONDS));
-    this.playerStunned = Math.max(this.playerStunned, Math.max(profile.stun, 0.14));
-    this.playerActionLockedUntil = Math.max(this.playerActionLockedUntil, this.time.now + Math.max(profile.stun * 1000, 180));
-    this.player.setVelocity(direction * profile.knockback * hurtbox.knockbackMultiplier, -12);
-    playCharacterAnimation(this.player, this.playerId, 'hurt', false);
+    this.playerController.invuln = 0.42;
+    this.playerController.dodgeState = 0;
+    this.playerController.knockback = Math.max(this.playerController.knockback, Math.min(Math.max(profile.stun, 0.12), KNOCKBACK_COAST_SECONDS));
+    this.playerController.stunned = Math.max(this.playerController.stunned, Math.max(profile.stun, 0.14));
+    this.playerController.actionLockedUntil = Math.max(this.playerController.actionLockedUntil, this.time.now + Math.max(profile.stun * 1000, 180));
+    this.playerController.sprite.setVelocity(direction * profile.knockback * hurtbox.knockbackMultiplier, -12);
+    playCharacterAnimation(this.playerController.sprite, this.playerController.id, 'hurt', false);
     this.cameras.main.shake(90, 0.006);
-    this.playImpact(profile, this.player.x, this.player.y - 130, 0xffca3a, 26);
+    this.playImpact(profile, this.playerController.sprite.x, this.playerController.sprite.y - 130, 0xffca3a, 26);
     this.startHitStop(profile.hitStopMs);
 
     if (this.state.hp <= 0) {
@@ -1004,34 +455,17 @@ export class Level1Scene extends Phaser.Scene {
     }
   }
 
-  private damageEnemy(enemy: Enemy, amount: number, knockback: number, stun: number, direction: number) {
-    enemy.hp = Math.max(0, enemy.hp - amount);
-    const stunDuration = Math.max(stun, 0.12);
-    enemy.engageDelay = 0;
-    enemy.cooldown = Math.max(enemy.cooldown, 0.28);
-    enemy.stunned = Math.max(enemy.stunned, stunDuration);
-    enemy.knockback = Math.max(enemy.knockback, Math.min(stunDuration, KNOCKBACK_COAST_SECONDS));
-    enemy.sprite.setVelocity(direction * knockback, -12);
-    enemy.sprite.setTintFill(0xffffff);
-    playCharacterAnimation(enemy.sprite, enemy.character.id, enemy.hp <= 0 ? 'death' : 'hurt', false);
-    this.time.delayedCall(64, () => enemy.sprite.clearTint());
-
-    if (enemy.hp <= 0 && enemy.active) {
-      enemy.active = false;
-      enemy.sprite.disableBody();
-      enemy.bar.clear();
-      this.tweens.add({
-        targets: enemy.sprite,
-        alpha: 0.22,
-        y: enemy.sprite.y + 24,
-        angle: this.facing * -14,
-        duration: 320,
-        ease: 'Back.out'
-      });
-    }
+  damageEnemy(enemy: EnemyController, amount: number, knockback: number, stun: number, direction: number) {
+      enemy.damage(amount, knockback, stun, direction);
   }
 
-  private hitDestructibleProps(rect: Phaser.Geom.Rectangle, damage: number, direction: number) {
+  startCompanionSupportRush(direction: number) {
+      if(this.companion) {
+          this.companion.startSupportRush(direction, this.playerController.sprite.x, this.playerController.sprite.y);
+      }
+  }
+
+  hitDestructibleProps(rect: Phaser.Geom.Rectangle, damage: number, direction: number) {
     let hits = 0;
     for (const prop of this.destructibleProps) {
       if (!prop.active) continue;
@@ -1111,8 +545,8 @@ export class Level1Scene extends Phaser.Scene {
       pickup.lifetime -= dt;
       pickup.sprite.setDepth(pickup.sprite.y + 24);
       const closeEnough = Phaser.Math.Distance.Between(
-        this.player.x,
-        this.player.y - 42,
+        this.playerController.sprite.x,
+        this.playerController.sprite.y - 42,
         pickup.sprite.x,
         pickup.sprite.y
       ) <= PICKUP_COLLECT_DISTANCE;
@@ -1157,12 +591,12 @@ export class Level1Scene extends Phaser.Scene {
     });
   }
 
-  private getForwardTargets(profile: HitboxProfile) {
-    const attackRect = this.getAttackRect(this.player.x, this.player.y, profile, this.facing);
+  getForwardTargets(profile: HitboxProfile, attackerX: number, attackerY: number, direction: number) {
+    const attackRect = this.getAttackRect(attackerX, attackerY, profile, direction);
     return this.enemies.filter((enemy) => {
       if (!enemy.active) return false;
-      if (!this.isInProfileLane(this.player.y, enemy.sprite.y, profile)) return false;
-      if (!this.isInProfileRange(this.player.x, enemy.sprite.x, profile, this.facing)) return false;
+      if (!this.isInProfileLane(attackerY, enemy.sprite.y, profile)) return false;
+      if (!this.isInProfileRange(attackerX, enemy.sprite.x, profile, direction)) return false;
       return Phaser.Geom.Intersects.RectangleToRectangle(
         attackRect,
         this.getHurtboxRect(enemy.sprite, enemy.character)
@@ -1170,18 +604,18 @@ export class Level1Scene extends Phaser.Scene {
     });
   }
 
-  private profileHitsPlayer(enemy: Enemy, profile: HitboxProfile) {
-    const direction = Math.sign(this.player.x - enemy.sprite.x) || 1;
+  profileHitsPlayer(enemy: EnemyController, profile: HitboxProfile) {
+    const direction = Math.sign(this.playerController.sprite.x - enemy.sprite.x) || 1;
     const attackRect = this.getAttackRect(enemy.sprite.x, enemy.sprite.y, profile, direction);
-    if (!this.isInProfileLane(enemy.sprite.y, this.player.y, profile)) return false;
-    if (!this.isInProfileRange(enemy.sprite.x, this.player.x, profile, direction)) return false;
+    if (!this.isInProfileLane(enemy.sprite.y, this.playerController.sprite.y, profile)) return false;
+    if (!this.isInProfileRange(enemy.sprite.x, this.playerController.sprite.x, profile, direction)) return false;
     return Phaser.Geom.Intersects.RectangleToRectangle(
       attackRect,
-      this.getHurtboxRect(this.player, this.playerDef)
+      this.getHurtboxRect(this.playerController.sprite, this.playerController.def)
     );
   }
 
-  private getAttackRect(x: number, y: number, profile: HitboxProfile, direction: number) {
+  getAttackRect(x: number, y: number, profile: HitboxProfile, direction: number) {
     const width = Math.max(profile.width, profile.range);
     const height = Math.max(profile.height, profile.laneHeight);
     const centerX = x + profile.offsetX * direction;
@@ -1204,7 +638,7 @@ export class Level1Scene extends Phaser.Scene {
     return forwardDistance >= -profile.width * 0.25 && forwardDistance <= profile.range;
   }
 
-  private getHurtboxRect(sprite: ArcadeCharacterSprite, character: CharacterDefinition) {
+  getHurtboxRect(sprite: ArcadeCharacterSprite, character: CharacterDefinition) {
     const profile = getHurtboxProfile(character.combat.hurtboxProfile);
     return new Phaser.Geom.Rectangle(
       sprite.x - profile.width / 2,
@@ -1214,7 +648,7 @@ export class Level1Scene extends Phaser.Scene {
     );
   }
 
-  private drawAttackDebug(rect: Phaser.Geom.Rectangle, color: number) {
+  drawAttackDebug(rect: Phaser.Geom.Rectangle, color: number) {
     if (!this.debugHitboxes || rect.width <= 0 || rect.height <= 0) return;
     const outline = this.add.graphics().setDepth(300);
     outline.lineStyle(2, color, 0.95);
@@ -1228,7 +662,7 @@ export class Level1Scene extends Phaser.Scene {
     });
   }
 
-  private playImpact(profile: HitboxProfile, x: number, y: number, color: number, radius = 30) {
+  playImpact(profile: HitboxProfile, x: number, y: number, color: number, radius = 30) {
     if (profile.vfx === 'fx:hit-impact:burst') {
       const fx = this.add.sprite(x, y, assetKeys.hitImpactFx)
         .setScale(0.8)
@@ -1241,7 +675,7 @@ export class Level1Scene extends Phaser.Scene {
     this.flashHit(x, y, color, radius);
   }
 
-  private flashHit(x: number, y: number, color: number, radius = 30) {
+  flashHit(x: number, y: number, color: number, radius = 30) {
     const burst = this.add.circle(x, y, radius, color, 0.9).setDepth(70).setBlendMode(Phaser.BlendModes.ADD);
     this.tweens.add({
       targets: burst,
@@ -1253,22 +687,14 @@ export class Level1Scene extends Phaser.Scene {
     });
   }
 
-  private drawEnemyBar(enemy: Enemy) {
-    enemy.bar.clear();
-    if (!enemy.active) return;
-    const x = enemy.sprite.x - 46;
-    const y = enemy.sprite.y - 208;
-    enemy.bar.fillStyle(0x050506, 0.74);
-    enemy.bar.fillRoundedRect(x, y, 92, 10, 3);
-    enemy.bar.fillStyle(0xef2b2d, 0.92);
-    enemy.bar.fillRoundedRect(x + 2, y + 2, 88 * (enemy.hp / enemy.maxHp), 6, 2);
-  }
-
   private updateDepths() {
-    this.player.setDepth(this.player.y);
+    this.playerController.sprite.setDepth(this.playerController.sprite.y);
     if (this.companion) {
       this.companion.sprite.setDepth(this.companion.sprite.y);
       this.companion.shadow.setDepth(this.companion.sprite.y - 2);
+    }
+    for (const npc of this.ambientNpcs) {
+      npc.setDepth(npc.y - 16);
     }
     for (const prop of this.destructibleProps) {
       if (!prop.active) continue;
@@ -1287,16 +713,16 @@ export class Level1Scene extends Phaser.Scene {
     const enemiesLeft = this.enemies.filter((enemy) => enemy.active).length;
     const exit = this.level.exit;
     if (enemiesLeft > 0) return;
-    if (Math.abs(this.player.x - exit.x) < 112 && Math.abs(this.player.y - exit.y) < 105) {
+    if (Math.abs(this.playerController.sprite.x - exit.x) < 112 && Math.abs(this.playerController.sprite.y - exit.y) < 105) {
       this.state.won = true;
       this.state.paused = false;
-      this.player.setVelocity(0, 0);
+      this.playerController.sprite.setVelocity(0, 0);
       this.playPlayerVictoryPose();
       this.showOutcome(this.level.clearTitle, this.getWinSubtitle(), 0x75ff43);
     }
   }
 
-  private playOptionalCharacterAnimation(
+  playOptionalCharacterAnimation(
     sprite: Phaser.GameObjects.Sprite,
     characterId: string,
     action: string,
@@ -1315,15 +741,15 @@ export class Level1Scene extends Phaser.Scene {
   private playPlayerDefeatedPose() {
     if (this.playerDefeatedPose) return;
     this.playerDefeatedPose = true;
-    this.playerActionLockedUntil = Number.POSITIVE_INFINITY;
-    this.playOptionalCharacterAnimation(this.player, this.playerId, 'knockdown', false, 'death');
+    this.playerController.actionLockedUntil = Number.POSITIVE_INFINITY;
+    this.playOptionalCharacterAnimation(this.playerController.sprite, this.playerController.id, 'knockdown', false, 'death');
   }
 
   private playPlayerVictoryPose() {
     if (this.playerVictoryPose) return;
     this.playerVictoryPose = true;
-    this.playerActionLockedUntil = Number.POSITIVE_INFINITY;
-    this.playOptionalCharacterAnimation(this.player, this.playerId, 'victory', false, 'idle');
+    this.playerController.actionLockedUntil = Number.POSITIVE_INFINITY;
+    this.playOptionalCharacterAnimation(this.playerController.sprite, this.playerController.id, 'victory', false, 'idle');
   }
 
   private showOutcome(title: string, subtitle: string, color: number) {
@@ -1343,6 +769,58 @@ export class Level1Scene extends Phaser.Scene {
     return getNextLevelId(this.level.id)
       ? 'Next street unlocked'
       : 'All streets clear';
+  }
+
+  private showLevelIntro() {
+    if (this.levelIntro) return;
+    const progress = getLevelProgress(this.level.id);
+    const { width, height } = this.scale;
+    const panelWidth = Math.min(660, width - 44);
+    const container = this.add.container(width / 2, Math.max(122, height * 0.2))
+      .setDepth(950)
+      .setScrollFactor(0)
+      .setAlpha(0);
+    const glow = this.add.rectangle(0, 0, panelWidth + 32, 142, this.level.theme.accent, 0.14)
+      .setBlendMode(Phaser.BlendModes.ADD);
+    const panel = this.add.image(0, 0, assetKeys.uiObjectiveChip)
+      .setDisplaySize(panelWidth, 118)
+      .setTint(this.level.theme.signColor)
+      .setAlpha(0.88);
+    const fill = this.add.rectangle(0, 0, panelWidth - 54, 76, 0x050506, 0.58);
+    const kicker = this.add.text(0, -38, `STREET ${progress.index}/${progress.total}`, {
+      color: '#ffca3a',
+      fontFamily: 'Arial Black, Arial, sans-serif',
+      fontSize: '15px'
+    }).setOrigin(0.5);
+    const title = this.add.text(0, -9, this.level.title, {
+      color: Phaser.Display.Color.IntegerToColor(this.level.theme.signColor).rgba,
+      fontFamily: 'Impact, Arial Black, sans-serif',
+      fontSize: this.level.title.length > 22 ? '34px' : '40px',
+      stroke: '#000000',
+      strokeThickness: 6
+    }).setOrigin(0.5);
+    const briefing = this.add.text(0, 34, this.level.briefing, {
+      color: '#f4f4f2',
+      fontFamily: 'Arial Black, Arial, sans-serif',
+      fontSize: '14px',
+      align: 'center',
+      wordWrap: { width: panelWidth - 110, useAdvancedWrap: true }
+    }).setOrigin(0.5);
+    container.add([glow, panel, fill, kicker, title, briefing]);
+    this.levelIntro = container;
+    this.tweens.add({
+      targets: container,
+      alpha: 1,
+      y: container.y + 10,
+      duration: 220,
+      ease: 'Quad.out',
+      hold: 980,
+      yoyo: true,
+      onComplete: () => {
+        container.destroy();
+        if (this.levelIntro === container) this.levelIntro = undefined;
+      }
+    });
   }
 
   private showPauseOverlay() {
@@ -1404,7 +882,7 @@ export class Level1Scene extends Phaser.Scene {
 
   private createOverlayButton(label: string, x: number, y: number, color: number, action: () => void) {
     const button = this.add.container(x, y);
-    let armed = false;
+    let fired = false;
     const hitArea = new Phaser.Geom.Rectangle(-92, -34, 184, 68);
     button.setInteractive(hitArea, Phaser.Geom.Rectangle.Contains);
     const plate = this.add.image(0, 0, assetKeys.uiObjectiveChip)
@@ -1421,23 +899,26 @@ export class Level1Scene extends Phaser.Scene {
     }).setOrigin(0.5);
     button.add([plate, bg, text]);
     button.on('pointerover', () => button.setScale(1.04));
-    button.on('pointerout', () => {
-      armed = false;
+    button.on('pointerout', () => button.setScale(1));
+    const fire = (pointer: Phaser.Input.Pointer) => {
+      pointer.event?.preventDefault();
+      pointer.event?.stopPropagation();
+      if (fired) return;
+      fired = true;
+      button.disableInteractive();
       button.setScale(1);
-    });
+      action();
+    };
     button.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       pointer.event?.preventDefault();
       pointer.event?.stopPropagation();
-      armed = true;
       button.setScale(0.97);
     });
-    button.on('pointerup', (pointer: Phaser.Input.Pointer) => {
+    button.on('pointerup', fire);
+    button.on('pointerupoutside', (pointer: Phaser.Input.Pointer) => {
       pointer.event?.preventDefault();
       pointer.event?.stopPropagation();
-      if (!armed) return;
-      armed = false;
       button.setScale(1);
-      action();
     });
     return button;
   }
@@ -1504,11 +985,13 @@ export class Level1Scene extends Phaser.Scene {
     if (this.leavingLevel) return;
     this.leavingLevel = true;
     clearMomentaryActions();
+    this.input.keyboard?.resetKeys();
+    window.dispatchEvent(new CustomEvent('slap:level-state', { detail: { active: false } }));
     this.scene.start('MenuScene');
   }
 
   private freezeActors() {
-    this.player.setVelocity(0, 0);
+    this.playerController.sprite.setVelocity(0, 0);
     this.companion?.sprite.setVelocity(0, 0);
     this.enemies.forEach((enemy) => enemy.sprite.setVelocity(0, 0));
   }
@@ -1556,6 +1039,7 @@ export class Level1Scene extends Phaser.Scene {
 
   private sendHud() {
     if (!this.state) return;
+    const progress = getLevelProgress(this.level.id);
     const enemiesLeft = this.enemies.filter((enemy) => enemy.active).length;
     const objective = this.state.won
       ? `${this.level.title} clear`
@@ -1563,19 +1047,22 @@ export class Level1Scene extends Phaser.Scene {
         ? `${this.level.title}: ${enemiesLeft} rival${enemiesLeft === 1 ? '' : 's'}`
         : `Reach ${this.level.exitLabel}`;
     const snapshot: HudSnapshot = {
-      playerName: this.playerDef.displayName,
-      handle: this.playerDef.handle,
-      portrait: this.playerDef.seed.path,
+      playerName: this.playerController.def.displayName,
+      handle: this.playerController.def.handle,
+      portrait: this.playerController.def.seed.path,
       hp: this.state.hp,
       maxHp: this.state.maxHp,
       meter: this.state.meter,
       maxMeter: this.state.maxMeter,
       score: this.state.score,
       enemiesLeft,
+      levelTitle: this.level.title,
+      levelIndex: progress.index,
+      levelTotal: progress.total,
       objective,
       paused: this.state.paused,
-      rushReady: this.dodgeCooldown <= 0,
-      rushCooldownRatio: Phaser.Math.Clamp(this.dodgeCooldown / PLAYER_DODGE_COOLDOWN_SECONDS, 0, 1),
+      rushReady: this.playerController.dodgeCooldown <= 0,
+      rushCooldownRatio: Phaser.Math.Clamp(this.playerController.dodgeCooldown / PLAYER_DODGE_COOLDOWN_SECONDS, 0, 1),
       companionName: this.companion?.character.displayName ?? 'Dang',
       companionPortrait: SOI_DOG_BUTTON_PORTRAIT,
       companionReady: (this.companion?.specialCooldown ?? 0) <= 0,

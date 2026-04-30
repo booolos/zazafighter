@@ -156,7 +156,7 @@
         "path": "assets/generated/characters/big-ink.png"
       },
       "render": {
-        "scale": 0.53,
+        "scale": 0.636,
         "originX": 0.5,
         "originY": 0.9
       },
@@ -286,6 +286,15 @@
           "frameWidth": 256,
           "frameHeight": 256,
           "frameRate": 7,
+          "repeat": -1
+        },
+        "smoking-idle": {
+          "key": "anim:big-ink:smoking-idle",
+          "file": "assets/generated/animations/big-ink/smoking-idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 5,
           "repeat": -1
         }
       }
@@ -646,6 +655,188 @@
         "panic": {
           "key": "anim:bar-promoter:panic",
           "file": "assets/generated/animations/bar-promoter/panic.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        }
+      }
+    },
+    {
+      "id": "soi-six-ruby",
+      "displayName": "Ruby",
+      "handle": "Soi 6 Bar Girl",
+      "role": "npc",
+      "faction": "nightlife",
+      "seed": {
+        "key": "character:soi-six-ruby:seed",
+        "path": "assets/generated/characters/npcs/soi-six-ruby.png"
+      },
+      "render": {
+        "scale": 0.62,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 70,
+        "speed": 90,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 0.82
+      },
+      "physics": {
+        "bodyWidth": 92,
+        "bodyHeight": 205,
+        "bodyOffsetX": 82,
+        "bodyOffsetY": 32
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-light",
+        "aiProfile": "idle-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:soi-six-ruby:idle",
+          "file": "assets/generated/animations/soi-six-ruby/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:soi-six-ruby:talk",
+          "file": "assets/generated/animations/soi-six-ruby/talk.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:soi-six-ruby:walk",
+          "file": "assets/generated/animations/soi-six-ruby/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:soi-six-ruby:react",
+          "file": "assets/generated/animations/soi-six-ruby/react.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:soi-six-ruby:cheer",
+          "file": "assets/generated/animations/soi-six-ruby/cheer.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:soi-six-ruby:panic",
+          "file": "assets/generated/animations/soi-six-ruby/panic.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        }
+      }
+    },
+    {
+      "id": "soi-six-nina",
+      "displayName": "Nina",
+      "handle": "Soi 6 Bar Girl",
+      "role": "npc",
+      "faction": "nightlife",
+      "seed": {
+        "key": "character:soi-six-nina:seed",
+        "path": "assets/generated/characters/npcs/soi-six-nina.png"
+      },
+      "render": {
+        "scale": 0.62,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 70,
+        "speed": 90,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 0.82
+      },
+      "physics": {
+        "bodyWidth": 92,
+        "bodyHeight": 205,
+        "bodyOffsetX": 82,
+        "bodyOffsetY": 32
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-light",
+        "aiProfile": "idle-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:soi-six-nina:idle",
+          "file": "assets/generated/animations/soi-six-nina/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:soi-six-nina:talk",
+          "file": "assets/generated/animations/soi-six-nina/talk.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:soi-six-nina:walk",
+          "file": "assets/generated/animations/soi-six-nina/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:soi-six-nina:react",
+          "file": "assets/generated/animations/soi-six-nina/react.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:soi-six-nina:cheer",
+          "file": "assets/generated/animations/soi-six-nina/cheer.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 7,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:soi-six-nina:panic",
+          "file": "assets/generated/animations/soi-six-nina/panic.png",
           "frames": 4,
           "frameWidth": 256,
           "frameHeight": 256,
@@ -1333,6 +1524,370 @@
           "frameHeight": 256,
           "frameRate": 7,
           "repeat": 0
+        }
+      }
+    },
+    {
+      "id": "npc-girl-red",
+      "displayName": "Mia",
+      "handle": "Club Goer",
+      "role": "npc",
+      "faction": "nightlife",
+      "seed": {
+        "key": "character:npc-girl-red:seed",
+        "path": "assets/generated/characters/npcs/npc-girl-red.png"
+      },
+      "render": {
+        "scale": 0.62,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 70,
+        "speed": 90,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 0.82
+      },
+      "physics": {
+        "bodyWidth": 92,
+        "bodyHeight": 205,
+        "bodyOffsetX": 82,
+        "bodyOffsetY": 32
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-light",
+        "aiProfile": "idle-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:npc-girl-red:idle",
+          "file": "assets/generated/animations/npc-girl-red/idle.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:npc-girl-red:talk",
+          "file": "assets/generated/animations/npc-girl-red/talk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:npc-girl-red:walk",
+          "file": "assets/generated/animations/npc-girl-red/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:npc-girl-red:react",
+          "file": "assets/generated/animations/npc-girl-red/react.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:npc-girl-red:cheer",
+          "file": "assets/generated/animations/npc-girl-red/cheer.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:npc-girl-red:panic",
+          "file": "assets/generated/animations/npc-girl-red/panic.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        }
+      }
+    },
+    {
+      "id": "npc-girl-black",
+      "displayName": "Chloe",
+      "handle": "Club Goer",
+      "role": "npc",
+      "faction": "nightlife",
+      "seed": {
+        "key": "character:npc-girl-black:seed",
+        "path": "assets/generated/characters/npcs/npc-girl-black.png"
+      },
+      "render": {
+        "scale": 0.62,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 70,
+        "speed": 90,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 0.82
+      },
+      "physics": {
+        "bodyWidth": 92,
+        "bodyHeight": 205,
+        "bodyOffsetX": 82,
+        "bodyOffsetY": 32
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-light",
+        "aiProfile": "idle-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:npc-girl-black:idle",
+          "file": "assets/generated/animations/npc-girl-black/idle.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:npc-girl-black:talk",
+          "file": "assets/generated/animations/npc-girl-black/talk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:npc-girl-black:walk",
+          "file": "assets/generated/animations/npc-girl-black/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:npc-girl-black:react",
+          "file": "assets/generated/animations/npc-girl-black/react.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:npc-girl-black:cheer",
+          "file": "assets/generated/animations/npc-girl-black/cheer.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:npc-girl-black:panic",
+          "file": "assets/generated/animations/npc-girl-black/panic.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        }
+      }
+    },
+    {
+      "id": "npc-girl-denim",
+      "displayName": "Emma",
+      "handle": "Party Girl",
+      "role": "npc",
+      "faction": "nightlife",
+      "seed": {
+        "key": "character:npc-girl-denim:seed",
+        "path": "assets/generated/characters/npcs/npc-girl-denim.png"
+      },
+      "render": {
+        "scale": 0.62,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 70,
+        "speed": 90,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 0.82
+      },
+      "physics": {
+        "bodyWidth": 92,
+        "bodyHeight": 205,
+        "bodyOffsetX": 82,
+        "bodyOffsetY": 32
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-light",
+        "aiProfile": "idle-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:npc-girl-denim:idle",
+          "file": "assets/generated/animations/npc-girl-denim/idle.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:npc-girl-denim:talk",
+          "file": "assets/generated/animations/npc-girl-denim/talk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:npc-girl-denim:walk",
+          "file": "assets/generated/animations/npc-girl-denim/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:npc-girl-denim:react",
+          "file": "assets/generated/animations/npc-girl-denim/react.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:npc-girl-denim:cheer",
+          "file": "assets/generated/animations/npc-girl-denim/cheer.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:npc-girl-denim:panic",
+          "file": "assets/generated/animations/npc-girl-denim/panic.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        }
+      }
+    },
+    {
+      "id": "npc-girl-silver",
+      "displayName": "Lily",
+      "handle": "Party Girl",
+      "role": "npc",
+      "faction": "nightlife",
+      "seed": {
+        "key": "character:npc-girl-silver:seed",
+        "path": "assets/generated/characters/npcs/npc-girl-silver.png"
+      },
+      "render": {
+        "scale": 0.62,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 70,
+        "speed": 90,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 0.82
+      },
+      "physics": {
+        "bodyWidth": 92,
+        "bodyHeight": 205,
+        "bodyOffsetX": 82,
+        "bodyOffsetY": 32
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-light",
+        "aiProfile": "idle-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:npc-girl-silver:idle",
+          "file": "assets/generated/animations/npc-girl-silver/idle.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:npc-girl-silver:talk",
+          "file": "assets/generated/animations/npc-girl-silver/talk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:npc-girl-silver:walk",
+          "file": "assets/generated/animations/npc-girl-silver/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:npc-girl-silver:react",
+          "file": "assets/generated/animations/npc-girl-silver/react.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:npc-girl-silver:cheer",
+          "file": "assets/generated/animations/npc-girl-silver/cheer.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:npc-girl-silver:panic",
+          "file": "assets/generated/animations/npc-girl-silver/panic.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
         }
       }
     }
