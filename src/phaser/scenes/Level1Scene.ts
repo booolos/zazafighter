@@ -9,6 +9,7 @@ import {
   type AiProfile,
   type HitboxProfile
 } from '../../game/content/combatProfiles';
+import { getLevelDefinition, getNextLevelId, type LevelDefinition, type PickupKind } from '../../game/content/levels';
 import { clearMomentaryActions, touchState } from '../../game/input/actions';
 import { createSessionState, type GameSessionState, type HudSnapshot } from '../../game/simulation/state';
 import { createCharacterSprite, type ArcadeCharacterSprite } from '../factories/characterFactory';
@@ -48,8 +49,6 @@ type DestructibleProp = {
   occludes: boolean;
 };
 
-type PickupKind = 'coin' | 'health' | 'meter';
-
 type Pickup = {
   sprite: Phaser.GameObjects.Image;
   kind: PickupKind;
@@ -83,14 +82,6 @@ const WORLD_HEIGHT = 720;
 const LANE_TOP = 505;
 const LANE_BOTTOM = 640;
 const LARGE_PROP_DEPTH = LANE_TOP - 10;
-const EXIT_X = 315;
-const PLAYER_START = { x: 520, y: 584 };
-const WEED_VENDOR_START = { x: 1095, y: 570 };
-const ENEMY_STARTS = [
-  { id: 'street-punk', x: 1325, y: 585, engageDelay: 0 },
-  { id: 'rival-artist', x: 1510, y: 612, engageDelay: 2.4 },
-  { id: 'corrupt-bouncer', x: 1740, y: 568, engageDelay: 4.8 }
-] as const;
 const KEY_CAPTURE = 'W,A,S,D,UP,DOWN,LEFT,RIGHT,SPACE,J,C,I,SHIFT,K,U,O,E,L,P,R,ESC';
 const PLAYER_DODGE_SECONDS = 0.48;
 const PLAYER_DODGE_COOLDOWN_SECONDS = 5;
@@ -125,6 +116,7 @@ export class Level1Scene extends Phaser.Scene {
   private player!: ArcadeCharacterSprite;
   private playerDef!: CharacterDefinition;
   private playerId!: PlayerId;
+  private level!: LevelDefinition;
   private state!: GameSessionState;
   private enemies: Enemy[] = [];
   private destructibleProps: DestructibleProp[] = [];
@@ -167,6 +159,8 @@ export class Level1Scene extends Phaser.Scene {
     this.restartingLevel = false;
     this.leavingLevel = false;
     this.debugHitboxes = new URLSearchParams(window.location.search).has('debugHitboxes');
+    this.level = getLevelDefinition(this.registry.get('selectedLevel'));
+    this.registry.set('selectedLevel', this.level.id);
     window.dispatchEvent(new CustomEvent('slap:hud-reset'));
 
     this.physics.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
@@ -265,7 +259,7 @@ export class Level1Scene extends Phaser.Scene {
       this.state.paused = false;
       this.hidePauseOverlay();
       this.playPlayerVictoryPose();
-      this.showOutcome('SHOP CLEAR', 'Press R to restart or Esc for menu', 0x75ff43);
+      this.showOutcome(this.level.clearTitle, this.getWinSubtitle(), 0x75ff43);
       this.freezeActors();
       this.sendHud();
       clearMomentaryActions();
@@ -356,150 +350,7 @@ export class Level1Scene extends Phaser.Scene {
     this.add.rectangle(WORLD_WIDTH / 2, 610, WORLD_WIDTH, 150, 0x050506, 0.16).setDepth(-5);
     this.add.rectangle(WORLD_WIDTH / 2, 492, WORLD_WIDTH, 4, 0x00dfff, 0.14).setDepth(-4);
 
-    const props: Array<{
-      key: string;
-      x: number;
-      y: number;
-      scale: number;
-      flipX?: boolean;
-      depth?: number;
-      destructible?: boolean;
-      fxKey?: string;
-      hp?: number;
-      dropKind?: PickupKind;
-      hitbox?: { width: number; height: number; offsetY?: number };
-      occludes?: boolean;
-    }> = [
-      { key: assetKeys.propRollingShutter, x: 200, y: 488, scale: 0.62, depth: -8 },
-      { key: assetKeys.propBeerNeonSign, x: 405, y: 372, scale: 0.42, depth: -7 },
-      {
-        key: assetKeys.propPottedPlant,
-        x: 460,
-        y: 660,
-        scale: 0.4,
-        destructible: true,
-        fxKey: 'fx:destructible:plant-chair:break',
-        dropKind: 'health',
-        hitbox: { width: 74, height: 92, offsetY: -44 },
-        occludes: true
-      },
-      {
-        key: assetKeys.propTrafficCone,
-        x: 690,
-        y: 654,
-        scale: 0.32,
-        destructible: true,
-        fxKey: 'fx:destructible:street-clutter:break',
-        dropKind: 'coin',
-        hitbox: { width: 64, height: 84, offsetY: -38 },
-        occludes: true
-      },
-      {
-        key: assetKeys.propStreetFoodCart,
-        x: 870,
-        y: 648,
-        scale: 0.55,
-        depth: LARGE_PROP_DEPTH,
-        destructible: true,
-        fxKey: 'fx:destructible:street-clutter:break',
-        hp: 2,
-        dropKind: 'health',
-        hitbox: { width: 168, height: 104, offsetY: -54 }
-      },
-      {
-        key: assetKeys.propGreenScooter,
-        x: 1180,
-        y: 660,
-        scale: 0.46,
-        flipX: true,
-        depth: LARGE_PROP_DEPTH,
-        destructible: true,
-        fxKey: 'fx:destructible:scooter:break',
-        hp: 2,
-        dropKind: 'meter',
-        hitbox: { width: 164, height: 88, offsetY: -42 }
-      },
-      {
-        key: assetKeys.propTattooSandwichBoard,
-        x: 360,
-        y: 666,
-        scale: 0.42,
-        depth: LARGE_PROP_DEPTH,
-        destructible: true,
-        fxKey: 'fx:destructible:street-clutter:break',
-        dropKind: 'coin',
-        hitbox: { width: 88, height: 116, offsetY: -58 }
-      },
-      {
-        key: assetKeys.propTrashBin,
-        x: 1390,
-        y: 658,
-        scale: 0.36,
-        depth: LARGE_PROP_DEPTH,
-        destructible: true,
-        fxKey: 'fx:destructible:street-clutter:break',
-        dropKind: 'coin',
-        hitbox: { width: 82, height: 96, offsetY: -46 }
-      },
-      { key: assetKeys.propCableBundle, x: 1570, y: 472, scale: 0.55, depth: -6 },
-      {
-        key: assetKeys.propRedScooter,
-        x: 1660,
-        y: 658,
-        scale: 0.46,
-        depth: LARGE_PROP_DEPTH,
-        destructible: true,
-        fxKey: 'fx:destructible:scooter:break',
-        hp: 2,
-        dropKind: 'meter',
-        hitbox: { width: 164, height: 88, offsetY: -42 }
-      },
-      {
-        key: assetKeys.propWeedSandwichBoard,
-        x: 1820,
-        y: 666,
-        scale: 0.42,
-        depth: LARGE_PROP_DEPTH,
-        destructible: true,
-        fxKey: 'fx:destructible:street-clutter:break',
-        dropKind: 'coin',
-        hitbox: { width: 88, height: 116, offsetY: -58 }
-      },
-      {
-        key: assetKeys.propInkBottle,
-        x: 1980,
-        y: 654,
-        scale: 0.28,
-        destructible: true,
-        fxKey: 'fx:destructible:plant-chair:break',
-        dropKind: 'meter',
-        hitbox: { width: 62, height: 82, offsetY: -36 },
-        occludes: true
-      },
-      {
-        key: assetKeys.propPottedPlant,
-        x: 2080,
-        y: 666,
-        scale: 0.42,
-        destructible: true,
-        fxKey: 'fx:destructible:plant-chair:break',
-        dropKind: 'health',
-        hitbox: { width: 76, height: 94, offsetY: -44 },
-        occludes: true
-      },
-      {
-        key: assetKeys.propStickerChair,
-        x: 1305,
-        y: 660,
-        scale: 0.4,
-        destructible: true,
-        fxKey: 'fx:destructible:plant-chair:break',
-        dropKind: 'coin',
-        hitbox: { width: 92, height: 82, offsetY: -38 },
-        occludes: true
-      }
-    ];
-    for (const p of props) {
+    for (const p of this.level.props) {
       const img = this.add.image(p.x, p.y, p.key).setOrigin(0.5, 1).setScale(p.scale);
       const occludes = Boolean(p.occludes);
       img.setDepth(p.depth ?? (occludes ? p.y + 4 : LARGE_PROP_DEPTH));
@@ -522,13 +373,14 @@ export class Level1Scene extends Phaser.Scene {
       }
     }
 
+    const exit = this.level.exit;
     this.exitGlow = this.add.graphics().setDepth(3);
     this.exitGlow.lineStyle(3, 0xef2b2d, 0.9);
-    this.exitGlow.strokeRoundedRect(EXIT_X - 72, 430, 144, 160, 8);
+    this.exitGlow.strokeRoundedRect(exit.x - 72, exit.y - 130, 144, 160, 8);
     this.exitGlow.lineStyle(1, 0xffca3a, 0.8);
-    this.exitGlow.strokeRoundedRect(EXIT_X - 82, 420, 164, 180, 8);
+    this.exitGlow.strokeRoundedRect(exit.x - 82, exit.y - 140, 164, 180, 8);
 
-    this.add.text(EXIT_X, 404, 'TATTOO', {
+    this.add.text(exit.x, exit.y - 156, this.level.exitLabel, {
       color: '#ff4d4d',
       fontFamily: 'Impact, Arial Black, sans-serif',
       fontSize: '28px',
@@ -542,11 +394,11 @@ export class Level1Scene extends Phaser.Scene {
     this.playerId = this.playerDef.id as PlayerId;
     this.state = createSessionState(this.playerId, this.playerDef.stats.maxHp);
 
-    const vendorDef = getCharacter('weed-vendor');
-    const vendor = createCharacterSprite(this, vendorDef, WEED_VENDOR_START.x, WEED_VENDOR_START.y, {
+    const vendorDef = getCharacter(this.level.vendor.id);
+    const vendor = createCharacterSprite(this, vendorDef, this.level.vendor.x, this.level.vendor.y, {
       action: 'idle',
       immovable: true,
-      flipX: true
+      flipX: this.level.vendor.flipX ?? true
     });
     vendor.body.enable = false;
     this.tweens.add({
@@ -558,27 +410,27 @@ export class Level1Scene extends Phaser.Scene {
       ease: 'Sine.inOut'
     });
 
-    this.player = createCharacterSprite(this, this.playerDef, PLAYER_START.x, PLAYER_START.y, {
+    this.player = createCharacterSprite(this, this.playerDef, this.level.playerStart.x, this.level.playerStart.y, {
       action: 'idle',
       collideWorldBounds: true,
       drag: 1200
     });
     this.playerBaseDisplayOriginY = this.player.displayOriginY;
 
-    this.playerShadow = this.add.image(this.player.x, PLAYER_START.y + 6, assetKeys.propPuddleDecal)
+    this.playerShadow = this.add.image(this.player.x, this.level.playerStart.y + 6, assetKeys.propPuddleDecal)
       .setOrigin(0.5, 0.5)
       .setScale(0.42)
       .setAlpha(0.55)
       .setDepth(this.player.y - 1);
 
     this.createCompanion();
-    this.enemies = ENEMY_STARTS.map((spawn) => this.makeEnemy(spawn.id, spawn.x, spawn.y, spawn.engageDelay));
+    this.enemies = this.level.enemyStarts.map((spawn) => this.makeEnemy(spawn.id, spawn.x, spawn.y, spawn.engageDelay));
   }
 
   private createCompanion() {
     const character = getCharacter(SOI_DOG_ID);
-    const x = PLAYER_START.x - this.facing * SOI_DOG_FOLLOW_OFFSET_X;
-    const y = Phaser.Math.Clamp(PLAYER_START.y + SOI_DOG_FOLLOW_OFFSET_Y, LANE_TOP, LANE_BOTTOM);
+    const x = this.level.playerStart.x - this.facing * SOI_DOG_FOLLOW_OFFSET_X;
+    const y = Phaser.Math.Clamp(this.level.playerStart.y + SOI_DOG_FOLLOW_OFFSET_Y, LANE_TOP, LANE_BOTTOM);
     const sprite = createCharacterSprite(this, character, x, y, {
       action: 'idle',
       collideWorldBounds: true,
@@ -1433,13 +1285,14 @@ export class Level1Scene extends Phaser.Scene {
 
   private checkWin() {
     const enemiesLeft = this.enemies.filter((enemy) => enemy.active).length;
+    const exit = this.level.exit;
     if (enemiesLeft > 0) return;
-    if (Math.abs(this.player.x - EXIT_X) < 112 && Math.abs(this.player.y - 560) < 105) {
+    if (Math.abs(this.player.x - exit.x) < 112 && Math.abs(this.player.y - exit.y) < 105) {
       this.state.won = true;
       this.state.paused = false;
       this.player.setVelocity(0, 0);
       this.playPlayerVictoryPose();
-      this.showOutcome('SHOP CLEAR', 'Press R to restart or Esc for menu', 0x75ff43);
+      this.showOutcome(this.level.clearTitle, this.getWinSubtitle(), 0x75ff43);
     }
   }
 
@@ -1475,12 +1328,21 @@ export class Level1Scene extends Phaser.Scene {
 
   private showOutcome(title: string, subtitle: string, color: number) {
     if (this.winText || this.koText) return;
-    const container = this.createScreenOverlay(title, subtitle, color, [
+    const nextLevelId = title === 'KO' ? undefined : getNextLevelId(this.level.id);
+    const actions = [
+      ...(nextLevelId ? [{ label: 'NEXT', action: () => this.openNextLevel(nextLevelId) }] : []),
       { label: 'RESTART', action: () => this.restartLevel() },
       { label: 'MENU', action: () => this.openMenu() }
-    ]);
+    ];
+    const container = this.createScreenOverlay(title, subtitle, color, actions);
     if (title === 'KO') this.koText = container;
     else this.winText = container;
+  }
+
+  private getWinSubtitle() {
+    return getNextLevelId(this.level.id)
+      ? 'Next street unlocked'
+      : 'All streets clear';
   }
 
   private showPauseOverlay() {
@@ -1629,6 +1491,15 @@ export class Level1Scene extends Phaser.Scene {
     this.scene.restart();
   }
 
+  private openNextLevel(levelId: string) {
+    if (this.leavingLevel) return;
+    this.leavingLevel = true;
+    this.restartingLevel = true;
+    this.registry.set('selectedLevel', levelId);
+    clearMomentaryActions();
+    this.scene.restart();
+  }
+
   private openMenu() {
     if (this.leavingLevel) return;
     this.leavingLevel = true;
@@ -1687,10 +1558,10 @@ export class Level1Scene extends Phaser.Scene {
     if (!this.state) return;
     const enemiesLeft = this.enemies.filter((enemy) => enemy.active).length;
     const objective = this.state.won
-      ? 'Shop clear'
+      ? `${this.level.title} clear`
       : enemiesLeft > 0
-        ? `${enemiesLeft} rival${enemiesLeft === 1 ? '' : 's'} in the street`
-        : 'Enter the tattoo shop';
+        ? `${this.level.title}: ${enemiesLeft} rival${enemiesLeft === 1 ? '' : 's'}`
+        : `Reach ${this.level.exitLabel}`;
     const snapshot: HudSnapshot = {
       playerName: this.playerDef.displayName,
       handle: this.playerDef.handle,
