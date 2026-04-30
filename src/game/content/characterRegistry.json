@@ -291,10 +291,10 @@
         "smoking-idle": {
           "key": "anim:big-ink:smoking-idle",
           "file": "assets/generated/animations/big-ink/smoking-idle.png",
-          "frames": 4,
+          "frames": 6,
           "frameWidth": 256,
           "frameHeight": 256,
-          "frameRate": 5,
+          "frameRate": 6,
           "repeat": -1
         }
       }
@@ -1038,7 +1038,7 @@
         "path": "assets/generated/characters/companions/soi-dog.png"
       },
       "render": {
-        "scale": 0.32,
+        "scale": 0.416,
         "originX": 0.5,
         "originY": 0.88
       },
@@ -1888,6 +1888,333 @@
           "frameHeight": 256,
           "frameRate": 6,
           "repeat": -1
+        }
+      }
+    },
+    {
+      "id": "indian-fighter-maroon",
+      "displayName": "Arjun",
+      "handle": "Barefoot Brawler",
+      "role": "enemy",
+      "faction": "lounge-row",
+      "seed": {
+        "key": "character:indian-fighter-maroon:seed",
+        "path": "assets/generated/characters/enemies/indian-fighter-maroon.png"
+      },
+      "render": {
+        "scale": 0.49,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 88,
+        "speed": 150,
+        "attackDamage": 15,
+        "superDamage": 0,
+        "weight": 1.03
+      },
+      "physics": {
+        "bodyWidth": 108,
+        "bodyHeight": 202,
+        "bodyOffsetX": 74,
+        "bodyOffsetY": 31
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "basic-punch",
+        "hurtboxProfile": "human-medium",
+        "aiProfile": "street-rusher"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:indian-fighter-maroon:idle",
+          "file": "assets/generated/animations/indian-fighter-maroon/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:indian-fighter-maroon:walk",
+          "file": "assets/generated/animations/indian-fighter-maroon/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 10,
+          "repeat": -1
+        },
+        "attack": {
+          "key": "anim:indian-fighter-maroon:attack",
+          "file": "assets/generated/animations/indian-fighter-maroon/attack.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 12,
+          "repeat": 0
+        },
+        "hurt": {
+          "key": "anim:indian-fighter-maroon:hurt",
+          "file": "assets/generated/animations/indian-fighter-maroon/hurt.png",
+          "frames": 3,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "stunned": {
+          "key": "anim:indian-fighter-maroon:stunned",
+          "file": "assets/generated/animations/indian-fighter-maroon/stunned.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "knockdown": {
+          "key": "anim:indian-fighter-maroon:knockdown",
+          "file": "assets/generated/animations/indian-fighter-maroon/knockdown.png",
+          "frames": 3,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": 0
+        },
+        "get-up": {
+          "key": "anim:indian-fighter-maroon:get-up",
+          "file": "assets/generated/animations/indian-fighter-maroon/get-up.png",
+          "frames": 3,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": 0
+        },
+        "death": {
+          "key": "anim:indian-fighter-maroon:death",
+          "file": "assets/generated/animations/indian-fighter-maroon/death.png",
+          "frames": 3,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 5,
+          "repeat": 0
+        }
+      }
+    },
+    {
+      "id": "indian-fighter-teal",
+      "displayName": "Ravi",
+      "handle": "Floral Shirt Fighter",
+      "role": "enemy",
+      "faction": "lounge-row",
+      "seed": {
+        "key": "character:indian-fighter-teal:seed",
+        "path": "assets/generated/characters/enemies/indian-fighter-teal.png"
+      },
+      "render": {
+        "scale": 0.49,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 96,
+        "speed": 138,
+        "attackDamage": 17,
+        "superDamage": 0,
+        "weight": 1.1
+      },
+      "physics": {
+        "bodyWidth": 108,
+        "bodyHeight": 202,
+        "bodyOffsetX": 74,
+        "bodyOffsetY": 31
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "wide-swing",
+        "hurtboxProfile": "human-medium",
+        "aiProfile": "cautious-rival"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:indian-fighter-teal:idle",
+          "file": "assets/generated/animations/indian-fighter-teal/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:indian-fighter-teal:walk",
+          "file": "assets/generated/animations/indian-fighter-teal/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 10,
+          "repeat": -1
+        },
+        "attack": {
+          "key": "anim:indian-fighter-teal:attack",
+          "file": "assets/generated/animations/indian-fighter-teal/attack.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 12,
+          "repeat": 0
+        },
+        "hurt": {
+          "key": "anim:indian-fighter-teal:hurt",
+          "file": "assets/generated/animations/indian-fighter-teal/hurt.png",
+          "frames": 3,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "stunned": {
+          "key": "anim:indian-fighter-teal:stunned",
+          "file": "assets/generated/animations/indian-fighter-teal/stunned.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "knockdown": {
+          "key": "anim:indian-fighter-teal:knockdown",
+          "file": "assets/generated/animations/indian-fighter-teal/knockdown.png",
+          "frames": 3,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": 0
+        },
+        "get-up": {
+          "key": "anim:indian-fighter-teal:get-up",
+          "file": "assets/generated/animations/indian-fighter-teal/get-up.png",
+          "frames": 3,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": 0
+        },
+        "death": {
+          "key": "anim:indian-fighter-teal:death",
+          "file": "assets/generated/animations/indian-fighter-teal/death.png",
+          "frames": 3,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 5,
+          "repeat": 0
+        }
+      }
+    },
+    {
+      "id": "indian-fighter-cream",
+      "displayName": "Vik",
+      "handle": "Lounge Heavy",
+      "role": "boss",
+      "faction": "lounge-row",
+      "seed": {
+        "key": "character:indian-fighter-cream:seed",
+        "path": "assets/generated/characters/enemies/indian-fighter-cream.png"
+      },
+      "render": {
+        "scale": 0.52,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 132,
+        "speed": 118,
+        "attackDamage": 21,
+        "superDamage": 0,
+        "weight": 1.35
+      },
+      "physics": {
+        "bodyWidth": 122,
+        "bodyHeight": 216,
+        "bodyOffsetX": 67,
+        "bodyOffsetY": 24
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "boss-heavy",
+        "hurtboxProfile": "human-heavy",
+        "aiProfile": "heavy-bouncer"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:indian-fighter-cream:idle",
+          "file": "assets/generated/animations/indian-fighter-cream/idle.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:indian-fighter-cream:walk",
+          "file": "assets/generated/animations/indian-fighter-cream/walk.png",
+          "frames": 6,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 10,
+          "repeat": -1
+        },
+        "attack": {
+          "key": "anim:indian-fighter-cream:attack",
+          "file": "assets/generated/animations/indian-fighter-cream/attack.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 12,
+          "repeat": 0
+        },
+        "hurt": {
+          "key": "anim:indian-fighter-cream:hurt",
+          "file": "assets/generated/animations/indian-fighter-cream/hurt.png",
+          "frames": 3,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 9,
+          "repeat": 0
+        },
+        "stunned": {
+          "key": "anim:indian-fighter-cream:stunned",
+          "file": "assets/generated/animations/indian-fighter-cream/stunned.png",
+          "frames": 4,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 6,
+          "repeat": -1
+        },
+        "knockdown": {
+          "key": "anim:indian-fighter-cream:knockdown",
+          "file": "assets/generated/animations/indian-fighter-cream/knockdown.png",
+          "frames": 3,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": 0
+        },
+        "get-up": {
+          "key": "anim:indian-fighter-cream:get-up",
+          "file": "assets/generated/animations/indian-fighter-cream/get-up.png",
+          "frames": 3,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 8,
+          "repeat": 0
+        },
+        "death": {
+          "key": "anim:indian-fighter-cream:death",
+          "file": "assets/generated/animations/indian-fighter-cream/death.png",
+          "frames": 3,
+          "frameWidth": 256,
+          "frameHeight": 256,
+          "frameRate": 5,
+          "repeat": 0
         }
       }
     }

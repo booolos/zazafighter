@@ -211,17 +211,14 @@ export class Level1Scene extends Phaser.Scene {
   }
 
   private createWorld() {
-    this.add.image(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, assetKeys.backgroundFar)
-      .setDisplaySize(WORLD_WIDTH, WORLD_HEIGHT)
+    this.addCoveredWorldImage(assetKeys.backgroundFar, 0.2, -20, 0.5)
       .setScrollFactor(0.2)
       .setDepth(-20);
 
     const bgKey = this.level.backgroundKey ?? assetKeys.background;
-    const bg = this.add.image(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, bgKey)
-      .setDisplaySize(WORLD_WIDTH, WORLD_HEIGHT)
+    this.addCoveredWorldImage(bgKey, 0.65, -15, 0.58)
       .setDepth(-15)
       .setScrollFactor(0.65);
-    bg.y = 360;
 
     this.add.rectangle(WORLD_WIDTH / 2, 610, WORLD_WIDTH, 150, 0x050506, 0.16).setDepth(-5);
     this.add.rectangle(WORLD_WIDTH / 2, 492, WORLD_WIDTH, 4, 0x00dfff, 0.14).setDepth(-4);
@@ -264,6 +261,19 @@ export class Level1Scene extends Phaser.Scene {
       stroke: '#07080c',
       strokeThickness: 6
     }).setOrigin(0.5).setDepth(4);
+  }
+
+  private addCoveredWorldImage(key: string, scrollFactor: number, depth: number, focusY: number) {
+    const texture = this.textures.get(key);
+    const source = texture.getSourceImage() as HTMLImageElement | HTMLCanvasElement | undefined;
+    const sourceWidth = source?.width || WORLD_WIDTH;
+    const sourceHeight = source?.height || WORLD_HEIGHT;
+    const scale = Math.max(WORLD_WIDTH / sourceWidth, WORLD_HEIGHT / sourceHeight);
+    return this.add.image(WORLD_WIDTH / 2, WORLD_HEIGHT * focusY, key)
+      .setOrigin(0.5)
+      .setScale(scale)
+      .setScrollFactor(scrollFactor)
+      .setDepth(depth);
   }
 
   private createLevelDressing() {
@@ -358,10 +368,28 @@ export class Level1Scene extends Phaser.Scene {
       sprite.setDepth(sprite.y - 16);
       this.ambientNpcs.push(sprite);
       
-      if (this.isAmbientGirlId(ambient.id) && sprite.anims.currentAnim) {
-        sprite.anims.timeScale = Phaser.Math.FloatBetween(0.84, 1.16);
+      if (this.isAmbientGirlId(ambient.id)) {
+        this.scheduleAmbientGirlIdle(sprite, character.id, action);
       }
     }
+  }
+
+  private scheduleAmbientGirlIdle(sprite: ArcadeCharacterSprite, characterId: string, action: string) {
+    const animAction = hasAnimation(characterId, action) ? action : 'idle';
+    const movingMs = Phaser.Math.Between(900, 1500);
+    const idleMs = Phaser.Math.Between(3000, 4000);
+    playCharacterAnimation(sprite, characterId, animAction);
+    sprite.anims.timeScale = Phaser.Math.FloatBetween(0.78, 0.98);
+    this.time.delayedCall(movingMs, () => {
+      if (!sprite.active) return;
+      const frameCount = sprite.anims.currentAnim?.frames.length ?? 1;
+      sprite.anims.pause();
+      sprite.setFrame(Phaser.Math.Between(0, Math.max(0, frameCount - 1)));
+      this.time.delayedCall(idleMs, () => {
+        if (!sprite.active) return;
+        this.scheduleAmbientGirlIdle(sprite, characterId, animAction);
+      });
+    });
   }
 
   private pickAmbientGirls(girlPool: CharacterDefinition[], count: number) {

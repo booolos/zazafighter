@@ -2,7 +2,6 @@ import Phaser from 'phaser';
 import { playCharacterAnimation } from '../../game/assets/loaders';
 import { assetKeys } from '../../game/assets/manifest';
 import { playableCharacters, type CharacterDefinition } from '../../game/content/characters';
-import { levels } from '../../game/content/levels';
 
 export class CharacterSelectScene extends Phaser.Scene {
   private selectedIndex = 0;
@@ -126,8 +125,7 @@ export class CharacterSelectScene extends Phaser.Scene {
     if (!selected) return;
     this.selectionLocked = true;
     this.registry.set('selectedPlayer', selected.id);
-    this.registry.set('selectedLevel', levels[0].id);
-    this.scene.start('Level1Scene');
+    this.scene.start('LevelSelectScene');
   }
 
   private inputReady() {

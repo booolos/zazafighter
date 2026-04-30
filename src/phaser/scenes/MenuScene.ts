@@ -31,15 +31,15 @@ export class MenuScene extends Phaser.Scene {
       stroke: '#050506',
       strokeThickness: 10
     });
-    this.add.text(70, 212, 'INK DISTRICT', {
-      color: '#b857ff',
+    this.add.text(70, 212, 'PATTAYA EDITION', {
+      color: '#ffca3a',
       fontFamily: 'Arial Black, Arial, sans-serif',
       fontSize: '28px',
       backgroundColor: '#15051f',
       padding: { x: 12, y: 5 }
     });
 
-    this.add.text(66, 600, 'TATTOO SHOP VS WEED SHOP', {
+    this.add.text(66, 600, 'NEON BACKSTREETS • SOI CHAOS • ARCADE SLAPS', {
       color: '#00dfff',
       fontFamily: 'Arial Black, Arial, sans-serif',
       fontSize: '20px'

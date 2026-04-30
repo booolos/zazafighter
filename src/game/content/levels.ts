@@ -192,14 +192,13 @@ export const levels: LevelDefinition[] = [
       { id: 'npc-girl-black', x: 950, y: 600, flipX: true, action: 'idle' }
     ],
     enemyStarts: [
-      { id: 'street-punk', x: 1325, y: 585, engageDelay: 0 },
-      { id: 'rival-artist', x: 1510, y: 612, engageDelay: 2.4 },
-      { id: 'corrupt-bouncer', x: 1740, y: 568, engageDelay: 4.8 }
+      { id: 'indian-fighter-maroon', x: 1325, y: 585, engageDelay: 0 },
+      { id: 'indian-fighter-teal', x: 1510, y: 612, engageDelay: 2.4 },
+      { id: 'indian-fighter-cream', x: 1740, y: 568, engageDelay: 4.8 }
     ],
     props: [
-      neon(405, 372), plant(460, 660), cone(690, 654), cart(870, 648),
+      plant(460, 660), cone(690, 654), cart(870, 648),
       scooter(1180, 660, false, true), sign(360, 666), bin(1390, 658),
-      { key: assetKeys.propCableBundle, x: 1570, y: 472, scale: 0.55, depth: -6 },
       scooter(1660, 658, true), sign(1820, 666, true), ink(1980, 654), plant(2080, 666, 0.42), chair(1305, 660)
     ]
   },
@@ -221,13 +220,13 @@ export const levels: LevelDefinition[] = [
       { id: 'npc-girl-silver', x: 1050, y: 595, flipX: false, action: 'idle' }
     ],
     enemyStarts: [
-      { id: 'street-punk', x: 1150, y: 590, engageDelay: 0 },
-      { id: 'scooter-punk', x: 1370, y: 624, engageDelay: 1.4 },
-      { id: 'rival-artist', x: 1640, y: 580, engageDelay: 3.1 },
-      { id: 'corrupt-bouncer', x: 1870, y: 606, engageDelay: 5.2 }
+      { id: 'indian-fighter-maroon', x: 1150, y: 590, engageDelay: 0 },
+      { id: 'indian-fighter-maroon', x: 1370, y: 624, engageDelay: 1.4 },
+      { id: 'indian-fighter-teal', x: 1640, y: 580, engageDelay: 3.1 },
+      { id: 'indian-fighter-cream', x: 1870, y: 606, engageDelay: 5.2 }
     ],
     props: [
-      neon(520, 360), sign(700, 664, true), scooter(980, 660, false),
+      sign(700, 664, true), scooter(980, 660, false),
       cone(1215, 654), bin(1430, 660), scooter(1560, 658, true, true), chair(1760, 662), plant(2050, 666, 0.38)
     ]
   },
@@ -248,10 +247,10 @@ export const levels: LevelDefinition[] = [
       { id: 'npc-girl-silver', x: 1250, y: 605, flipX: true, action: 'idle' }
     ],
     enemyStarts: [
-      { id: 'scooter-punk', x: 1175, y: 588, engageDelay: 0 },
-      { id: 'street-punk', x: 1395, y: 625, engageDelay: 1.6 },
-      { id: 'scooter-punk', x: 1610, y: 602, engageDelay: 3.2 },
-      { id: 'rival-artist', x: 1860, y: 575, engageDelay: 5.4 }
+      { id: 'indian-fighter-maroon', x: 1175, y: 588, engageDelay: 0 },
+      { id: 'indian-fighter-maroon', x: 1395, y: 625, engageDelay: 1.6 },
+      { id: 'indian-fighter-maroon', x: 1610, y: 602, engageDelay: 3.2 },
+      { id: 'indian-fighter-teal', x: 1860, y: 575, engageDelay: 5.4 }
     ],
     props: [
       cone(540, 654), bin(760, 660), scooter(920, 660, true), scooter(1230, 660, false, true),
@@ -275,13 +274,13 @@ export const levels: LevelDefinition[] = [
       { id: 'npc-girl-denim', x: 950, y: 605, flipX: true, action: 'idle' }
     ],
     enemyStarts: [
-      { id: 'corrupt-bouncer', x: 1160, y: 590, engageDelay: 0 },
-      { id: 'street-punk', x: 1390, y: 618, engageDelay: 1.8 },
-      { id: 'rival-artist', x: 1620, y: 582, engageDelay: 3.8 },
-      { id: 'corrupt-bouncer', x: 1880, y: 612, engageDelay: 6.2 }
+      { id: 'indian-fighter-cream', x: 1160, y: 590, engageDelay: 0 },
+      { id: 'indian-fighter-maroon', x: 1390, y: 618, engageDelay: 1.8 },
+      { id: 'indian-fighter-teal', x: 1620, y: 582, engageDelay: 3.8 },
+      { id: 'indian-fighter-cream', x: 1880, y: 612, engageDelay: 6.2 }
     ],
     props: [
-      neon(420, 370), sign(610, 666, true), chair(810, 660), plant(990, 666, 0.46),
+      sign(610, 666, true), chair(810, 660), plant(990, 666, 0.46),
       cart(1210, 648), bin(1500, 660), scooter(1730, 660, true), ink(1940, 654), plant(2110, 666)
     ]
   },
@@ -302,10 +301,10 @@ export const levels: LevelDefinition[] = [
       { id: 'npc-girl-red', x: 1150, y: 605, flipX: true, action: 'idle' }
     ],
     enemyStarts: [
-      { id: 'street-punk', x: 1080, y: 620, engageDelay: 0 },
-      { id: 'rival-artist', x: 1300, y: 585, engageDelay: 1.2 },
-      { id: 'scooter-punk', x: 1515, y: 615, engageDelay: 2.8 },
-      { id: 'corrupt-bouncer', x: 1785, y: 580, engageDelay: 5.0 }
+      { id: 'indian-fighter-maroon', x: 1080, y: 620, engageDelay: 0 },
+      { id: 'indian-fighter-teal', x: 1300, y: 585, engageDelay: 1.2 },
+      { id: 'indian-fighter-maroon', x: 1515, y: 615, engageDelay: 2.8 },
+      { id: 'indian-fighter-cream', x: 1785, y: 580, engageDelay: 5.0 }
     ],
     props: [
       cart(700, 648), chair(925, 660), chair(1030, 660), cone(1190, 654), bin(1375, 660),
@@ -327,10 +326,10 @@ export const levels: LevelDefinition[] = [
       { id: 'soi-six-ruby', x: 620, y: 606, flipX: true, action: 'cheer' }
     ],
     enemyStarts: [
-      { id: 'scooter-punk', x: 1110, y: 588, engageDelay: 0 },
-      { id: 'scooter-punk', x: 1340, y: 624, engageDelay: 1.5 },
-      { id: 'street-punk', x: 1580, y: 592, engageDelay: 3.2 },
-      { id: 'corrupt-bouncer', x: 1850, y: 610, engageDelay: 5.8 }
+      { id: 'indian-fighter-maroon', x: 1110, y: 588, engageDelay: 0 },
+      { id: 'indian-fighter-maroon', x: 1340, y: 624, engageDelay: 1.5 },
+      { id: 'indian-fighter-maroon', x: 1580, y: 592, engageDelay: 3.2 },
+      { id: 'indian-fighter-cream', x: 1850, y: 610, engageDelay: 5.8 }
     ],
     props: [
       scooter(700, 660, false), scooter(910, 660, true, true), cone(1125, 654), scooter(1320, 660, false, true),

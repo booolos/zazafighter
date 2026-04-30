@@ -158,6 +158,27 @@
       "path": "assets/generated/characters/npcs/npc-girl-silver.png",
       "frameWidth": 256,
       "frameHeight": 256
+    },
+    {
+      "key": "indian-fighter-maroon",
+      "role": "enemy",
+      "path": "assets/generated/characters/enemies/indian-fighter-maroon.png",
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "key": "indian-fighter-teal",
+      "role": "enemy",
+      "path": "assets/generated/characters/enemies/indian-fighter-teal.png",
+      "frameWidth": 256,
+      "frameHeight": 256
+    },
+    {
+      "key": "indian-fighter-cream",
+      "role": "boss",
+      "path": "assets/generated/characters/enemies/indian-fighter-cream.png",
+      "frameWidth": 256,
+      "frameHeight": 256
     }
   ],
   "props": [
@@ -1260,6 +1281,206 @@
       "frameWidth": 256,
       "frameHeight": 256,
       "frames": 6
+    },
+    {
+      "character": "indian-fighter-maroon",
+      "action": "idle",
+      "path": "assets/generated/animations/indian-fighter-maroon/idle.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 4
+    },
+    {
+      "character": "indian-fighter-maroon",
+      "action": "walk",
+      "path": "assets/generated/animations/indian-fighter-maroon/walk.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "indian-fighter-maroon",
+      "action": "attack",
+      "path": "assets/generated/animations/indian-fighter-maroon/attack.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 4
+    },
+    {
+      "character": "indian-fighter-maroon",
+      "action": "hurt",
+      "path": "assets/generated/animations/indian-fighter-maroon/hurt.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 3
+    },
+    {
+      "character": "indian-fighter-maroon",
+      "action": "stunned",
+      "path": "assets/generated/animations/indian-fighter-maroon/stunned.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 4
+    },
+    {
+      "character": "indian-fighter-maroon",
+      "action": "knockdown",
+      "path": "assets/generated/animations/indian-fighter-maroon/knockdown.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 3
+    },
+    {
+      "character": "indian-fighter-maroon",
+      "action": "get-up",
+      "path": "assets/generated/animations/indian-fighter-maroon/get-up.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 3
+    },
+    {
+      "character": "indian-fighter-maroon",
+      "action": "death",
+      "path": "assets/generated/animations/indian-fighter-maroon/death.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 3
+    },
+    {
+      "character": "indian-fighter-teal",
+      "action": "idle",
+      "path": "assets/generated/animations/indian-fighter-teal/idle.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 4
+    },
+    {
+      "character": "indian-fighter-teal",
+      "action": "walk",
+      "path": "assets/generated/animations/indian-fighter-teal/walk.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "indian-fighter-teal",
+      "action": "attack",
+      "path": "assets/generated/animations/indian-fighter-teal/attack.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 4
+    },
+    {
+      "character": "indian-fighter-teal",
+      "action": "hurt",
+      "path": "assets/generated/animations/indian-fighter-teal/hurt.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 3
+    },
+    {
+      "character": "indian-fighter-teal",
+      "action": "stunned",
+      "path": "assets/generated/animations/indian-fighter-teal/stunned.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 4
+    },
+    {
+      "character": "indian-fighter-teal",
+      "action": "knockdown",
+      "path": "assets/generated/animations/indian-fighter-teal/knockdown.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 3
+    },
+    {
+      "character": "indian-fighter-teal",
+      "action": "get-up",
+      "path": "assets/generated/animations/indian-fighter-teal/get-up.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 3
+    },
+    {
+      "character": "indian-fighter-teal",
+      "action": "death",
+      "path": "assets/generated/animations/indian-fighter-teal/death.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 3
+    },
+    {
+      "character": "indian-fighter-cream",
+      "action": "idle",
+      "path": "assets/generated/animations/indian-fighter-cream/idle.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 4
+    },
+    {
+      "character": "indian-fighter-cream",
+      "action": "walk",
+      "path": "assets/generated/animations/indian-fighter-cream/walk.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 6
+    },
+    {
+      "character": "indian-fighter-cream",
+      "action": "attack",
+      "path": "assets/generated/animations/indian-fighter-cream/attack.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 4
+    },
+    {
+      "character": "indian-fighter-cream",
+      "action": "hurt",
+      "path": "assets/generated/animations/indian-fighter-cream/hurt.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 3
+    },
+    {
+      "character": "indian-fighter-cream",
+      "action": "stunned",
+      "path": "assets/generated/animations/indian-fighter-cream/stunned.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 4
+    },
+    {
+      "character": "indian-fighter-cream",
+      "action": "knockdown",
+      "path": "assets/generated/animations/indian-fighter-cream/knockdown.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 3
+    },
+    {
+      "character": "indian-fighter-cream",
+      "action": "get-up",
+      "path": "assets/generated/animations/indian-fighter-cream/get-up.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 3
+    },
+    {
+      "character": "indian-fighter-cream",
+      "action": "death",
+      "path": "assets/generated/animations/indian-fighter-cream/death.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frames": 3
+    },
+    {
+      "character": "big-ink",
+      "action": "smoking-idle",
+      "path": "assets/generated/animations/big-ink/smoking-idle.png",
+      "frames": 6,
+      "frameWidth": 256,
+      "frameHeight": 256
     }
   ],
   "standards": {

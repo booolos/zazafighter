@@ -4,6 +4,7 @@ import { setupDomHud } from './ui/domHud';
 import { BootScene } from './phaser/scenes/BootScene';
 import { CharacterSelectScene } from './phaser/scenes/CharacterSelectScene';
 import { Level1Scene } from './phaser/scenes/Level1Scene';
+import { LevelSelectScene } from './phaser/scenes/LevelSelectScene';
 import { MenuScene } from './phaser/scenes/MenuScene';
 import { PreloadScene } from './phaser/scenes/PreloadScene';
 import { UIScene } from './phaser/scenes/UIScene';
@@ -38,7 +39,7 @@ const config: Phaser.Types.Core.GameConfig = {
   input: {
     activePointers: 6
   },
-  scene: [BootScene, PreloadScene, MenuScene, CharacterSelectScene, Level1Scene, UIScene]
+  scene: [BootScene, PreloadScene, MenuScene, CharacterSelectScene, LevelSelectScene, Level1Scene, UIScene]
 };
 
 new Phaser.Game(config);
