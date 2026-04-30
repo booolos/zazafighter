@@ -24,6 +24,8 @@ export const assetKeys = {
   propRollingShutter: 'prop:rolling-shutter',
   propCableBundle: 'prop:cable-bundle',
   propInkBottle: 'prop:ink-bottle',
+  propBahtCoin: 'prop:baht-coin',
+  propEnergySoda: 'prop:energy-soda',
   propPuddleDecal: 'prop:puddle-decal',
   propStickerChair: 'prop:sticker-chair'
 } as const;
@@ -54,6 +56,8 @@ export const assetPaths = {
   propRollingShutter: 'assets/generated/props/rolling-shutter.png',
   propCableBundle: 'assets/generated/props/cable-bundle.png',
   propInkBottle: 'assets/generated/props/ink-bottle.png',
+  propBahtCoin: 'assets/generated/props/baht-coin.png',
+  propEnergySoda: 'assets/generated/props/energy-soda.png',
   propPuddleDecal: 'assets/generated/props/puddle-decal.png',
   propStickerChair: 'assets/generated/props/sticker-chair.png'
 } as const;

@@ -11,7 +11,7 @@ import {
 } from '../../game/content/combatProfiles';
 import { clearMomentaryActions, touchState } from '../../game/input/actions';
 import { createSessionState, type GameSessionState, type HudSnapshot } from '../../game/simulation/state';
-import { createCharacterSprite, getRuntimeScale, type ArcadeCharacterSprite } from '../factories/characterFactory';
+import { createCharacterSprite, type ArcadeCharacterSprite } from '../factories/characterFactory';
 
 type Enemy = {
   sprite: ArcadeCharacterSprite;
@@ -36,6 +36,26 @@ type Companion = {
   specialDirection: number;
   hitEnemies: Set<Enemy>;
   actionLockedUntil: number;
+};
+
+type DestructibleProp = {
+  sprite: Phaser.GameObjects.Image;
+  hitbox: Phaser.Geom.Rectangle;
+  hp: number;
+  fxKey: string;
+  dropKind: PickupKind;
+  active: boolean;
+  occludes: boolean;
+};
+
+type PickupKind = 'coin' | 'health' | 'meter';
+
+type Pickup = {
+  sprite: Phaser.GameObjects.Image;
+  kind: PickupKind;
+  value: number;
+  lifetime: number;
+  collected: boolean;
 };
 
 type StoredVelocity = {
@@ -99,6 +119,7 @@ const SOI_DOG_SPECIAL_KNOCKBACK = 520;
 const SOI_DOG_SPECIAL_STUN_SECONDS = 0.32;
 const SOI_DOG_SPECIAL_LOCK_MS = 640;
 const SOI_DOG_CATCHUP_DISTANCE = 320;
+const PICKUP_COLLECT_DISTANCE = 72;
 
 export class Level1Scene extends Phaser.Scene {
   private player!: ArcadeCharacterSprite;
@@ -106,6 +127,8 @@ export class Level1Scene extends Phaser.Scene {
   private playerId!: PlayerId;
   private state!: GameSessionState;
   private enemies: Enemy[] = [];
+  private destructibleProps: DestructibleProp[] = [];
+  private pickups: Pickup[] = [];
   private companion?: Companion;
   private facing = 1;
   private attackCooldown = 0;
@@ -144,11 +167,13 @@ export class Level1Scene extends Phaser.Scene {
     this.restartingLevel = false;
     this.leavingLevel = false;
     this.debugHitboxes = new URLSearchParams(window.location.search).has('debugHitboxes');
+    window.dispatchEvent(new CustomEvent('slap:hud-reset'));
 
     this.physics.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
     this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
     this.cameras.main.setBackgroundColor('#07080c');
     this.cameras.main.setRoundPixels(true);
+    this.input.setTopOnly(true);
     this.createKeyboardControls();
 
     this.createWorld();
@@ -171,6 +196,8 @@ export class Level1Scene extends Phaser.Scene {
 
   private resetRuntimeFields() {
     this.enemies = [];
+    this.destructibleProps = [];
+    this.pickups = [];
     this.facing = 1;
     this.attackCooldown = 0;
     this.dodgeCooldown = 0;
@@ -257,6 +284,7 @@ export class Level1Scene extends Phaser.Scene {
     this.updatePlayer(dt);
     this.updateEnemies(dt);
     this.updateCompanion(dt);
+    this.updatePickups(dt);
     this.updateDepths();
     this.checkWin();
     this.sendHud();
@@ -328,26 +356,170 @@ export class Level1Scene extends Phaser.Scene {
     this.add.rectangle(WORLD_WIDTH / 2, 610, WORLD_WIDTH, 150, 0x050506, 0.16).setDepth(-5);
     this.add.rectangle(WORLD_WIDTH / 2, 492, WORLD_WIDTH, 4, 0x00dfff, 0.14).setDepth(-4);
 
-    const props: Array<{ key: string; x: number; y: number; scale: number; flipX?: boolean; depth?: number }> = [
+    const props: Array<{
+      key: string;
+      x: number;
+      y: number;
+      scale: number;
+      flipX?: boolean;
+      depth?: number;
+      destructible?: boolean;
+      fxKey?: string;
+      hp?: number;
+      dropKind?: PickupKind;
+      hitbox?: { width: number; height: number; offsetY?: number };
+      occludes?: boolean;
+    }> = [
       { key: assetKeys.propRollingShutter, x: 200, y: 488, scale: 0.62, depth: -8 },
       { key: assetKeys.propBeerNeonSign, x: 405, y: 372, scale: 0.42, depth: -7 },
-      { key: assetKeys.propPottedPlant, x: 460, y: 660, scale: 0.4 },
-      { key: assetKeys.propTrafficCone, x: 690, y: 654, scale: 0.32 },
-      { key: assetKeys.propStreetFoodCart, x: 870, y: 648, scale: 0.55, depth: LARGE_PROP_DEPTH },
-      { key: assetKeys.propGreenScooter, x: 1180, y: 660, scale: 0.46, flipX: true, depth: LARGE_PROP_DEPTH },
-      { key: assetKeys.propTattooSandwichBoard, x: 360, y: 666, scale: 0.42, depth: LARGE_PROP_DEPTH },
-      { key: assetKeys.propTrashBin, x: 1390, y: 658, scale: 0.36, depth: LARGE_PROP_DEPTH },
+      {
+        key: assetKeys.propPottedPlant,
+        x: 460,
+        y: 660,
+        scale: 0.4,
+        destructible: true,
+        fxKey: 'fx:destructible:plant-chair:break',
+        dropKind: 'health',
+        hitbox: { width: 74, height: 92, offsetY: -44 },
+        occludes: true
+      },
+      {
+        key: assetKeys.propTrafficCone,
+        x: 690,
+        y: 654,
+        scale: 0.32,
+        destructible: true,
+        fxKey: 'fx:destructible:street-clutter:break',
+        dropKind: 'coin',
+        hitbox: { width: 64, height: 84, offsetY: -38 },
+        occludes: true
+      },
+      {
+        key: assetKeys.propStreetFoodCart,
+        x: 870,
+        y: 648,
+        scale: 0.55,
+        depth: LARGE_PROP_DEPTH,
+        destructible: true,
+        fxKey: 'fx:destructible:street-clutter:break',
+        hp: 2,
+        dropKind: 'health',
+        hitbox: { width: 168, height: 104, offsetY: -54 }
+      },
+      {
+        key: assetKeys.propGreenScooter,
+        x: 1180,
+        y: 660,
+        scale: 0.46,
+        flipX: true,
+        depth: LARGE_PROP_DEPTH,
+        destructible: true,
+        fxKey: 'fx:destructible:scooter:break',
+        hp: 2,
+        dropKind: 'meter',
+        hitbox: { width: 164, height: 88, offsetY: -42 }
+      },
+      {
+        key: assetKeys.propTattooSandwichBoard,
+        x: 360,
+        y: 666,
+        scale: 0.42,
+        depth: LARGE_PROP_DEPTH,
+        destructible: true,
+        fxKey: 'fx:destructible:street-clutter:break',
+        dropKind: 'coin',
+        hitbox: { width: 88, height: 116, offsetY: -58 }
+      },
+      {
+        key: assetKeys.propTrashBin,
+        x: 1390,
+        y: 658,
+        scale: 0.36,
+        depth: LARGE_PROP_DEPTH,
+        destructible: true,
+        fxKey: 'fx:destructible:street-clutter:break',
+        dropKind: 'coin',
+        hitbox: { width: 82, height: 96, offsetY: -46 }
+      },
       { key: assetKeys.propCableBundle, x: 1570, y: 472, scale: 0.55, depth: -6 },
-      { key: assetKeys.propRedScooter, x: 1660, y: 658, scale: 0.46, depth: LARGE_PROP_DEPTH },
-      { key: assetKeys.propWeedSandwichBoard, x: 1820, y: 666, scale: 0.42, depth: LARGE_PROP_DEPTH },
-      { key: assetKeys.propInkBottle, x: 1980, y: 654, scale: 0.28 },
-      { key: assetKeys.propPottedPlant, x: 2080, y: 666, scale: 0.42 },
-      { key: assetKeys.propStickerChair, x: 1305, y: 660, scale: 0.4 }
+      {
+        key: assetKeys.propRedScooter,
+        x: 1660,
+        y: 658,
+        scale: 0.46,
+        depth: LARGE_PROP_DEPTH,
+        destructible: true,
+        fxKey: 'fx:destructible:scooter:break',
+        hp: 2,
+        dropKind: 'meter',
+        hitbox: { width: 164, height: 88, offsetY: -42 }
+      },
+      {
+        key: assetKeys.propWeedSandwichBoard,
+        x: 1820,
+        y: 666,
+        scale: 0.42,
+        depth: LARGE_PROP_DEPTH,
+        destructible: true,
+        fxKey: 'fx:destructible:street-clutter:break',
+        dropKind: 'coin',
+        hitbox: { width: 88, height: 116, offsetY: -58 }
+      },
+      {
+        key: assetKeys.propInkBottle,
+        x: 1980,
+        y: 654,
+        scale: 0.28,
+        destructible: true,
+        fxKey: 'fx:destructible:plant-chair:break',
+        dropKind: 'meter',
+        hitbox: { width: 62, height: 82, offsetY: -36 },
+        occludes: true
+      },
+      {
+        key: assetKeys.propPottedPlant,
+        x: 2080,
+        y: 666,
+        scale: 0.42,
+        destructible: true,
+        fxKey: 'fx:destructible:plant-chair:break',
+        dropKind: 'health',
+        hitbox: { width: 76, height: 94, offsetY: -44 },
+        occludes: true
+      },
+      {
+        key: assetKeys.propStickerChair,
+        x: 1305,
+        y: 660,
+        scale: 0.4,
+        destructible: true,
+        fxKey: 'fx:destructible:plant-chair:break',
+        dropKind: 'coin',
+        hitbox: { width: 92, height: 82, offsetY: -38 },
+        occludes: true
+      }
     ];
     for (const p of props) {
       const img = this.add.image(p.x, p.y, p.key).setOrigin(0.5, 1).setScale(p.scale);
-      img.setDepth(p.depth ?? p.y);
+      const occludes = Boolean(p.occludes);
+      img.setDepth(p.depth ?? (occludes ? p.y + 4 : LARGE_PROP_DEPTH));
       if (p.flipX) img.setFlipX(true);
+      if (p.destructible && p.fxKey && p.dropKind && p.hitbox) {
+        this.destructibleProps.push({
+          sprite: img,
+          hitbox: new Phaser.Geom.Rectangle(
+            p.x - p.hitbox.width / 2,
+            p.y + (p.hitbox.offsetY ?? -p.hitbox.height / 2) - p.hitbox.height / 2,
+            p.hitbox.width,
+            p.hitbox.height
+          ),
+          hp: p.hp ?? 1,
+          fxKey: p.fxKey,
+          dropKind: p.dropKind,
+          active: true,
+          occludes
+        });
+      }
     }
 
     this.exitGlow = this.add.graphics().setDepth(3);
@@ -667,6 +839,7 @@ export class Level1Scene extends Phaser.Scene {
       this.cameras.main.shake(80, 0.004);
       this.startHitStop(55);
     }
+    this.hitDestructibleProps(biteRect, 2, direction);
   }
 
   private updateCompanionShadow() {
@@ -778,18 +951,13 @@ export class Level1Scene extends Phaser.Scene {
     this.attackCooldown = profile.cooldownMs / 1000;
     this.playerActionLockedUntil = this.time.now + 260;
     playCharacterAnimation(this.player, this.playerId, 'attack', false);
-    this.tweens.add({
-      targets: this.player,
-      scaleX: getRuntimeScale(this.playerDef) * 1.08,
-      duration: 52,
-      yoyo: true,
-      ease: 'Quad.out'
-    });
 
-    this.drawAttackDebug(this.getAttackRect(this.player.x, this.player.y, profile, this.facing), 0xef2b2d);
+    const attackRect = this.getAttackRect(this.player.x, this.player.y, profile, this.facing);
+    this.drawAttackDebug(attackRect, 0xef2b2d);
+    const propHits = this.hitDestructibleProps(attackRect, 1, this.facing);
 
     const targets = this.getForwardTargets(profile);
-    if (targets.length === 0) {
+    if (targets.length === 0 && propHits === 0) {
       this.state.meter = Math.min(this.state.maxMeter, this.state.meter + profile.meterGainOnWhiff);
       return;
     }
@@ -843,6 +1011,7 @@ export class Level1Scene extends Phaser.Scene {
       this.startHitStop(55);
       this.state.meter = Math.min(this.state.maxMeter, this.state.meter + 4);
     }
+    this.hitDestructibleProps(rushRect, 2, this.facing);
   }
 
   private jump(moveX: number) {
@@ -930,7 +1099,9 @@ export class Level1Scene extends Phaser.Scene {
       ease: 'Cubic.out'
     });
 
-    this.drawAttackDebug(this.getAttackRect(this.player.x, this.player.y, profile, this.facing), 0x00dfff);
+    const attackRect = this.getAttackRect(this.player.x, this.player.y, profile, this.facing);
+    this.drawAttackDebug(attackRect, 0x00dfff);
+    this.hitDestructibleProps(attackRect, 3, this.facing);
 
     const targets = this.getForwardTargets(profile);
     for (const enemy of targets) {
@@ -1006,6 +1177,132 @@ export class Level1Scene extends Phaser.Scene {
         ease: 'Back.out'
       });
     }
+  }
+
+  private hitDestructibleProps(rect: Phaser.Geom.Rectangle, damage: number, direction: number) {
+    let hits = 0;
+    for (const prop of this.destructibleProps) {
+      if (!prop.active) continue;
+      if (!Phaser.Geom.Intersects.RectangleToRectangle(rect, prop.hitbox)) continue;
+      hits += 1;
+      prop.hp -= damage;
+      prop.sprite.setTintFill(0xffffff);
+      this.time.delayedCall(54, () => prop.sprite.clearTint());
+      this.flashHit(prop.sprite.x + direction * 18, prop.sprite.y - 60, 0xffca3a, 18);
+      if (prop.hp <= 0) {
+        this.breakDestructibleProp(prop, direction);
+      }
+    }
+    return hits;
+  }
+
+  private breakDestructibleProp(prop: DestructibleProp, direction: number) {
+    if (!prop.active) return;
+    prop.active = false;
+    prop.sprite.setVisible(false);
+    const fx = this.add.sprite(prop.sprite.x, prop.sprite.y - 70, assetKeys.destructibleStreetClutterFx)
+      .setScale(0.72)
+      .setDepth(Math.max(60, prop.sprite.depth + 6))
+      .setFlipX(direction < 0);
+    fx.play(prop.fxKey);
+    fx.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => fx.destroy());
+    this.spawnPickup(prop.dropKind, prop.sprite.x + direction * 18, prop.sprite.y - 24);
+    this.state.score += 75;
+    this.cameras.main.shake(70, 0.003);
+    this.startHitStop(35);
+  }
+
+  private spawnPickup(kind: PickupKind, x: number, y: number) {
+    const config = this.getPickupConfig(kind);
+    const sprite = this.add.image(x, y, config.key)
+      .setOrigin(0.5, 0.5)
+      .setScale(config.scale)
+      .setDepth(y + 24);
+    const pickup: Pickup = {
+      sprite,
+      kind,
+      value: config.value,
+      lifetime: 8,
+      collected: false
+    };
+    this.pickups.push(pickup);
+    this.tweens.add({
+      targets: sprite,
+      y: y - 20,
+      duration: 220,
+      ease: 'Back.out',
+      yoyo: true
+    });
+    this.tweens.add({
+      targets: sprite,
+      scale: config.scale * 1.12,
+      duration: 420,
+      ease: 'Sine.inOut',
+      yoyo: true,
+      repeat: -1
+    });
+  }
+
+  private getPickupConfig(kind: PickupKind) {
+    if (kind === 'health') {
+      return { key: assetKeys.propEnergySoda, value: 22, scale: 0.18, color: 0x75ff43 };
+    }
+    if (kind === 'meter') {
+      return { key: assetKeys.propInkBottle, value: 28, scale: 0.2, color: 0x00dfff };
+    }
+    return { key: assetKeys.propBahtCoin, value: 1, scale: 0.16, color: 0xffca3a };
+  }
+
+  private updatePickups(dt: number) {
+    for (const pickup of this.pickups) {
+      if (pickup.collected) continue;
+      pickup.lifetime -= dt;
+      pickup.sprite.setDepth(pickup.sprite.y + 24);
+      const closeEnough = Phaser.Math.Distance.Between(
+        this.player.x,
+        this.player.y - 42,
+        pickup.sprite.x,
+        pickup.sprite.y
+      ) <= PICKUP_COLLECT_DISTANCE;
+      if (closeEnough) {
+        this.collectPickup(pickup);
+      } else if (pickup.lifetime <= 0) {
+        pickup.collected = true;
+        this.tweens.killTweensOf(pickup.sprite);
+        this.tweens.add({
+          targets: pickup.sprite,
+          alpha: 0,
+          duration: 220,
+          onComplete: () => pickup.sprite.destroy()
+        });
+      }
+    }
+    this.pickups = this.pickups.filter((pickup) => !pickup.collected || pickup.sprite.active);
+  }
+
+  private collectPickup(pickup: Pickup) {
+    if (pickup.collected) return;
+    pickup.collected = true;
+    const config = this.getPickupConfig(pickup.kind);
+    if (pickup.kind === 'health') {
+      this.state.hp = Math.min(this.state.maxHp, this.state.hp + pickup.value);
+    } else if (pickup.kind === 'meter') {
+      this.state.meter = Math.min(this.state.maxMeter, this.state.meter + pickup.value);
+    } else {
+      this.state.coins += pickup.value;
+      this.state.score += 50 * pickup.value;
+    }
+    this.flashHit(pickup.sprite.x, pickup.sprite.y, config.color, 20);
+    this.tweens.killTweensOf(pickup.sprite);
+    this.tweens.add({
+      targets: pickup.sprite,
+      y: pickup.sprite.y - 34,
+      alpha: 0,
+      scale: pickup.sprite.scale * 1.35,
+      duration: 180,
+      ease: 'Quad.out',
+      onComplete: () => pickup.sprite.destroy()
+    });
   }
 
   private getForwardTargets(profile: HitboxProfile) {
@@ -1120,6 +1417,13 @@ export class Level1Scene extends Phaser.Scene {
     if (this.companion) {
       this.companion.sprite.setDepth(this.companion.sprite.y);
       this.companion.shadow.setDepth(this.companion.sprite.y - 2);
+    }
+    for (const prop of this.destructibleProps) {
+      if (!prop.active) continue;
+      prop.sprite.setDepth(prop.occludes ? prop.sprite.y + 4 : LARGE_PROP_DEPTH);
+    }
+    for (const pickup of this.pickups) {
+      if (!pickup.collected) pickup.sprite.setDepth(pickup.sprite.y + 24);
     }
     for (const enemy of this.enemies) {
       enemy.sprite.setDepth(enemy.sprite.y);
@@ -1238,7 +1542,8 @@ export class Level1Scene extends Phaser.Scene {
 
   private createOverlayButton(label: string, x: number, y: number, color: number, action: () => void) {
     const button = this.add.container(x, y);
-    const hitArea = new Phaser.Geom.Rectangle(-78, -27, 156, 54);
+    let armed = false;
+    const hitArea = new Phaser.Geom.Rectangle(-92, -34, 184, 68);
     button.setInteractive(hitArea, Phaser.Geom.Rectangle.Contains);
     const plate = this.add.image(0, 0, assetKeys.uiObjectiveChip)
       .setDisplaySize(158, 58)
@@ -1254,14 +1559,23 @@ export class Level1Scene extends Phaser.Scene {
     }).setOrigin(0.5);
     button.add([plate, bg, text]);
     button.on('pointerover', () => button.setScale(1.04));
-    button.on('pointerout', () => button.setScale(1));
+    button.on('pointerout', () => {
+      armed = false;
+      button.setScale(1);
+    });
     button.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       pointer.event?.preventDefault();
+      pointer.event?.stopPropagation();
+      armed = true;
       button.setScale(0.97);
-      action();
     });
     button.on('pointerup', (pointer: Phaser.Input.Pointer) => {
       pointer.event?.preventDefault();
+      pointer.event?.stopPropagation();
+      if (!armed) return;
+      armed = false;
+      button.setScale(1);
+      action();
     });
     return button;
   }

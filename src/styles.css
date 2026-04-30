@@ -31,15 +31,27 @@ body,
   margin: 0;
   overflow: hidden;
   background: var(--ink);
+  overscroll-behavior: none;
+  touch-action: none;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   touch-action: none;
   user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 canvas {
   display: block;
+  touch-action: none;
+}
+
+button {
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
 }
 
 #hud-root,
@@ -77,7 +89,7 @@ canvas {
   left: max(14px, env(safe-area-inset-left));
   right: max(14px, env(safe-area-inset-right));
   display: grid;
-  grid-template-columns: minmax(240px, 380px) 1fr clamp(52px, 6vw, 66px);
+  grid-template-columns: minmax(220px, min(38vw, 380px)) minmax(120px, 1fr) clamp(52px, 6vw, 66px);
   gap: 12px;
   align-items: start;
 }
@@ -95,8 +107,8 @@ canvas {
 
 .fighter-card {
   display: grid;
-  grid-template-columns: 56px 1fr;
-  gap: 12px;
+  grid-template-columns: clamp(46px, 5.2vw, 56px) minmax(0, 1fr);
+  gap: clamp(8px, 1.2vw, 12px);
   padding: 10px 14px 10px 14px;
   border-radius: 8px;
   min-height: 88px;
@@ -106,8 +118,8 @@ canvas {
 
 .portrait {
   position: relative;
-  width: 56px;
-  height: 56px;
+  width: clamp(46px, 5.2vw, 56px);
+  height: clamp(46px, 5.2vw, 56px);
   border-radius: 50%;
   overflow: hidden;
   border: 2px solid rgba(255, 255, 255, 0.32);
@@ -148,9 +160,12 @@ canvas {
 
 .fighter-card strong {
   display: block;
-  font-size: clamp(20px, 3.1vw, 32px);
+  font-size: clamp(18px, 3vw, 32px);
   line-height: 1;
   letter-spacing: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .eyebrow {
@@ -172,7 +187,7 @@ canvas {
 .bar {
   position: relative;
   display: block;
-  height: 22px;
+  height: clamp(16px, 2.2vw, 22px);
   border: 0;
   background-color: rgba(0, 0, 0, 0.58);
   background-position: center;
@@ -352,6 +367,7 @@ canvas {
   font: 900 clamp(14px, 2vw, 20px)/1 Arial, sans-serif;
   overflow: visible;
   touch-action: none;
+  -webkit-touch-callout: none;
   transition: filter 140ms ease, transform 110ms ease;
 }
 
@@ -528,12 +544,29 @@ canvas {
 
 @media (max-width: 760px) {
   .hud-top {
-    grid-template-columns: minmax(210px, 1fr) minmax(120px, 0.8fr) 52px;
+    grid-template-columns: minmax(172px, 1fr) clamp(44px, 10vw, 52px);
+    grid-template-areas:
+      "fighter pause"
+      "objective objective";
     gap: 8px;
   }
 
   .fighter-card {
-    grid-template-columns: 92px 1fr;
+    grid-area: fighter;
+    min-height: 76px;
     padding: 8px 10px;
+  }
+
+  .objective-chip {
+    grid-area: objective;
+    justify-self: start;
+    max-width: min(72vw, 360px);
+    min-height: 42px;
+    padding: 11px 24px 10px;
+    font-size: 12px;
+  }
+
+  .pause-button {
+    grid-area: pause;
   }
 }

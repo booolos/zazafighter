@@ -14,7 +14,7 @@ export function loadCoreAssets(scene: Phaser.Scene) {
     'propGreenScooter','propRedScooter','propStreetFoodCart','propTrafficCone',
     'propTrashBin','propPottedPlant','propBeerNeonSign','propTattooSandwichBoard',
     'propWeedSandwichBoard','propRollingShutter','propCableBundle','propInkBottle',
-    'propPuddleDecal','propStickerChair'
+    'propBahtCoin','propEnergySoda','propPuddleDecal','propStickerChair'
   ] as const;
   for (const key of propKeys) {
     scene.load.image(assetKeys[key], assetPaths[key]);
@@ -123,5 +123,5 @@ export function playCharacterAnimation(
   if (ignoreIfPlaying && sprite.anims.currentAnim?.key === key && sprite.anims.isPlaying) {
     return;
   }
-  sprite.play(key, ignoreIfPlaying);
+  sprite.play(key, false);
 }

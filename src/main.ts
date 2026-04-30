@@ -8,6 +8,7 @@ import { MenuScene } from './phaser/scenes/MenuScene';
 import { PreloadScene } from './phaser/scenes/PreloadScene';
 import { UIScene } from './phaser/scenes/UIScene';
 
+installMobileInputGuards();
 setupDomHud();
 
 const config: Phaser.Types.Core.GameConfig = {
@@ -41,3 +42,25 @@ const config: Phaser.Types.Core.GameConfig = {
 };
 
 new Phaser.Game(config);
+
+function installMobileInputGuards() {
+  let lastTouchEnd = 0;
+  const preventDefault = (event: Event) => {
+    event.preventDefault();
+  };
+
+  document.addEventListener('gesturestart', preventDefault, { passive: false });
+  document.addEventListener('gesturechange', preventDefault, { passive: false });
+  document.addEventListener('dblclick', preventDefault, { passive: false });
+  document.addEventListener(
+    'touchend',
+    (event) => {
+      const now = Date.now();
+      if (now - lastTouchEnd < 340) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    },
+    { passive: false }
+  );
+}

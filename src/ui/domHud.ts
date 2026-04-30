@@ -87,6 +87,14 @@ export function setupDomHud() {
     const active = (event as CustomEvent<{ active: boolean }>).detail.active;
     setHudActive(root, active);
   });
+
+  window.addEventListener('slap:hud-reset', () => {
+    lastHud = null;
+    root.querySelectorAll<HTMLElement>('.bar i').forEach((bar) => {
+      bar.style.width = '100%';
+    });
+    setHudActive(root, false);
+  });
 }
 
 function setHudActive(root: HTMLElement, active: boolean) {
@@ -118,6 +126,8 @@ function bindButtons(root: HTMLElement) {
     button.addEventListener('pointerdown', down);
     button.addEventListener('pointerup', up);
     button.addEventListener('pointercancel', up);
+    button.addEventListener('dblclick', (event) => event.preventDefault());
+    button.addEventListener('contextmenu', (event) => event.preventDefault());
   });
 }
 
