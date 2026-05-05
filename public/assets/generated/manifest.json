@@ -369,6 +369,36 @@
       "path": "assets/generated/ui/dang-portrait-button.png",
       "width": 256,
       "height": 256
+    },
+    {
+      "key": "route-arrow-portal-marker",
+      "path": "assets/generated/ui/route-arrow-portal-marker.png",
+      "width": 256,
+      "height": 160
+    },
+    {
+      "key": "cleared-stamp-badge",
+      "path": "assets/generated/ui/cleared-stamp-badge.png",
+      "width": 256,
+      "height": 128
+    },
+    {
+      "key": "current-fight-marker",
+      "path": "assets/generated/ui/current-fight-marker.png",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "locked-upcoming-marker",
+      "path": "assets/generated/ui/locked-upcoming-marker.png",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "city-route-board-frame",
+      "path": "assets/generated/ui/city-route-board-frame.png",
+      "width": 512,
+      "height": 320
     }
   ],
   "fx": [

@@ -13,6 +13,11 @@ export function loadCoreAssets(scene: Phaser.Scene) {
   scene.load.image(assetKeys.uiObjectiveChip, assetPaths.uiObjectiveChip);
   scene.load.image(assetKeys.uiDialogueFrame, assetPaths.uiDialogueFrame);
   scene.load.image(assetKeys.uiCharacterPanel, assetPaths.uiCharacterPanel);
+  scene.load.image(assetKeys.uiRouteArrowPortal, assetPaths.uiRouteArrowPortal);
+  scene.load.image(assetKeys.uiClearedStamp, assetPaths.uiClearedStamp);
+  scene.load.image(assetKeys.uiCurrentFightMarker, assetPaths.uiCurrentFightMarker);
+  scene.load.image(assetKeys.uiLockedUpcomingMarker, assetPaths.uiLockedUpcomingMarker);
+  scene.load.image(assetKeys.uiCityRouteBoard, assetPaths.uiCityRouteBoard);
   const propKeys = [
     'propGreenScooter','propRedScooter','propStreetFoodCart','propTrafficCone',
     'propTrashBin','propPottedPlant','propBeerNeonSign','propTattooSandwichBoard',

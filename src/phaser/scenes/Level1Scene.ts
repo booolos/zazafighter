@@ -73,6 +73,8 @@ export class Level1Scene extends Phaser.Scene {
   playerDefeatedPose = false;
   playerVictoryPose = false;
   playerShadow?: Phaser.GameObjects.Image;
+  exitPortal?: Phaser.GameObjects.Image;
+  exitLabel?: Phaser.GameObjects.Text;
 
   constructor() {
     super('Level1Scene');
@@ -88,8 +90,10 @@ export class Level1Scene extends Phaser.Scene {
     this.registry.set('selectedLevel', this.level.id);
     window.dispatchEvent(new CustomEvent('slap:hud-reset'));
 
-    this.physics.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
-    this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+    const worldWidth = this.getResponsiveWorldWidth();
+    const worldHeight = this.getResponsiveWorldHeight();
+    this.physics.world.setBounds(0, 0, worldWidth, worldHeight);
+    this.cameras.main.setBounds(0, 0, worldWidth, worldHeight);
     this.cameras.main.setBackgroundColor('#07080c');
     this.cameras.main.setRoundPixels(true);
     this.input.setTopOnly(true);
@@ -130,6 +134,8 @@ export class Level1Scene extends Phaser.Scene {
     this.playerDefeatedPose = false;
     this.playerVictoryPose = false;
     this.playerShadow = undefined;
+    this.exitPortal = undefined;
+    this.exitLabel = undefined;
     this.companion = undefined;
     clearMomentaryActions();
   }
@@ -164,6 +170,12 @@ export class Level1Scene extends Phaser.Scene {
     if (this.state.won) {
       this.state.paused = false;
       this.hidePauseOverlay();
+      if (this.leavingLevel) {
+        this.freezeActors();
+        this.sendHud();
+        clearMomentaryActions();
+        return;
+      }
       this.playPlayerVictoryPose();
       this.showOutcome(this.level.clearTitle, this.getWinSubtitle(), 0x75ff43);
       this.freezeActors();
@@ -211,6 +223,8 @@ export class Level1Scene extends Phaser.Scene {
   }
 
   private createWorld() {
+    const worldWidth = this.getResponsiveWorldWidth();
+    const worldHeight = this.getResponsiveWorldHeight();
     this.addCoveredWorldImage(assetKeys.backgroundFar, 0.2, -20, 0.5)
       .setScrollFactor(0.2)
       .setDepth(-20);
@@ -220,8 +234,8 @@ export class Level1Scene extends Phaser.Scene {
       .setDepth(-15)
       .setScrollFactor(0.65);
 
-    this.add.rectangle(WORLD_WIDTH / 2, 610, WORLD_WIDTH, 150, 0x050506, 0.16).setDepth(-5);
-    this.add.rectangle(WORLD_WIDTH / 2, 492, WORLD_WIDTH, 4, 0x00dfff, 0.14).setDepth(-4);
+    this.add.rectangle(worldWidth / 2, 610, worldWidth, 150, 0x050506, 0.16).setDepth(-5);
+    this.add.rectangle(worldWidth / 2, 492, worldWidth, 4, 0x00dfff, 0.14).setDepth(-4);
     this.createLevelDressing();
 
     for (const p of this.level.props) {
@@ -248,13 +262,26 @@ export class Level1Scene extends Phaser.Scene {
     }
 
     const exit = this.level.exit;
+    this.exitPortal = this.add.image(exit.x, exit.y - 70, assetKeys.uiRouteArrowPortal)
+      .setDisplaySize(178, 112)
+      .setDepth(4)
+      .setAlpha(0.78);
+    this.tweens.add({
+      targets: this.exitPortal,
+      x: exit.x + 12,
+      alpha: 1,
+      duration: 620,
+      yoyo: true,
+      repeat: -1,
+      ease: 'Sine.inOut'
+    });
     this.exitGlow = this.add.graphics().setDepth(3);
     this.exitGlow.lineStyle(3, 0xef2b2d, 0.9);
     this.exitGlow.strokeRoundedRect(exit.x - 72, exit.y - 130, 144, 160, 8);
     this.exitGlow.lineStyle(1, 0xffca3a, 0.8);
     this.exitGlow.strokeRoundedRect(exit.x - 82, exit.y - 140, 164, 180, 8);
 
-    this.add.text(exit.x, exit.y - 156, this.level.exitLabel, {
+    this.exitLabel = this.add.text(exit.x, exit.y - 156, `NEXT -> ${this.level.exitLabel}`, {
       color: '#ffca3a',
       fontFamily: 'Impact, Arial Black, sans-serif',
       fontSize: '28px',
@@ -264,12 +291,14 @@ export class Level1Scene extends Phaser.Scene {
   }
 
   private addCoveredWorldImage(key: string, scrollFactor: number, depth: number, focusY: number) {
+    const worldWidth = this.getResponsiveWorldWidth();
+    const worldHeight = this.getResponsiveWorldHeight();
     const texture = this.textures.get(key);
     const source = texture.getSourceImage() as HTMLImageElement | HTMLCanvasElement | undefined;
-    const sourceWidth = source?.width || WORLD_WIDTH;
-    const sourceHeight = source?.height || WORLD_HEIGHT;
-    const scale = Math.max(WORLD_WIDTH / sourceWidth, WORLD_HEIGHT / sourceHeight);
-    return this.add.image(WORLD_WIDTH / 2, WORLD_HEIGHT * focusY, key)
+    const sourceWidth = source?.width || worldWidth;
+    const sourceHeight = source?.height || worldHeight;
+    const scale = Math.max(worldWidth / sourceWidth, worldHeight / sourceHeight);
+    return this.add.image(worldWidth / 2, worldHeight * focusY, key)
       .setOrigin(0.5)
       .setScale(scale)
       .setScrollFactor(scrollFactor)
@@ -278,13 +307,15 @@ export class Level1Scene extends Phaser.Scene {
 
   private createLevelDressing() {
     const { accent, haze, signText, signColor } = this.level.theme;
-    this.add.rectangle(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, WORLD_WIDTH, WORLD_HEIGHT, haze, 0.2)
+    const worldWidth = this.getResponsiveWorldWidth();
+    const worldHeight = this.getResponsiveWorldHeight();
+    this.add.rectangle(worldWidth / 2, worldHeight / 2, worldWidth, worldHeight, haze, 0.2)
       .setDepth(-14)
       .setBlendMode(Phaser.BlendModes.MULTIPLY);
-    this.add.rectangle(WORLD_WIDTH / 2, 490, WORLD_WIDTH, 3, accent, 0.32)
+    this.add.rectangle(worldWidth / 2, 490, worldWidth, 3, accent, 0.32)
       .setDepth(-3)
       .setBlendMode(Phaser.BlendModes.ADD);
-    this.add.rectangle(WORLD_WIDTH / 2, 635, WORLD_WIDTH, 2, accent, 0.18)
+    this.add.rectangle(worldWidth / 2, 635, worldWidth, 2, accent, 0.18)
       .setDepth(-3)
       .setBlendMode(Phaser.BlendModes.ADD);
 
@@ -305,6 +336,14 @@ export class Level1Scene extends Phaser.Scene {
       repeat: -1,
       ease: 'Sine.inOut'
     });
+  }
+
+  private getResponsiveWorldWidth() {
+    return Math.max(WORLD_WIDTH, Math.ceil(this.scale.width));
+  }
+
+  private getResponsiveWorldHeight() {
+    return Math.max(WORLD_HEIGHT, Math.ceil(this.scale.height));
   }
 
   private createActors() {
@@ -369,27 +408,40 @@ export class Level1Scene extends Phaser.Scene {
       this.ambientNpcs.push(sprite);
       
       if (this.isAmbientGirlId(ambient.id)) {
-        this.scheduleAmbientGirlIdle(sprite, character.id, action);
+        this.scheduleAmbientGirlIdle(sprite, character.id, action, Phaser.Math.Between(0, 3600));
       }
     }
   }
 
-  private scheduleAmbientGirlIdle(sprite: ArcadeCharacterSprite, characterId: string, action: string) {
+  private scheduleAmbientGirlIdle(sprite: ArcadeCharacterSprite, characterId: string, action: string, startDelayMs = 0) {
     const animAction = hasAnimation(characterId, action) ? action : 'idle';
-    const movingMs = Phaser.Math.Between(900, 1500);
-    const idleMs = Phaser.Math.Between(3000, 4000);
-    playCharacterAnimation(sprite, characterId, animAction);
-    sprite.anims.timeScale = Phaser.Math.FloatBetween(0.78, 0.98);
-    this.time.delayedCall(movingMs, () => {
+    const beginCycle = () => {
       if (!sprite.active) return;
+      const movingMs = Phaser.Math.Between(650, 2200);
+      const idleMs = Phaser.Math.Between(3000, 4800);
+      playCharacterAnimation(sprite, characterId, animAction, false);
+      sprite.anims.timeScale = Phaser.Math.FloatBetween(0.55, 1.05);
+      sprite.anims.setProgress(Phaser.Math.FloatBetween(0, 0.95));
+      this.time.delayedCall(movingMs, () => {
+        if (!sprite.active) return;
+        const frameCount = sprite.anims.currentAnim?.frames.length ?? 1;
+        sprite.anims.pause();
+        sprite.setFrame(Phaser.Math.Between(0, Math.max(0, frameCount - 1)));
+        this.time.delayedCall(idleMs, () => {
+          if (!sprite.active) return;
+          this.scheduleAmbientGirlIdle(sprite, characterId, animAction, Phaser.Math.Between(250, 2600));
+        });
+      });
+    };
+
+    if (startDelayMs > 0) {
       const frameCount = sprite.anims.currentAnim?.frames.length ?? 1;
       sprite.anims.pause();
       sprite.setFrame(Phaser.Math.Between(0, Math.max(0, frameCount - 1)));
-      this.time.delayedCall(idleMs, () => {
-        if (!sprite.active) return;
-        this.scheduleAmbientGirlIdle(sprite, characterId, animAction);
-      });
-    });
+      this.time.delayedCall(startDelayMs, beginCycle);
+    } else {
+      beginCycle();
+    }
   }
 
   private pickAmbientGirls(girlPool: CharacterDefinition[], count: number) {
@@ -742,12 +794,66 @@ export class Level1Scene extends Phaser.Scene {
     const exit = this.level.exit;
     if (enemiesLeft > 0) return;
     if (Math.abs(this.playerController.sprite.x - exit.x) < 112 && Math.abs(this.playerController.sprite.y - exit.y) < 105) {
-      this.state.won = true;
-      this.state.paused = false;
-      this.playerController.sprite.setVelocity(0, 0);
-      this.playPlayerVictoryPose();
-      this.showOutcome(this.level.clearTitle, this.getWinSubtitle(), 0x75ff43);
+      this.completeRouteStop();
     }
+  }
+
+  private completeRouteStop() {
+    if (this.state.won || this.leavingLevel) return;
+    this.state.won = true;
+    this.state.paused = false;
+    this.playerController.sprite.setVelocity(0, 0);
+    this.markLevelCleared(this.level.id);
+    const nextLevelId = getNextLevelId(this.level.id);
+    if (nextLevelId) {
+      this.flashRouteAdvance(nextLevelId);
+      return;
+    }
+    this.playPlayerVictoryPose();
+    this.showOutcome(this.level.clearTitle, 'Thailand route finished', 0x75ff43);
+  }
+
+  private flashRouteAdvance(nextLevelId: string) {
+    this.leavingLevel = true;
+    this.restartingLevel = true;
+    this.freezeActors();
+    const { width, height } = this.scale;
+    const banner = this.add.container(width / 2, height * 0.42).setDepth(1200).setScrollFactor(0).setAlpha(0);
+    const bg = this.add.rectangle(0, 0, Math.min(620, width - 56), 118, 0x050506, 0.82)
+      .setStrokeStyle(3, this.level.theme.accent, 0.95);
+    const title = this.add.text(0, -22, 'FINISHED', {
+      color: '#75ff43',
+      fontFamily: 'Impact, Arial Black, sans-serif',
+      fontSize: '48px',
+      stroke: '#000000',
+      strokeThickness: 7
+    }).setOrigin(0.5);
+    const next = this.add.text(0, 28, 'NEXT FIGHT  ->', {
+      color: '#ffca3a',
+      fontFamily: 'Arial Black, Arial, sans-serif',
+      fontSize: '20px'
+    }).setOrigin(0.5);
+    banner.add([bg, title, next]);
+    this.tweens.add({
+      targets: banner,
+      alpha: 1,
+      y: banner.y - 10,
+      duration: 220,
+      ease: 'Quad.out',
+      onComplete: () => {
+        this.time.delayedCall(520, () => {
+          this.leavingLevel = false;
+          this.openNextLevel(nextLevelId);
+        });
+      }
+    });
+  }
+
+  private markLevelCleared(levelId: string) {
+    const current = this.registry.get('clearedLevels');
+    const cleared = Array.isArray(current) ? current.filter((id): id is string => typeof id === 'string') : [];
+    if (!cleared.includes(levelId)) cleared.push(levelId);
+    this.registry.set('clearedLevels', cleared);
   }
 
   playOptionalCharacterAnimation(

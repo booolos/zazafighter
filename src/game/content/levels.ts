@@ -176,12 +176,12 @@ const shutter = (x: number, y: number): LevelPropDefinition => ({
 
 export const levels: LevelDefinition[] = [
   {
-    id: 'tattoo-weed-street',
-    title: 'Tattoo Weed Street',
-    briefing: 'Tattoo shop across from the weed shop. Clear the block and reach the ink door.',
-    exitLabel: 'NEXT',
-    clearTitle: 'SHOP CLEAR',
-    theme: { accent: 0x00dfff, haze: 0x1b0f2d, signText: 'TATTOO  |  ZAZA', signColor: 0xef2b2d },
+    id: 'pattaya-soi-six',
+    title: 'Pattaya Soi Six',
+    briefing: 'Start on Pattaya neon concrete, clear the soi, and push toward Beach Road.',
+    exitLabel: 'PATTAYA',
+    clearTitle: 'SOI SIX CLEAR',
+    theme: { accent: 0x00dfff, haze: 0x1b0f2d, signText: 'PATTAYA SOI 6', signColor: 0xef2b2d },
     playerStart: { x: 520, y: 584 },
     vendor: { id: 'weed-vendor', x: 1095, y: 570, flipX: true },
     exit: { x: 2075, y: 560 },
@@ -203,12 +203,12 @@ export const levels: LevelDefinition[] = [
     ]
   },
   {
-    id: 'walking-street-neon',
-    title: 'Walking Street Neon Alley',
-    briefing: 'Neon signs, bar barkers, and trouble spilling out of the side alley.',
-    exitLabel: 'NEON',
-    clearTitle: 'ALLEY CLEAR',
-    theme: { accent: 0xff2e9a, haze: 0x241035, signText: 'WALKING STREET', signColor: 0xff2e9a },
+    id: 'bangkok-sukhumvit',
+    title: 'Bangkok Sukhumvit',
+    briefing: 'Sukhumvit glows under the rail line. Break through the rush before midnight.',
+    exitLabel: 'BANGKOK',
+    clearTitle: 'SUKHUMVIT CLEAR',
+    theme: { accent: 0xff2e9a, haze: 0x241035, signText: 'BANGKOK SUKHUMVIT', signColor: 0xff2e9a },
     playerStart: { x: 440, y: 594 },
     vendor: { id: 'bar-promoter', x: 910, y: 586, flipX: true },
     exit: { x: 1980, y: 560 },
@@ -231,12 +231,12 @@ export const levels: LevelDefinition[] = [
     ]
   },
   {
-    id: 'soi-buakhao-back-row',
-    title: 'Soi Buakhao Back Row',
-    briefing: 'Back-row scooters and late-night repair stalls. Keep moving through the soi.',
-    exitLabel: 'SOI',
-    clearTitle: 'SOI CLEAR',
-    theme: { accent: 0xffca3a, haze: 0x2b1907, signText: 'SOI BUAKHAO', signColor: 0xffca3a },
+    id: 'phuket-bangla-road',
+    title: 'Phuket Bangla Road',
+    briefing: 'Bangla Road is packed shoulder to shoulder. Cut a path toward Patong lights.',
+    exitLabel: 'PHUKET',
+    clearTitle: 'BANGLA CLEAR',
+    theme: { accent: 0xffca3a, haze: 0x2b1907, signText: 'PHUKET BANGLA', signColor: 0xffca3a },
     playerStart: { x: 450, y: 600 },
     vendor: { id: 'scooter-mechanic', x: 1030, y: 596, flipX: true },
     exit: { x: 2050, y: 560 },
@@ -258,12 +258,12 @@ export const levels: LevelDefinition[] = [
     ]
   },
   {
-    id: 'indian-lounge-block',
-    title: 'Indian Lounge Block',
-    briefing: 'Lounge row is packed with loud shirts, bare feet, and stubborn door crews.',
-    exitLabel: 'LOUNGE',
-    clearTitle: 'LOUNGE CLEAR',
-    theme: { accent: 0x75ff43, haze: 0x082816, signText: 'INDIAN LOUNGE', signColor: 0x75ff43 },
+    id: 'chiang-mai-nimman',
+    title: 'Chiang Mai Nimman',
+    briefing: 'Nimman after dark mixes scooter rows, cafe signs, and crews guarding the lane.',
+    exitLabel: 'CHIANG MAI',
+    clearTitle: 'NIMMAN CLEAR',
+    theme: { accent: 0x75ff43, haze: 0x082816, signText: 'CHIANG MAI NIMMAN', signColor: 0x75ff43 },
     playerStart: { x: 430, y: 590 },
     vendor: { id: 'street-food-vendor', x: 1040, y: 575, flipX: true },
     exit: { x: 2040, y: 560 },
@@ -285,12 +285,12 @@ export const levels: LevelDefinition[] = [
     ]
   },
   {
-    id: 'night-market-spillover',
-    title: 'Night Market Spillover',
-    briefing: 'Food carts, plastic chairs, and market clutter turn every slap into chaos.',
-    exitLabel: 'MARKET',
-    clearTitle: 'MARKET CLEAR',
-    theme: { accent: 0x00dfff, haze: 0x0c2430, signText: 'NIGHT MARKET', signColor: 0x00dfff },
+    id: 'krabi-ao-nang',
+    title: 'Krabi Ao Nang',
+    briefing: 'Ao Nang market spillover blocks the beach road. Clear the carts and keep moving.',
+    exitLabel: 'KRABI',
+    clearTitle: 'AO NANG CLEAR',
+    theme: { accent: 0x00dfff, haze: 0x0c2430, signText: 'KRABI AO NANG', signColor: 0x00dfff },
     playerStart: { x: 460, y: 604 },
     vendor: { id: 'street-food-vendor', x: 920, y: 590, flipX: true },
     exit: { x: 2050, y: 560 },
@@ -312,12 +312,12 @@ export const levels: LevelDefinition[] = [
     ]
   },
   {
-    id: 'beach-road-scooter-strip',
-    title: 'Beach Road Scooter Strip',
-    briefing: 'Beach Road traffic is jammed with scooters. Smash through and reach the strip.',
-    exitLabel: 'BEACH',
-    clearTitle: 'STRIP CLEAR',
-    theme: { accent: 0xa02cff, haze: 0x1c1633, signText: 'BEACH ROAD', signColor: 0xa02cff },
+    id: 'koh-samui-chaweng',
+    title: 'Koh Samui Chaweng',
+    briefing: 'Chaweng Beach Road is jammed with scooters. Smash through and reach the strip.',
+    exitLabel: 'SAMUI',
+    clearTitle: 'CHAWENG CLEAR',
+    theme: { accent: 0xa02cff, haze: 0x1c1633, signText: 'KOH SAMUI CHAWENG', signColor: 0xa02cff },
     playerStart: { x: 440, y: 592 },
     vendor: { id: 'weed-vendor', x: 970, y: 584, flipX: true },
     exit: { x: 2035, y: 560 },
@@ -334,6 +334,87 @@ export const levels: LevelDefinition[] = [
     props: [
       scooter(700, 660, false), scooter(910, 660, true, true), cone(1125, 654), scooter(1320, 660, false, true),
       bin(1510, 660), scooter(1700, 660, true), sign(1905, 666), plant(2100, 666, 0.4)
+    ]
+  },
+  {
+    id: 'hua-hin-night-market',
+    title: 'Hua Hin Night Market',
+    briefing: 'Hua Hin night stalls leave no room to dodge. Knock the trouble out past the carts.',
+    exitLabel: 'HUA HIN',
+    clearTitle: 'HUA HIN CLEAR',
+    theme: { accent: 0xff7a2f, haze: 0x2a1208, signText: 'HUA HIN NIGHT MARKET', signColor: 0xff7a2f },
+    playerStart: { x: 455, y: 602 },
+    vendor: { id: 'street-food-vendor', x: 990, y: 590, flipX: true },
+    exit: { x: 2045, y: 560 },
+    backgroundKey: assetKeys.backgroundSoiBuakhao,
+    ambientNpcs: [
+      { id: 'npc-girl-denim', x: 610, y: 600, flipX: false, action: 'idle' },
+      { id: 'soi-six-ruby', x: 830, y: 604, flipX: true, action: 'talk' },
+      { id: 'npc-girl-black', x: 1180, y: 600, flipX: true, action: 'idle' }
+    ],
+    enemyStarts: [
+      { id: 'indian-fighter-cream', x: 1120, y: 590, engageDelay: 0 },
+      { id: 'indian-fighter-teal', x: 1365, y: 618, engageDelay: 1.7 },
+      { id: 'indian-fighter-maroon', x: 1595, y: 586, engageDelay: 3.5 },
+      { id: 'indian-fighter-cream', x: 1840, y: 612, engageDelay: 5.7 }
+    ],
+    props: [
+      cart(650, 648), cone(880, 654), chair(1050, 660), bin(1260, 660),
+      cart(1460, 648), plant(1690, 666, 0.44), sign(1885, 666, true), ink(2070, 654)
+    ]
+  },
+  {
+    id: 'ayutthaya-riverside',
+    title: 'Ayutthaya Riverside',
+    briefing: 'Riverside lanes tighten near the old city. Hold the line and reach the pier.',
+    exitLabel: 'AYUTTHAYA',
+    clearTitle: 'RIVERSIDE CLEAR',
+    theme: { accent: 0x8cf0ff, haze: 0x0b2332, signText: 'AYUTTHAYA RIVERSIDE', signColor: 0x8cf0ff },
+    playerStart: { x: 435, y: 592 },
+    vendor: { id: 'thai-tattoo-artist', x: 1010, y: 584, flipX: true },
+    exit: { x: 2030, y: 560 },
+    backgroundKey: assetKeys.backgroundBeachRoad,
+    ambientNpcs: [
+      { id: 'npc-girl-silver', x: 590, y: 600, flipX: true, action: 'idle' },
+      { id: 'soi-six-nina', x: 790, y: 604, flipX: false, action: 'talk' },
+      { id: 'npc-girl-red', x: 1110, y: 596, flipX: true, action: 'idle' }
+    ],
+    enemyStarts: [
+      { id: 'indian-fighter-maroon', x: 1100, y: 588, engageDelay: 0 },
+      { id: 'indian-fighter-teal', x: 1340, y: 624, engageDelay: 1.4 },
+      { id: 'indian-fighter-teal', x: 1580, y: 592, engageDelay: 3.4 },
+      { id: 'indian-fighter-cream', x: 1835, y: 610, engageDelay: 5.6 }
+    ],
+    props: [
+      plant(610, 666, 0.42), sign(780, 666), scooter(960, 660, false, true), cone(1190, 654),
+      bin(1390, 660), scooter(1620, 660, true), chair(1840, 660), plant(2060, 666)
+    ]
+  },
+  {
+    id: 'koh-phangan-haad-rin',
+    title: 'Koh Phangan Haad Rin',
+    briefing: 'Haad Rin is all bass, beach dust, and last-wave challengers under the signs.',
+    exitLabel: 'PHANGAN',
+    clearTitle: 'HAAD RIN CLEAR',
+    theme: { accent: 0xd7ff4a, haze: 0x17260a, signText: 'KOH PHANGAN HAAD RIN', signColor: 0xd7ff4a },
+    playerStart: { x: 450, y: 596 },
+    vendor: { id: 'bar-promoter', x: 940, y: 586, flipX: true },
+    exit: { x: 2050, y: 560 },
+    backgroundKey: assetKeys.backgroundWalkingStreet,
+    ambientNpcs: [
+      { id: 'soi-six-ruby', x: 620, y: 604, flipX: false, action: 'cheer' },
+      { id: 'soi-six-nina', x: 820, y: 606, flipX: true, action: 'cheer' },
+      { id: 'npc-girl-black', x: 1080, y: 600, flipX: false, action: 'idle' }
+    ],
+    enemyStarts: [
+      { id: 'indian-fighter-maroon', x: 1125, y: 590, engageDelay: 0 },
+      { id: 'indian-fighter-cream', x: 1360, y: 624, engageDelay: 1.5 },
+      { id: 'indian-fighter-teal', x: 1610, y: 580, engageDelay: 3.3 },
+      { id: 'indian-fighter-cream', x: 1880, y: 606, engageDelay: 5.4 }
+    ],
+    props: [
+      sign(690, 664, true), scooter(930, 660, false), cone(1160, 654), bin(1360, 660),
+      scooter(1585, 658, true, true), chair(1780, 662), plant(1970, 666, 0.38), ink(2120, 654)
     ]
   }
 ];
