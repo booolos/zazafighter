@@ -83,6 +83,8 @@ type FeetCheckDetail = {
   title: string;
   subtitle: string;
   faceImage: string;
+  faceFrames?: number;
+  faceFps?: number;
   stripImage: string;
   frames: number;
   fps: number;
@@ -1050,6 +1052,8 @@ export class Level1Scene extends Phaser.Scene {
         title: 'FEET CHECK',
         subtitle: 'No custom check loaded yet',
         faceImage: character.seed.path,
+        faceFrames: 1,
+        faceFps: 1,
         stripImage: character.seed.path,
         frames: 1,
         fps: 1
@@ -1060,6 +1064,8 @@ export class Level1Scene extends Phaser.Scene {
       title: feetCheck.title,
       subtitle: feetCheck.subtitle,
       faceImage: feetCheck.faceImage,
+      faceFrames: feetCheck.faceFrames,
+      faceFps: feetCheck.faceFps,
       stripImage: feetCheck.stripImage,
       frames: feetCheck.frames,
       fps: feetCheck.fps

@@ -2229,7 +2229,7 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-dao.png"
       },
       "render": {
-        "scale": 0.34,
+        "scale": 0.38,
         "originX": 0.5,
         "originY": 0.95
       },
@@ -2259,7 +2259,7 @@
           "frames": 8,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 8,
+          "frameRate": 16,
           "repeat": -1
         },
         "talk": {
@@ -2268,7 +2268,7 @@
           "frames": 8,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 10,
+          "frameRate": 16,
           "repeat": -1
         },
         "walk": {
@@ -2277,7 +2277,7 @@
           "frames": 10,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 15,
+          "frameRate": 16,
           "repeat": -1
         },
         "run": {
@@ -2286,7 +2286,7 @@
           "frames": 11,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 22,
+          "frameRate": 16,
           "repeat": -1
         },
         "react": {
@@ -2295,7 +2295,7 @@
           "frames": 4,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 11,
+          "frameRate": 16,
           "repeat": 0
         },
         "cheer": {
@@ -2304,7 +2304,7 @@
           "frames": 8,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 10,
+          "frameRate": 16,
           "repeat": -1
         },
         "panic": {
@@ -2313,7 +2313,7 @@
           "frames": 11,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 22,
+          "frameRate": 16,
           "repeat": -1
         }
       },
@@ -2324,12 +2324,12 @@
         "faceFrames": 4,
         "faceFrameWidth": 640,
         "faceFrameHeight": 720,
-        "faceFps": 6,
+        "faceFps": 16,
         "stripImage": "assets/generated/interactions/feet-check/soi-six-hd-dao-heels-strip.png",
         "frames": 10,
         "frameWidth": 512,
         "frameHeight": 512,
-        "fps": 20
+        "fps": 16
       }
     },
     {
@@ -2343,7 +2343,7 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-kanda.png"
       },
       "render": {
-        "scale": 0.34,
+        "scale": 0.38,
         "originX": 0.5,
         "originY": 0.95
       },
@@ -2373,7 +2373,7 @@
           "frames": 8,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 8,
+          "frameRate": 16,
           "repeat": -1
         },
         "talk": {
@@ -2382,7 +2382,7 @@
           "frames": 8,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 10,
+          "frameRate": 16,
           "repeat": -1
         },
         "walk": {
@@ -2391,7 +2391,7 @@
           "frames": 10,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 15,
+          "frameRate": 16,
           "repeat": -1
         },
         "run": {
@@ -2400,7 +2400,7 @@
           "frames": 11,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 22,
+          "frameRate": 16,
           "repeat": -1
         },
         "react": {
@@ -2409,7 +2409,7 @@
           "frames": 4,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 11,
+          "frameRate": 16,
           "repeat": 0
         },
         "cheer": {
@@ -2418,7 +2418,7 @@
           "frames": 8,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 10,
+          "frameRate": 16,
           "repeat": -1
         },
         "panic": {
@@ -2427,7 +2427,7 @@
           "frames": 11,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 22,
+          "frameRate": 16,
           "repeat": -1
         }
       },
@@ -2438,12 +2438,12 @@
         "faceFrames": 4,
         "faceFrameWidth": 640,
         "faceFrameHeight": 720,
-        "faceFps": 6,
+        "faceFps": 16,
         "stripImage": "assets/generated/interactions/feet-check/soi-six-hd-kanda-heels-strip.png",
         "frames": 10,
         "frameWidth": 512,
         "frameHeight": 512,
-        "fps": 20
+        "fps": 16
       }
     },
     {
@@ -2457,7 +2457,7 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-mintra.png"
       },
       "render": {
-        "scale": 0.34,
+        "scale": 0.38,
         "originX": 0.5,
         "originY": 0.95
       },
@@ -2487,7 +2487,7 @@
           "frames": 8,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 8,
+          "frameRate": 16,
           "repeat": -1
         },
         "talk": {
@@ -2496,7 +2496,7 @@
           "frames": 8,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 10,
+          "frameRate": 16,
           "repeat": -1
         },
         "walk": {
@@ -2505,7 +2505,7 @@
           "frames": 10,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 15,
+          "frameRate": 16,
           "repeat": -1
         },
         "run": {
@@ -2514,7 +2514,7 @@
           "frames": 11,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 22,
+          "frameRate": 16,
           "repeat": -1
         },
         "react": {
@@ -2523,7 +2523,7 @@
           "frames": 4,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 11,
+          "frameRate": 16,
           "repeat": 0
         },
         "cheer": {
@@ -2532,7 +2532,7 @@
           "frames": 8,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 10,
+          "frameRate": 16,
           "repeat": -1
         },
         "panic": {
@@ -2541,7 +2541,7 @@
           "frames": 11,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 22,
+          "frameRate": 16,
           "repeat": -1
         }
       },
@@ -2552,12 +2552,12 @@
         "faceFrames": 4,
         "faceFrameWidth": 640,
         "faceFrameHeight": 720,
-        "faceFps": 6,
+        "faceFps": 16,
         "stripImage": "assets/generated/interactions/feet-check/soi-six-hd-mintra-heels-strip.png",
         "frames": 10,
         "frameWidth": 512,
         "frameHeight": 512,
-        "fps": 20
+        "fps": 16
       }
     },
     {
@@ -2571,7 +2571,7 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-ploy.png"
       },
       "render": {
-        "scale": 0.34,
+        "scale": 0.38,
         "originX": 0.5,
         "originY": 0.95
       },
@@ -2601,7 +2601,7 @@
           "frames": 8,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 8,
+          "frameRate": 16,
           "repeat": -1
         },
         "talk": {
@@ -2610,7 +2610,7 @@
           "frames": 8,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 10,
+          "frameRate": 16,
           "repeat": -1
         },
         "walk": {
@@ -2619,7 +2619,7 @@
           "frames": 10,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 15,
+          "frameRate": 16,
           "repeat": -1
         },
         "run": {
@@ -2628,7 +2628,7 @@
           "frames": 11,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 22,
+          "frameRate": 16,
           "repeat": -1
         },
         "react": {
@@ -2637,7 +2637,7 @@
           "frames": 4,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 11,
+          "frameRate": 16,
           "repeat": 0
         },
         "cheer": {
@@ -2646,7 +2646,7 @@
           "frames": 8,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 10,
+          "frameRate": 16,
           "repeat": -1
         },
         "panic": {
@@ -2655,7 +2655,7 @@
           "frames": 11,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 22,
+          "frameRate": 16,
           "repeat": -1
         }
       },
@@ -2666,12 +2666,12 @@
         "faceFrames": 4,
         "faceFrameWidth": 640,
         "faceFrameHeight": 720,
-        "faceFps": 6,
+        "faceFps": 16,
         "stripImage": "assets/generated/interactions/feet-check/soi-six-hd-ploy-heels-strip.png",
         "frames": 10,
         "frameWidth": 512,
         "frameHeight": 512,
-        "fps": 20
+        "fps": 16
       }
     },
     {
@@ -2685,7 +2685,7 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-mew.png"
       },
       "render": {
-        "scale": 0.34,
+        "scale": 0.38,
         "originX": 0.5,
         "originY": 0.95
       },
@@ -2715,12 +2715,12 @@
         "faceFrames": 4,
         "faceFrameWidth": 640,
         "faceFrameHeight": 720,
-        "faceFps": 6,
+        "faceFps": 16,
         "stripImage": "assets/generated/interactions/feet-check/soi-six-hd-mew-heels-strip.png",
         "frames": 10,
         "frameWidth": 512,
         "frameHeight": 512,
-        "fps": 20
+        "fps": 16
       },
       "animations": {
         "idle": {
@@ -2729,7 +2729,7 @@
           "frames": 10,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 10,
+          "frameRate": 16,
           "repeat": -1
         },
         "talk": {
@@ -2738,7 +2738,7 @@
           "frames": 10,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 12,
+          "frameRate": 16,
           "repeat": -1
         },
         "walk": {
@@ -2747,7 +2747,7 @@
           "frames": 10,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 18,
+          "frameRate": 16,
           "repeat": -1
         },
         "run": {
@@ -2756,7 +2756,7 @@
           "frames": 10,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 24,
+          "frameRate": 16,
           "repeat": -1
         },
         "react": {
@@ -2765,7 +2765,7 @@
           "frames": 4,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 12,
+          "frameRate": 16,
           "repeat": 0
         },
         "cheer": {
@@ -2774,7 +2774,7 @@
           "frames": 10,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 12,
+          "frameRate": 16,
           "repeat": -1
         },
         "panic": {
@@ -2783,7 +2783,7 @@
           "frames": 10,
           "frameWidth": 384,
           "frameHeight": 384,
-          "frameRate": 24,
+          "frameRate": 16,
           "repeat": -1
         }
       }
