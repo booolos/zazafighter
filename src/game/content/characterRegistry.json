@@ -2229,9 +2229,9 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-dao.png"
       },
       "render": {
-        "scale": 0.235,
+        "scale": 0.34,
         "originX": 0.5,
-        "originY": 0.9
+        "originY": 0.95
       },
       "stats": {
         "maxHp": 70,
@@ -2343,9 +2343,9 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-kanda.png"
       },
       "render": {
-        "scale": 0.238,
+        "scale": 0.34,
         "originX": 0.5,
-        "originY": 0.9
+        "originY": 0.95
       },
       "stats": {
         "maxHp": 70,
@@ -2457,9 +2457,9 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-mintra.png"
       },
       "render": {
-        "scale": 0.235,
+        "scale": 0.34,
         "originX": 0.5,
-        "originY": 0.9
+        "originY": 0.95
       },
       "stats": {
         "maxHp": 70,
@@ -2571,9 +2571,9 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-ploy.png"
       },
       "render": {
-        "scale": 0.235,
+        "scale": 0.34,
         "originX": 0.5,
-        "originY": 0.9
+        "originY": 0.95
       },
       "stats": {
         "maxHp": 70,
@@ -2685,9 +2685,9 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-mew.png"
       },
       "render": {
-        "scale": 0.235,
+        "scale": 0.34,
         "originX": 0.5,
-        "originY": 0.9
+        "originY": 0.95
       },
       "stats": {
         "maxHp": 70,
