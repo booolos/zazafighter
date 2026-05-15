@@ -1038,7 +1038,7 @@
         "path": "assets/generated/characters/companions/soi-dog.png"
       },
       "render": {
-        "scale": 0.416,
+        "scale": 0.541,
         "originX": 0.5,
         "originY": 0.88
       },
@@ -1073,7 +1073,7 @@
         },
         "walk": {
           "key": "anim:soi-dog:walk",
-          "file": "assets/generated/animations/soi-dog/walk-run-v2.png",
+          "file": "assets/generated/animations/soi-dog/walk-run-stable.png",
           "frames": 6,
           "frameWidth": 256,
           "frameHeight": 256,

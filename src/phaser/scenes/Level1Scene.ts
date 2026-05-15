@@ -204,7 +204,17 @@ export class Level1Scene extends Phaser.Scene {
     }
     
     if (this.companion) {
-      this.companion.update(dt, this.wantsCompanionAttack(), this.playerController.sprite.x, this.playerController.sprite.y, this.playerController.facing);
+      const playerMoving = Math.abs(moveX) + Math.abs(moveY) > 0.08
+        || this.playerController.dodgeState > 0
+        || this.playerController.jumpState > 0;
+      this.companion.update(
+        dt,
+        this.wantsCompanionAttack(),
+        this.playerController.sprite.x,
+        this.playerController.sprite.y,
+        this.playerController.facing,
+        playerMoving
+      );
     }
 
     this.updatePickups(dt);
@@ -234,6 +244,11 @@ export class Level1Scene extends Phaser.Scene {
     this.addCoveredWorldImage(bgKey, 0.65, -15, 0.58)
       .setDepth(-15)
       .setScrollFactor(0.65);
+    this.add.image(worldWidth / 2, worldHeight + 18, assetKeys.backgroundPlayLane)
+      .setOrigin(0.5, 1)
+      .setDisplaySize(worldWidth, 372)
+      .setDepth(-6)
+      .setScrollFactor(1);
 
     this.add.rectangle(worldWidth / 2, 590, worldWidth, 176, 0x050506, 0.22).setDepth(-2);
     this.add.rectangle(worldWidth / 2, 610, worldWidth, 150, 0x050506, 0.16).setDepth(-5);
@@ -371,14 +386,6 @@ export class Level1Scene extends Phaser.Scene {
     const playerId = playerDef.id as PlayerId;
     this.state = createSessionState(playerId, playerDef.stats.maxHp);
 
-    const vendorDef = getCharacter(this.level.vendor.id);
-    const vendor = createCharacterSprite(this, vendorDef, this.level.vendor.x, this.level.vendor.y, {
-      action: 'idle',
-      immovable: true,
-      flipX: this.level.vendor.flipX ?? true
-    });
-    vendor.body.enable = false;
-
     this.createAmbientNpcs();
 
     const playerSprite = createCharacterSprite(this, playerDef, this.level.playerStart.x, this.level.playerStart.y, {
@@ -399,12 +406,10 @@ export class Level1Scene extends Phaser.Scene {
   }
 
   private createAmbientNpcs() {
-    const configuredNpcs = this.level.ambientNpcs ?? [];
     const girlPool = getCharactersByRole('npc')
       .filter((character) => character.id.startsWith('soi-six-') || character.id.startsWith('npc-girl-'));
     const randomGirlCount = Phaser.Math.Between(4, 8);
-    const randomGirlNpcs = this.pickAmbientGirls(girlPool, randomGirlCount);
-    const ambientNpcs = [...configuredNpcs.filter((ambient) => !this.isAmbientGirlId(ambient.id)), ...randomGirlNpcs];
+    const ambientNpcs = this.pickAmbientGirls(girlPool, randomGirlCount);
 
     for (const ambient of ambientNpcs) {
       const character = getCharacter(ambient.id);
@@ -415,7 +420,7 @@ export class Level1Scene extends Phaser.Scene {
         flipX: ambient.flipX
       });
       sprite.body.enable = false;
-      sprite.setAlpha(0.72);
+      sprite.setAlpha(1);
       sprite.setDepth(LANE_TOP - 26);
       this.ambientNpcs.push(sprite);
       
@@ -432,6 +437,12 @@ export class Level1Scene extends Phaser.Scene {
       playCharacterAnimation(sprite, characterId, animAction, false);
       sprite.anims.timeScale = Phaser.Math.FloatBetween(0.72, 0.95);
       sprite.anims.setProgress(Phaser.Math.FloatBetween(0, 0.85));
+      this.time.delayedCall(Phaser.Math.Between(850, 1500), holdStill);
+    };
+    const holdStill = () => {
+      if (!sprite.active) return;
+      sprite.anims.pause();
+      this.time.delayedCall(Phaser.Math.Between(3000, 4200), begin);
     };
 
     if (startDelayMs > 0) {

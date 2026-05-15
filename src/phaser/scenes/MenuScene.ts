@@ -5,7 +5,6 @@ import { addCoverImage, fitTextToWidth } from './sceneLayout';
 
 const arcadeRed = 0xef2b2d;
 const arcadeGold = 0xffca3a;
-const arcadeCyan = 0x00dfff;
 
 export class MenuScene extends Phaser.Scene {
   private startRequested = false;
@@ -20,8 +19,7 @@ export class MenuScene extends Phaser.Scene {
 
     const { width, height } = this.scale;
     addCoverImage(this, assetKeys.backgroundThumb, width / 2, height / 2, width, height);
-    this.add.rectangle(width / 2, height / 2, width, height, 0x050506, 0.66);
-    this.add.rectangle(width / 2, height - 74, width, 5, arcadeCyan, 0.42);
+    this.add.rectangle(width / 2, height / 2, width, height, 0x050506, 0.72);
 
     const titleY = Phaser.Math.Clamp(height * 0.25, 100, 190);
     const titleMaxW = Math.min(width - 48, 920);
@@ -40,14 +38,6 @@ export class MenuScene extends Phaser.Scene {
       fontSize: `${Phaser.Math.Clamp(height * 0.045, 22, 34)}px`,
       stroke: '#050506',
       strokeThickness: 6
-    }).setOrigin(0.5);
-
-    this.add.text(width / 2, titleY + Phaser.Math.Clamp(height * 0.18, 96, 142), 'CLEAR THE ROUTE. KEEP MOVING RIGHT.', {
-      color: '#00dfff',
-      fontFamily: 'Arial Black, Arial, sans-serif',
-      fontSize: `${Phaser.Math.Clamp(height * 0.026, 14, 20)}px`,
-      stroke: '#050506',
-      strokeThickness: 5
     }).setOrigin(0.5);
 
     const buttonW = Phaser.Math.Clamp(width * 0.34, 250, 430);

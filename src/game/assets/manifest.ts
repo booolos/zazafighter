@@ -41,7 +41,7 @@ export const assetKeys = {
 export const assetPaths = {
   backgroundFar: 'assets/generated/backgrounds/level1-pattaya-far-2048x720.jpg',
   background: 'assets/generated/backgrounds/level1-pattaya-storefronts-2048x720.jpg',
-  backgroundPlayLane: 'assets/generated/backgrounds/level1-pattaya-play-lane.jpg',
+  backgroundPlayLane: 'assets/generated/backgrounds/pattaya-neon-sidewalk-road-v2.jpg',
   backgroundWalkingStreet: 'assets/generated/backgrounds/walking-street.jpg',
   backgroundBeachRoad: 'assets/generated/backgrounds/beach-road.jpg',
   backgroundSoiBuakhao: 'assets/generated/backgrounds/soi-buakhao.jpg',

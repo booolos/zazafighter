@@ -36,7 +36,7 @@ export class CompanionController {
     this.shadow = shadow;
   }
 
-  update(dt: number, wantsAttack: boolean, playerX: number, playerY: number, playerFacing: number) {
+  update(dt: number, wantsAttack: boolean, playerX: number, playerY: number, playerFacing: number, playerMoving: boolean) {
     this.specialCooldown = Math.max(0, this.specialCooldown - dt);
     this.specialRush = Math.max(0, this.specialRush - dt);
     this.supportRush = Math.max(0, this.supportRush - dt);
@@ -78,15 +78,27 @@ export class CompanionController {
     const dy = targetY - this.sprite.y;
     const distance = Math.hypot(dx, dy);
     this.lastFollowDistance = distance;
+    const escapeDistance = playerMoving ? 74 : this.followEscapeDistance;
+
+    if (!playerMoving && distance <= this.followEscapeDistance) {
+      this.followMoving = false;
+      this.parkedUntil = this.scene.time.now + 900;
+      this.sprite.setVelocity(0, 0);
+      this.sprite.y = Phaser.Math.Clamp(this.sprite.y, LANE_TOP, LANE_BOTTOM);
+      this.sprite.setFlipX(playerFacing < 0);
+      playCharacterAnimation(this.sprite, this.character.id, 'idle');
+      this.updateCompanionShadow();
+      return;
+    }
 
     if (distance <= this.followSettleDistance) {
       this.followMoving = false;
       this.parkedUntil = this.scene.time.now + 700;
       this.sprite.setVelocity(0, 0);
-    } else if (this.scene.time.now < this.parkedUntil && distance < this.followEscapeDistance) {
+    } else if (this.scene.time.now < this.parkedUntil && distance < escapeDistance) {
       this.followMoving = false;
       this.sprite.setVelocity(0, 0);
-    } else if (distance > this.followEscapeDistance && dt > 0) {
+    } else if (distance > escapeDistance && dt > 0) {
       this.followMoving = true;
       const speed = distance > SOI_DOG_CATCHUP_DISTANCE
         ? this.character.stats.speed * 1.55

@@ -72,8 +72,7 @@ export class LevelSelectScene extends Phaser.Scene {
     this.add.rectangle(width / 2, height / 2, width - layout.marginX * 2, height - layout.marginY * 2, 0x07080c, 0.5)
       .setStrokeStyle(3, 0x00dfff, 0.34);
 
-    this.drawRouteHeader(width, layout, '02  ROUTE BOARD', 'THAILAND ROUTE');
-    this.drawTrackLines(layout);
+    this.drawRouteHeader(width, layout, 'CITY SELECT', 'CHOOSE CITY');
 
     levels.forEach((level, index) => {
       const col = index % layout.columns;
@@ -88,11 +87,8 @@ export class LevelSelectScene extends Phaser.Scene {
       ));
     });
 
-    if (layout.showDetail) {
-      this.drawDetailPanel(width, layout);
-    }
     this.makeButton(layout.backX, layout.navY, layout.buttonW, layout.buttonH, 'BACK', 0x00dfff, () => this.scene.start('CharacterSelectScene'));
-    this.makeButton(layout.startX, layout.navY, layout.buttonW + 70, layout.buttonH, 'START NEXT', 0xef2b2d, () => this.chooseSelected());
+    this.makeButton(layout.startX, layout.navY, layout.buttonW + 70, layout.buttonH, 'START  ->', 0xef2b2d, () => this.chooseSelected());
 
     this.updateSelection();
     this.input.keyboard?.on('keydown-LEFT', () => this.moveSelection(-1));
@@ -113,8 +109,7 @@ export class LevelSelectScene extends Phaser.Scene {
     const marginY = Phaser.Math.Clamp(height * 0.045, 18, 34);
     const headerH = Phaser.Math.Clamp(height * 0.078, 44, 58);
     const headerY = marginY + headerH / 2;
-    const displayHeight = window.innerHeight || height;
-    const showDetail = displayHeight >= 680;
+    const showDetail = false;
     const detailH = showDetail ? Phaser.Math.Clamp(height * 0.125, 70, 96) : 0;
     const buttonH = Phaser.Math.Clamp(height * 0.078, 46, 62);
     const navY = height - marginY - buttonH / 2;
