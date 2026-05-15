@@ -432,12 +432,16 @@ export class Level1Scene extends Phaser.Scene {
   private createAmbientNpcs() {
     const girlPool = getCharactersByRole('npc')
       .filter((character) => character.id.startsWith('soi-six-') || character.id.startsWith('npc-girl-'));
+    const usesRunnerBehavior = this.level.ambientBehavior === 'soi-six-runner';
     const randomGirlCount = Phaser.Math.Between(4, 8);
-    const ambientNpcs = this.pickAmbientGirls(girlPool, randomGirlCount);
+    const ambientNpcs = usesRunnerBehavior && this.level.ambientNpcs?.length
+      ? this.level.ambientNpcs
+      : this.pickAmbientGirls(girlPool, randomGirlCount);
 
     for (const ambient of ambientNpcs) {
       const character = getCharacter(ambient.id);
       const action = ambient.action ?? 'idle';
+      const startY = Phaser.Math.Clamp(ambient.y, AMBIENT_SIDEWALK_TOP, AMBIENT_SIDEWALK_BOTTOM);
       const sprite = createCharacterSprite(this, character, ambient.x, ambient.y, {
         action: hasAnimation(character.id, action) ? action : 'idle',
         immovable: true,
@@ -445,12 +449,26 @@ export class Level1Scene extends Phaser.Scene {
       });
       sprite.body.enable = false;
       sprite.setAlpha(1);
-      sprite.y = Phaser.Math.Clamp(sprite.y, AMBIENT_SIDEWALK_TOP, AMBIENT_SIDEWALK_BOTTOM);
+      sprite.y = startY;
       sprite.setDepth(AMBIENT_SIDEWALK_BOTTOM - 2);
-      this.ambientNpcs.push(sprite);
+      const npc: AmbientNpc = {
+        sprite,
+        characterId: character.id,
+        action: hasAnimation(character.id, action) ? action : 'idle',
+        homeX: ambient.x,
+        homeY: startY,
+        runnerState: 'idle',
+        nextActionAt: this.time.now + Phaser.Math.Between(900, 3600),
+        targetX: ambient.x,
+        targetY: startY,
+        speed: Phaser.Math.Between(150, 205)
+      };
+      this.ambientNpcs.push(npc);
       
-      if (this.isAmbientGirlId(ambient.id)) {
+      if (this.isAmbientGirlId(ambient.id) && !usesRunnerBehavior) {
         this.startAmbientGirlStrip(sprite, character.id, action, Phaser.Math.Between(0, 2200));
+      } else if (this.isAmbientGirlId(ambient.id)) {
+        playCharacterAnimation(sprite, character.id, npc.action, true);
       }
     }
   }
@@ -477,6 +495,76 @@ export class Level1Scene extends Phaser.Scene {
     } else {
       begin();
     }
+  }
+
+  private updateAmbientNpcs(dt: number) {
+    if (this.level.ambientBehavior !== 'soi-six-runner') return;
+    const now = this.time.now;
+    const player = this.playerController.sprite;
+
+    for (const npc of this.ambientNpcs) {
+      const { sprite, characterId } = npc;
+      if (!sprite.active) continue;
+
+      if (npc.runnerState === 'idle') {
+        sprite.x = Phaser.Math.Linear(sprite.x, npc.homeX, Math.min(1, dt * 6));
+        sprite.y = Phaser.Math.Linear(sprite.y, npc.homeY, Math.min(1, dt * 6));
+        sprite.setFlipX(player.x < sprite.x);
+        this.playOptionalCharacterAnimation(sprite, characterId, npc.action, true, 'idle');
+        if (now < npc.nextActionAt) continue;
+
+        npc.runnerState = 'approach';
+        npc.targetX = Phaser.Math.Clamp(player.x + Phaser.Math.Between(-86, 86), npc.homeX - 520, npc.homeX + 520);
+        npc.targetX = Phaser.Math.Clamp(npc.targetX, 180, WORLD_WIDTH - 180);
+        npc.targetY = Phaser.Math.Clamp(player.y - Phaser.Math.Between(18, 34), LANE_TOP, LANE_BOTTOM - 10);
+        npc.speed = Phaser.Math.Between(168, 224);
+        playCharacterAnimation(sprite, characterId, 'walk', true);
+        continue;
+      }
+
+      if (npc.runnerState === 'approach') {
+        if (this.moveAmbientNpcToward(npc, npc.targetX, npc.targetY, dt)) {
+          npc.runnerState = 'linger';
+          npc.nextActionAt = now + Phaser.Math.Between(620, 980);
+          this.playOptionalCharacterAnimation(sprite, characterId, Phaser.Math.Between(0, 1) ? 'cheer' : 'talk', false, 'idle');
+        }
+        continue;
+      }
+
+      if (npc.runnerState === 'linger') {
+        sprite.setFlipX(player.x < sprite.x);
+        if (now >= npc.nextActionAt) {
+          npc.runnerState = 'return';
+          npc.targetX = npc.homeX;
+          npc.targetY = npc.homeY;
+          npc.speed = Phaser.Math.Between(176, 232);
+          playCharacterAnimation(sprite, characterId, 'walk', true);
+        }
+        continue;
+      }
+
+      if (this.moveAmbientNpcToward(npc, npc.homeX, npc.homeY, dt)) {
+        npc.runnerState = 'idle';
+        sprite.setPosition(npc.homeX, npc.homeY);
+        npc.nextActionAt = now + Phaser.Math.Between(4200, 9000);
+        this.playOptionalCharacterAnimation(sprite, characterId, npc.action, false, 'idle');
+      }
+    }
+  }
+
+  private moveAmbientNpcToward(npc: AmbientNpc, targetX: number, targetY: number, dt: number) {
+    const dx = targetX - npc.sprite.x;
+    const dy = targetY - npc.sprite.y;
+    const distance = Math.hypot(dx, dy);
+    if (distance <= Math.max(5, npc.speed * dt)) {
+      npc.sprite.setPosition(targetX, targetY);
+      return true;
+    }
+    npc.sprite.x += (dx / distance) * npc.speed * dt;
+    npc.sprite.y += (dy / distance) * npc.speed * dt;
+    npc.sprite.setFlipX(dx < 0);
+    playCharacterAnimation(npc.sprite, npc.characterId, 'walk', true);
+    return false;
   }
 
   private pickAmbientGirls(girlPool: CharacterDefinition[], count: number) {
@@ -814,7 +902,8 @@ export class Level1Scene extends Phaser.Scene {
       this.companion.shadow.setDepth(this.companion.sprite.y - 2);
     }
     for (const npc of this.ambientNpcs) {
-      npc.setDepth(AMBIENT_SIDEWALK_BOTTOM - 2);
+      const onSidewalk = npc.sprite.y <= AMBIENT_SIDEWALK_BOTTOM + 4;
+      npc.sprite.setDepth(onSidewalk ? AMBIENT_SIDEWALK_BOTTOM - 2 : npc.sprite.y - 12);
     }
     for (const prop of this.destructibleProps) {
       if (!prop.active) continue;
