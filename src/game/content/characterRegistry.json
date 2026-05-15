@@ -290,7 +290,7 @@
         },
         "smoking-idle": {
           "key": "anim:big-ink:smoking-idle",
-          "file": "assets/generated/animations/big-ink-v2/smoking-idle.png",
+          "file": "assets/generated/animations/big-ink/smoking-idle.png",
           "frames": 6,
           "frameWidth": 256,
           "frameHeight": 256,

@@ -26,6 +26,8 @@ export class CompanionController {
   lastFollowDistance = 0;
   followMoving = false;
   parkedUntil = 0;
+  private followEscapeDistance = 128;
+  private followSettleDistance = 46;
 
   constructor(scene: Level1Scene, sprite: ArcadeCharacterSprite, character: CharacterDefinition, shadow: Phaser.GameObjects.Image) {
     this.scene = scene;
@@ -65,6 +67,7 @@ export class CompanionController {
     if (this.scene.time.now < this.actionLockedUntil) {
       this.followMoving = false;
       this.sprite.setVelocity(0, 0);
+      playCharacterAnimation(this.sprite, this.character.id, 'idle');
       this.updateCompanionShadow();
       return;
     }
@@ -76,15 +79,14 @@ export class CompanionController {
     const distance = Math.hypot(dx, dy);
     this.lastFollowDistance = distance;
 
-    if (distance <= 34) {
+    if (distance <= this.followSettleDistance) {
       this.followMoving = false;
-      this.parkedUntil = this.scene.time.now + 260;
+      this.parkedUntil = this.scene.time.now + 700;
       this.sprite.setVelocity(0, 0);
-      this.sprite.setPosition(targetX, targetY);
-    } else if (this.scene.time.now < this.parkedUntil && distance < 70) {
+    } else if (this.scene.time.now < this.parkedUntil && distance < this.followEscapeDistance) {
       this.followMoving = false;
       this.sprite.setVelocity(0, 0);
-    } else if (distance > 82 && dt > 0) {
+    } else if (distance > this.followEscapeDistance && dt > 0) {
       this.followMoving = true;
       const speed = distance > SOI_DOG_CATCHUP_DISTANCE
         ? this.character.stats.speed * 1.55

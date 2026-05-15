@@ -73,7 +73,7 @@ export class Level1Scene extends Phaser.Scene {
   playerDefeatedPose = false;
   playerVictoryPose = false;
   playerShadow?: Phaser.GameObjects.Image;
-  exitPortal?: Phaser.GameObjects.Image;
+  exitPortal?: Phaser.GameObjects.Container;
   exitLabel?: Phaser.GameObjects.Text;
 
   constructor() {
@@ -264,10 +264,19 @@ export class Level1Scene extends Phaser.Scene {
     }
 
     const exit = this.level.exit;
-    this.exitPortal = this.add.image(exit.x, exit.y - 70, assetKeys.uiRouteArrowPortal)
-      .setDisplaySize(178, 112)
+    const portalBack = this.add.rectangle(0, 0, 168, 58, 0x050506, 0.56)
+      .setStrokeStyle(3, this.level.theme.accent, 0.86);
+    const portalText = this.add.text(0, -3, 'NEXT  ->', {
+      color: '#f4f4f2',
+      fontFamily: 'Impact, Arial Black, sans-serif',
+      fontSize: '32px',
+      stroke: '#050506',
+      strokeThickness: 6
+    }).setOrigin(0.5);
+    const portalRail = this.add.rectangle(0, 25, 132, 4, this.level.theme.accent, 0.82);
+    this.exitPortal = this.add.container(exit.x, exit.y - 78, [portalBack, portalText, portalRail])
       .setDepth(4)
-      .setAlpha(0.78);
+      .setAlpha(0.88);
     this.tweens.add({
       targets: this.exitPortal,
       x: exit.x + 12,
@@ -278,10 +287,10 @@ export class Level1Scene extends Phaser.Scene {
       ease: 'Sine.inOut'
     });
     this.exitGlow = this.add.graphics().setDepth(3);
-    this.exitGlow.lineStyle(3, 0xef2b2d, 0.9);
-    this.exitGlow.strokeRoundedRect(exit.x - 72, exit.y - 130, 144, 160, 8);
-    this.exitGlow.lineStyle(1, 0xffca3a, 0.8);
-    this.exitGlow.strokeRoundedRect(exit.x - 82, exit.y - 140, 164, 180, 8);
+    this.exitGlow.lineStyle(5, this.level.theme.accent, 0.5);
+    this.exitGlow.lineBetween(exit.x, exit.y - 142, exit.x, exit.y + 16);
+    this.exitGlow.lineStyle(2, 0xf4f4f2, 0.32);
+    this.exitGlow.lineBetween(exit.x + 12, exit.y - 128, exit.x + 12, exit.y + 6);
 
     this.exitLabel = this.add.text(exit.x, exit.y - 156, `NEXT -> ${this.level.exitLabel}`, {
       color: '#ffca3a',
@@ -369,14 +378,6 @@ export class Level1Scene extends Phaser.Scene {
       flipX: this.level.vendor.flipX ?? true
     });
     vendor.body.enable = false;
-    this.tweens.add({
-      targets: vendor,
-      y: vendor.y - 5,
-      duration: 1200,
-      yoyo: true,
-      repeat: -1,
-      ease: 'Sine.inOut'
-    });
 
     this.createAmbientNpcs();
 
@@ -419,39 +420,26 @@ export class Level1Scene extends Phaser.Scene {
       this.ambientNpcs.push(sprite);
       
       if (this.isAmbientGirlId(ambient.id)) {
-        this.scheduleAmbientGirlIdle(sprite, character.id, action, Phaser.Math.Between(0, 3600));
+        this.startAmbientGirlStrip(sprite, character.id, action, Phaser.Math.Between(0, 2200));
       }
     }
   }
 
-  private scheduleAmbientGirlIdle(sprite: ArcadeCharacterSprite, characterId: string, action: string, startDelayMs = 0) {
+  private startAmbientGirlStrip(sprite: ArcadeCharacterSprite, characterId: string, action: string, startDelayMs = 0) {
     const animAction = hasAnimation(characterId, action) ? action : 'idle';
-    const beginCycle = () => {
+    const begin = () => {
       if (!sprite.active) return;
-      const movingMs = Phaser.Math.Between(650, 2200);
-      const idleMs = Phaser.Math.Between(3000, 4800);
       playCharacterAnimation(sprite, characterId, animAction, false);
-      sprite.anims.timeScale = Phaser.Math.FloatBetween(0.55, 1.05);
-      sprite.anims.setProgress(Phaser.Math.FloatBetween(0, 0.95));
-      this.time.delayedCall(movingMs, () => {
-        if (!sprite.active) return;
-        const frameCount = sprite.anims.currentAnim?.frames.length ?? 1;
-        sprite.anims.pause();
-        sprite.setFrame(Phaser.Math.Between(0, Math.max(0, frameCount - 1)));
-        this.time.delayedCall(idleMs, () => {
-          if (!sprite.active) return;
-          this.scheduleAmbientGirlIdle(sprite, characterId, animAction, Phaser.Math.Between(250, 2600));
-        });
-      });
+      sprite.anims.timeScale = Phaser.Math.FloatBetween(0.72, 0.95);
+      sprite.anims.setProgress(Phaser.Math.FloatBetween(0, 0.85));
     };
 
     if (startDelayMs > 0) {
-      const frameCount = sprite.anims.currentAnim?.frames.length ?? 1;
       sprite.anims.pause();
-      sprite.setFrame(Phaser.Math.Between(0, Math.max(0, frameCount - 1)));
-      this.time.delayedCall(startDelayMs, beginCycle);
+      sprite.setFrame(0);
+      this.time.delayedCall(startDelayMs, begin);
     } else {
-      beginCycle();
+      begin();
     }
   }
 
@@ -938,11 +926,9 @@ export class Level1Scene extends Phaser.Scene {
       .setAlpha(0);
     const glow = this.add.rectangle(0, 0, panelWidth + 32, 142, this.level.theme.accent, 0.14)
       .setBlendMode(Phaser.BlendModes.ADD);
-    const panel = this.add.image(0, 0, assetKeys.uiObjectiveChip)
-      .setDisplaySize(panelWidth, 118)
-      .setTint(this.level.theme.signColor)
-      .setAlpha(0.88);
-    const fill = this.add.rectangle(0, 0, panelWidth - 54, 76, 0x050506, 0.58);
+    const panel = this.add.rectangle(0, 0, panelWidth, 118, 0x07080c, 0.86)
+      .setStrokeStyle(3, this.level.theme.signColor, 0.78);
+    const fill = this.add.rectangle(0, 0, panelWidth - 54, 76, 0x050506, 0.36);
     const kicker = this.add.text(0, -38, `STREET ${progress.index}/${progress.total}`, {
       color: '#ffca3a',
       fontFamily: 'Arial Black, Arial, sans-serif',
@@ -1010,10 +996,8 @@ export class Level1Scene extends Phaser.Scene {
     const container = this.add.container(width / 2, height / 2).setDepth(1000).setScrollFactor(0);
     const shade = this.add.rectangle(0, 0, width, height, 0x050506, 0.42);
     const panelShadow = this.add.rectangle(0, 7, 620, 238, 0x050506, 0.56);
-    const panel = this.add.image(0, 0, assetKeys.uiDialogueFrame)
-      .setDisplaySize(650, 248)
-      .setTint(color)
-      .setAlpha(0.94);
+    const panel = this.add.rectangle(0, 0, 650, 248, 0x0c0d13, 0.94)
+      .setStrokeStyle(4, color, 0.82);
     const panelFill = this.add.rectangle(0, 0, 566, 168, 0x07080c, 0.64);
     const text = this.add.text(0, -72, title, {
       color: Phaser.Display.Color.IntegerToColor(color).rgba,
@@ -1032,7 +1016,7 @@ export class Level1Scene extends Phaser.Scene {
     const buttons = actions.map((action, index) => (
       this.createOverlayButton(action.label, firstX + index * buttonSpacing, 66, color, action.action)
     ));
-    container.add([shade, panelShadow, panelFill, panel, text, sub, ...buttons]);
+    container.add([shade, panelShadow, panel, panelFill, text, sub, ...buttons]);
     return container;
   }
 
@@ -1041,10 +1025,8 @@ export class Level1Scene extends Phaser.Scene {
     let fired = false;
     const hitArea = new Phaser.Geom.Rectangle(-92, -34, 184, 68);
     button.setInteractive(hitArea, Phaser.Geom.Rectangle.Contains);
-    const plate = this.add.image(0, 0, assetKeys.uiObjectiveChip)
-      .setDisplaySize(158, 58)
-      .setTint(color)
-      .setAlpha(0.86);
+    const plate = this.add.rectangle(0, 0, 158, 58, 0x11131b, 0.92)
+      .setStrokeStyle(3, color, 0.86);
     const bg = this.add.rectangle(0, 0, 124, 33, 0x050506, 0.58);
     const text = this.add.text(0, 0, label, {
       color: '#ffffff',

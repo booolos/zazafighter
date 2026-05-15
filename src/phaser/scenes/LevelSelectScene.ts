@@ -5,13 +5,13 @@ import { addCoverImage, fitTextToWidth } from './sceneLayout';
 
 type LevelCardData = {
   panel: Phaser.GameObjects.Rectangle;
-  marker: Phaser.GameObjects.Image;
+  marker: Phaser.GameObjects.Arc;
   title: Phaser.GameObjects.Text;
   enemies: Phaser.GameObjects.Text;
   exit: Phaser.GameObjects.Text;
   rail: Phaser.GameObjects.Rectangle;
   status: Phaser.GameObjects.Text;
-  stamp: Phaser.GameObjects.Image;
+  stamp: Phaser.GameObjects.Text;
   accent: number;
   state: 'finished' | 'next' | 'upcoming';
 };
@@ -113,7 +113,8 @@ export class LevelSelectScene extends Phaser.Scene {
     const marginY = Phaser.Math.Clamp(height * 0.045, 18, 34);
     const headerH = Phaser.Math.Clamp(height * 0.078, 44, 58);
     const headerY = marginY + headerH / 2;
-    const showDetail = height >= 460;
+    const displayHeight = window.innerHeight || height;
+    const showDetail = displayHeight >= 680;
     const detailH = showDetail ? Phaser.Math.Clamp(height * 0.125, 70, 96) : 0;
     const buttonH = Phaser.Math.Clamp(height * 0.078, 46, 62);
     const navY = height - marginY - buttonH / 2;
@@ -213,13 +214,13 @@ export class LevelSelectScene extends Phaser.Scene {
     const compact = height < 96;
     const markerSize = Phaser.Math.Clamp(height * 0.2, 17, 24);
     const titleSize = Phaser.Math.Clamp(width * 0.052, 13, 17);
-    const markerKey = state === 'finished'
-      ? assetKeys.uiClearedStamp
+    const markerColor = state === 'finished'
+      ? 0x75ff43
       : state === 'next'
-        ? assetKeys.uiCurrentFightMarker
-        : assetKeys.uiLockedUpcomingMarker;
-    const marker = this.add.image(-width / 2 + markerSize + 14, -height / 2 + markerSize + 10, markerKey)
-      .setDisplaySize(markerSize * 2.35, markerSize * 2.35);
+        ? 0xffca3a
+        : 0x2a3040;
+    const marker = this.add.circle(-width / 2 + markerSize + 14, -height / 2 + markerSize + 10, markerSize * 1.08, markerColor, 0.9)
+      .setStrokeStyle(3, 0x050506, 1);
     const number = this.add.text(-width / 2 + markerSize + 14, -height / 2 + markerSize - 5, `${index + 1}`.padStart(2, '0'), {
       color: '#050506',
       fontFamily: 'Impact, Arial Black, sans-serif',
@@ -248,9 +249,13 @@ export class LevelSelectScene extends Phaser.Scene {
       fontFamily: 'Arial Black, Arial, sans-serif',
       fontSize: `${compact ? 11 : 13}px`
     });
-    const stamp = this.add.image(width / 2 - 62, -height / 2 + 30, state === 'next' ? assetKeys.uiRouteArrowPortal : assetKeys.uiClearedStamp)
-      .setDisplaySize(state === 'next' ? 76 : 86, state === 'next' ? 48 : 44)
-      .setAlpha(state === 'upcoming' ? 0 : 0.9);
+    const stamp = this.add.text(width / 2 - 22, -height / 2 + 18, state === 'finished' ? 'DONE' : state === 'next' ? 'GO' : '', {
+      color: state === 'finished' ? '#75ff43' : '#ffca3a',
+      fontFamily: 'Arial Black, Arial, sans-serif',
+      fontSize: `${compact ? 12 : 15}px`,
+      stroke: '#050506',
+      strokeThickness: 4
+    }).setOrigin(1, 0).setAlpha(state === 'upcoming' ? 0 : 0.9);
     const rail = this.add.rectangle(0, height / 2 - 9, width - 28, 5, accent, 0.5);
     card.add([panel, marker, number, title, enemies, exit, status, stamp, rail]);
     card.setData('cardData', { panel, marker, title, enemies, exit, rail, status, stamp, accent, state } satisfies LevelCardData);
