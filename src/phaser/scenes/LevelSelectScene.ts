@@ -5,13 +5,9 @@ import { addCoverImage, fitTextToWidth } from './sceneLayout';
 
 type LevelCardData = {
   panel: Phaser.GameObjects.Rectangle;
-  marker: Phaser.GameObjects.Arc;
   title: Phaser.GameObjects.Text;
-  enemies: Phaser.GameObjects.Text;
-  exit: Phaser.GameObjects.Text;
   rail: Phaser.GameObjects.Rectangle;
   status: Phaser.GameObjects.Text;
-  stamp: Phaser.GameObjects.Text;
   accent: number;
   state: 'finished' | 'next' | 'upcoming';
 };
@@ -66,13 +62,11 @@ export class LevelSelectScene extends Phaser.Scene {
     this.inputReadyAt = this.time.now + 220;
 
     const { width, height } = this.scale;
-    addCoverImage(this, assetKeys.backgroundThumb, width / 2, height / 2, width, height);
-    this.add.rectangle(width / 2, height / 2, width, height, 0x050506, 0.72);
+    addCoverImage(this, assetKeys.background, width / 2, height / 2, width, height);
+    this.add.rectangle(width / 2, height / 2, width, height, 0x050506, 0.82);
     const layout = this.getLayout(width, height);
-    this.add.rectangle(width / 2, height / 2, width - layout.marginX * 2, height - layout.marginY * 2, 0x07080c, 0.5)
-      .setStrokeStyle(3, 0x00dfff, 0.34);
 
-    this.drawRouteHeader(width, layout, 'CITY SELECT', 'CHOOSE CITY');
+    this.drawRouteHeader(width, layout, 'CITY');
 
     levels.forEach((level, index) => {
       const col = index % layout.columns;
@@ -88,7 +82,7 @@ export class LevelSelectScene extends Phaser.Scene {
     });
 
     this.makeButton(layout.backX, layout.navY, layout.buttonW, layout.buttonH, 'BACK', 0x00dfff, () => this.scene.start('CharacterSelectScene'));
-    this.makeButton(layout.startX, layout.navY, layout.buttonW + 70, layout.buttonH, 'START  ->', 0xef2b2d, () => this.chooseSelected());
+    this.makeButton(layout.startX, layout.navY, layout.buttonW + 64, layout.buttonH, 'GO  ->', 0xef2b2d, () => this.chooseSelected());
 
     this.updateSelection();
     this.input.keyboard?.on('keydown-LEFT', () => this.moveSelection(-1));
@@ -114,19 +108,18 @@ export class LevelSelectScene extends Phaser.Scene {
     const buttonH = Phaser.Math.Clamp(height * 0.078, 46, 62);
     const navY = height - marginY - buttonH / 2;
     const detailY = showDetail ? navY - buttonH / 2 - 10 - detailH / 2 : navY;
-    const gridTop = headerY + headerH / 2 + Phaser.Math.Clamp(height * 0.055, 24, 42);
+    const gridTop = headerY + headerH / 2 + Phaser.Math.Clamp(height * 0.038, 18, 30);
     const gridBottom = showDetail
       ? detailY - detailH / 2 - Phaser.Math.Clamp(height * 0.022, 10, 18)
       : navY - buttonH / 2 - Phaser.Math.Clamp(height * 0.026, 10, 16);
-    const gapX = Phaser.Math.Clamp(width * 0.022, 14, 28);
-    const gapY = Phaser.Math.Clamp(height * 0.022, 10, 18);
-    const displayWidth = window.innerWidth || width;
-    const columns = width >= 1460 && displayWidth >= 1100 && levels.length > 6 ? 4 : width < 620 ? 2 : 3;
+    const gapX = Phaser.Math.Clamp(width * 0.018, 12, 24);
+    const gapY = Phaser.Math.Clamp(height * 0.012, 6, 10);
+    const columns = height < 520 || width < 760 ? 2 : 1;
     const rowCount = Math.ceil(levels.length / columns);
     const availableW = width - marginX * 2 - gapX * (columns - 1);
     const availableH = Math.max(1, gridBottom - gridTop - gapY * (rowCount - 1));
-    const cardW = Math.floor(Phaser.Math.Clamp(availableW / columns, 170, 334));
-    const cardH = Math.floor(Phaser.Math.Clamp(availableH / rowCount, 52, 122));
+    const cardW = Math.floor(Phaser.Math.Clamp(availableW / columns, columns === 1 ? 420 : 170, columns === 1 ? 620 : 334));
+    const cardH = Math.floor(Phaser.Math.Clamp(availableH / rowCount, 38, 58));
     const gridW = cardW * columns + gapX * (columns - 1);
     const startXGrid = width / 2 - gridW / 2 + cardW / 2;
     const buttonW = Phaser.Math.Clamp(width * 0.17, 148, 220);
@@ -158,27 +151,14 @@ export class LevelSelectScene extends Phaser.Scene {
     };
   }
 
-  private drawRouteHeader(width: number, layout: LevelSelectLayout, step: string, title: string) {
-    this.add.rectangle(width / 2, layout.headerY, width - layout.marginX * 2 - 60, layout.headerH, 0x100a18, 0.94)
-      .setStrokeStyle(2, 0xef2b2d, 0.62);
-    this.add.text(layout.marginX + 28, layout.headerY - layout.metaSize / 2, step, {
-      color: '#ffca3a',
-      fontFamily: 'Arial Black, Arial, sans-serif',
-      fontSize: `${layout.metaSize}px`
-    });
+  private drawRouteHeader(width: number, layout: LevelSelectLayout, title: string) {
     fitTextToWidth(this.add.text(width / 2, layout.headerY - layout.headerH / 2 + 2, title, {
       color: '#f4f4f2',
       fontFamily: 'Impact, Arial Black, sans-serif',
       fontSize: `${layout.titleSize}px`,
       stroke: '#050506',
       strokeThickness: 7
-    }).setOrigin(0.5, 0), width - layout.marginX * 2 - 210, 26);
-    this.add.text(width - layout.marginX - 28, layout.headerY - layout.metaSize / 2, 'ESC BACK', {
-      color: '#00dfff',
-      fontFamily: 'Arial Black, Arial, sans-serif',
-      fontSize: `${layout.metaSize}px`
-    }).setOrigin(1, 0);
-    this.add.rectangle(width / 2, layout.headerY + layout.headerH / 2, width - layout.marginX * 2 - 80, 4, 0xffca3a, 0.86);
+    }).setOrigin(0.5, 0), width - layout.marginX * 2, 26);
   }
 
   private drawTrackLines(layout: LevelSelectLayout) {
@@ -203,57 +183,26 @@ export class LevelSelectScene extends Phaser.Scene {
     const card = this.add.container(x, y);
     const accent = level.theme.accent;
     const state = this.getLevelState(index);
-    const panel = this.add.rectangle(0, 0, width, height, 0x0d1018, 0.9)
-      .setStrokeStyle(3, accent, 0.72)
+    const panel = this.add.rectangle(0, 0, width, height, 0x0d1018, 0.72)
+      .setStrokeStyle(2, accent, 0.4)
       .setInteractive({ useHandCursor: true });
-    const compact = height < 96;
-    const markerSize = Phaser.Math.Clamp(height * 0.2, 17, 24);
-    const titleSize = Phaser.Math.Clamp(width * 0.052, 13, 17);
-    const markerColor = state === 'finished'
-      ? 0x75ff43
-      : state === 'next'
-        ? 0xffca3a
-        : 0x2a3040;
-    const marker = this.add.circle(-width / 2 + markerSize + 14, -height / 2 + markerSize + 10, markerSize * 1.08, markerColor, 0.9)
-      .setStrokeStyle(3, 0x050506, 1);
-    const number = this.add.text(-width / 2 + markerSize + 14, -height / 2 + markerSize - 5, `${index + 1}`.padStart(2, '0'), {
-      color: '#050506',
-      fontFamily: 'Impact, Arial Black, sans-serif',
-      fontSize: `${Phaser.Math.Clamp(height * 0.2, 17, 24)}px`
-    }).setOrigin(0.5);
-    const title = this.add.text(-width / 2 + markerSize * 2 + 30, -height / 2 + 14, level.title.toUpperCase(), {
+    const titleSize = Phaser.Math.Clamp(height * 0.34, 12, 16);
+    const title = this.add.text(-width / 2 + 22, 0, level.title.toUpperCase(), {
       color: '#ffffff',
       fontFamily: 'Arial Black, Arial, sans-serif',
       fontSize: `${titleSize}px`,
-      wordWrap: { width: width - markerSize * 2 - 54, useAdvancedWrap: true }
-    });
-    const enemies = this.add.text(-width / 2 + 24, compact ? 13 : 18, `${level.enemyStarts.length} CHALLENGERS`, {
-      color: '#d9dae3',
-      fontFamily: 'Arial Black, Arial, sans-serif',
-      fontSize: `${compact ? 12 : 14}px`
-    });
-    const exit = this.add.text(width / 2 - 20, height / 2 - (compact ? 24 : 32), level.exitLabel.toUpperCase(), {
-      color: this.hex(accent),
-      fontFamily: 'Arial Black, Arial, sans-serif',
-      fontSize: `${compact ? 12 : 14}px`
-    }).setOrigin(1, 0.5);
-    const statusLabel = state === 'finished' ? 'FINISHED' : state === 'next' ? 'NEXT  ->' : 'UPCOMING';
+      wordWrap: { width: width - 150, useAdvancedWrap: true }
+    }).setOrigin(0, 0.5);
+    const statusLabel = state === 'finished' ? 'FINISHED' : state === 'next' ? 'NEXT  ->' : 'LOCKED';
     const statusColor = state === 'finished' ? '#75ff43' : state === 'next' ? '#ffca3a' : '#7f8696';
-    const status = this.add.text(-width / 2 + 24, height / 2 - (compact ? 26 : 34), statusLabel, {
+    const status = this.add.text(width / 2 - 18, 0, statusLabel, {
       color: statusColor,
       fontFamily: 'Arial Black, Arial, sans-serif',
-      fontSize: `${compact ? 11 : 13}px`
-    });
-    const stamp = this.add.text(width / 2 - 22, -height / 2 + 18, state === 'finished' ? 'DONE' : state === 'next' ? 'GO' : '', {
-      color: state === 'finished' ? '#75ff43' : '#ffca3a',
-      fontFamily: 'Arial Black, Arial, sans-serif',
-      fontSize: `${compact ? 12 : 15}px`,
-      stroke: '#050506',
-      strokeThickness: 4
-    }).setOrigin(1, 0).setAlpha(state === 'upcoming' ? 0 : 0.9);
-    const rail = this.add.rectangle(0, height / 2 - 9, width - 28, 5, accent, 0.5);
-    card.add([panel, marker, number, title, enemies, exit, status, stamp, rail]);
-    card.setData('cardData', { panel, marker, title, enemies, exit, rail, status, stamp, accent, state } satisfies LevelCardData);
+      fontSize: `${Phaser.Math.Clamp(height * 0.28, 10, 13)}px`
+    }).setOrigin(1, 0.5);
+    const rail = this.add.rectangle(-width / 2 + 5, 0, 6, height - 12, accent, 0.72);
+    card.add([panel, rail, title, status]);
+    card.setData('cardData', { panel, title, rail, status, accent, state } satisfies LevelCardData);
     panel.on('pointerover', () => {
       if (!this.inputReady()) return;
       if (this.getLevelState(index) === 'upcoming') return;
@@ -304,17 +253,16 @@ export class LevelSelectScene extends Phaser.Scene {
     const button = this.add.container(x, y).setDepth(20);
     const plate = this.add.rectangle(0, 0, width, height, 0x0e1119, 0.94)
       .setStrokeStyle(3, accent, 0.88);
-    const rail = this.add.rectangle(0, height / 2 - 7, width - 22, 6, accent, 0.72);
-    const text = fitTextToWidth(this.add.text(0, -3, label, {
+    const text = fitTextToWidth(this.add.text(0, -2, label, {
       color: '#f4f4f2',
       fontFamily: 'Impact, Arial Black, sans-serif',
-      fontSize: '29px',
+      fontSize: '27px',
       stroke: '#050506',
       strokeThickness: 5
     }).setOrigin(0.5), width - 26, 20);
     const hitZone = this.add.rectangle(0, 0, width, height, 0xffffff, 0.001)
       .setInteractive({ useHandCursor: true });
-    button.add([plate, rail, text, hitZone]);
+    button.add([plate, text, hitZone]);
     hitZone.on('pointerover', () => button.setScale(1.035));
     hitZone.on('pointerout', () => button.setScale(1));
     hitZone.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
@@ -339,17 +287,13 @@ export class LevelSelectScene extends Phaser.Scene {
       const selected = index === this.selectedIndex;
       const data = card.getData('cardData') as LevelCardData;
       const locked = data.state === 'upcoming';
-      card.setScale(selected ? 1.035 : 0.98);
-      card.setAlpha(locked ? 0.48 : selected ? 1 : 0.78);
-      data.panel.setFillStyle(selected ? 0x161924 : 0x0d1018, selected ? 0.96 : 0.86);
-      data.panel.setStrokeStyle(selected ? 6 : 3, data.accent, selected ? 1 : 0.62);
-      data.marker.setAlpha(locked ? 0.5 : selected ? 1 : 0.72);
+      card.setScale(selected ? 1.02 : 1);
+      card.setAlpha(locked ? 0.42 : selected ? 1 : 0.76);
+      data.panel.setFillStyle(selected ? 0x171a24 : 0x0d1018, selected ? 0.9 : 0.66);
+      data.panel.setStrokeStyle(selected ? 4 : 2, data.accent, selected ? 1 : 0.36);
       data.title.setColor(selected ? '#ffffff' : '#cfd4df');
-      data.enemies.setAlpha(selected ? 1 : 0.72);
-      data.exit.setAlpha(selected ? 1 : 0.72);
       data.status.setAlpha(selected ? 1 : 0.82);
-      data.stamp.setAlpha(data.state === 'upcoming' ? 0 : selected ? 1 : 0.72);
-      data.rail.setAlpha(selected ? 0.82 : 0.42);
+      data.rail.setAlpha(selected ? 0.95 : 0.42);
     });
 
     const level = levels[this.selectedIndex];

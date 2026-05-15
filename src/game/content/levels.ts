@@ -50,6 +50,7 @@ export type LevelDefinition = {
   vendor: { id: string; x: number; y: number; flipX?: boolean };
   exit: { x: number; y: number };
   backgroundKey?: string;
+  ambientBehavior?: 'sidewalk-idle' | 'soi-six-runner';
   ambientNpcs?: LevelAmbientNpcDefinition[];
   enemyStarts: LevelEnemySpawn[];
   props: LevelPropDefinition[];
@@ -176,15 +177,15 @@ const shutter = (x: number, y: number): LevelPropDefinition => ({
 
 export const levels: LevelDefinition[] = [
   {
-    id: 'pattaya-soi-six',
-    title: 'Pattaya Soi Six',
-    briefing: 'Start on Pattaya neon concrete, clear the soi, and push toward Beach Road.',
+    id: 'pattaya-walking-street',
+    title: 'Pattaya Walking Street',
+    briefing: 'Start under the Walking Street sign, clear the neon strip, and push toward Beach Road.',
     exitLabel: 'PATTAYA',
-    clearTitle: 'SOI SIX CLEAR',
-    theme: { accent: 0x00dfff, haze: 0x1b0f2d, signText: 'PATTAYA SOI 6', signColor: 0xef2b2d },
-    playerStart: { x: 520, y: 584 },
+    clearTitle: 'WALKING STREET CLEAR',
+    theme: { accent: 0x00dfff, haze: 0x1b0f2d, signText: 'PATTAYA WALKING STREET', signColor: 0xef2b2d },
+    playerStart: { x: 520, y: 634 },
     vendor: { id: 'weed-vendor', x: 1095, y: 570, flipX: true },
-    exit: { x: 2075, y: 560 },
+    exit: { x: 2075, y: 628 },
     ambientNpcs: [
       { id: 'soi-six-nina', x: 285, y: 598, flipX: false, action: 'idle' },
       { id: 'soi-six-ruby', x: 785, y: 606, flipX: true, action: 'talk' },
@@ -192,14 +193,45 @@ export const levels: LevelDefinition[] = [
       { id: 'npc-girl-black', x: 950, y: 600, flipX: true, action: 'idle' }
     ],
     enemyStarts: [
-      { id: 'indian-fighter-maroon', x: 1325, y: 585, engageDelay: 0 },
-      { id: 'indian-fighter-maroon', x: 1510, y: 612, engageDelay: 2.4 },
-      { id: 'indian-fighter-maroon', x: 1740, y: 568, engageDelay: 4.8 }
+      { id: 'indian-fighter-maroon', x: 1325, y: 626, engageDelay: 0 },
+      { id: 'indian-fighter-maroon', x: 1510, y: 654, engageDelay: 2.4 },
+      { id: 'indian-fighter-maroon', x: 1740, y: 618, engageDelay: 4.8 }
     ],
     props: [
       plant(460, 660), cone(690, 654), cart(870, 648),
       scooter(1180, 660, false, true), sign(360, 666), bin(1390, 658),
       scooter(1660, 658, true), sign(1820, 666, true), ink(1980, 654), plant(2080, 666, 0.42), chair(1305, 660)
+    ]
+  },
+  {
+    id: 'pattaya-soi-six',
+    title: 'Pattaya Soi Six',
+    briefing: 'Neon barfronts press close on the lane. Keep moving while the sidewalk girls dart in and back.',
+    exitLabel: 'SOI 6',
+    clearTitle: 'SOI SIX CLEAR',
+    theme: { accent: 0xff2e9a, haze: 0x281026, signText: 'PATTAYA SOI 6', signColor: 0xff2e9a },
+    playerStart: { x: 455, y: 634 },
+    vendor: { id: 'bar-promoter', x: 920, y: 586, flipX: true },
+    exit: { x: 2050, y: 628 },
+    backgroundKey: assetKeys.backgroundSoiBuakhao,
+    ambientBehavior: 'soi-six-runner',
+    ambientNpcs: [
+      { id: 'soi-six-ruby', x: 350, y: 586, flipX: false, action: 'idle' },
+      { id: 'soi-six-nina', x: 620, y: 580, flipX: true, action: 'talk' },
+      { id: 'npc-girl-red', x: 920, y: 588, flipX: false, action: 'idle' },
+      { id: 'npc-girl-black', x: 1220, y: 574, flipX: true, action: 'cheer' },
+      { id: 'npc-girl-denim', x: 1530, y: 592, flipX: false, action: 'idle' },
+      { id: 'npc-girl-silver', x: 1810, y: 578, flipX: true, action: 'talk' }
+    ],
+    enemyStarts: [
+      { id: 'indian-fighter-maroon', x: 1110, y: 620, engageDelay: 0 },
+      { id: 'indian-fighter-maroon', x: 1375, y: 652, engageDelay: 1.4 },
+      { id: 'indian-fighter-maroon', x: 1640, y: 624, engageDelay: 3.0 },
+      { id: 'indian-fighter-maroon', x: 1885, y: 648, engageDelay: 4.8 }
+    ],
+    props: [
+      sign(585, 666), chair(735, 662), plant(850, 666, 0.36), cone(1035, 654),
+      scooter(1260, 660, true, true), bin(1460, 660), cart(1660, 648), ink(1905, 654), sign(2090, 666, true)
     ]
   },
   {

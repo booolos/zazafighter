@@ -67,7 +67,7 @@ export class CompanionController {
     if (this.scene.time.now < this.actionLockedUntil) {
       this.followMoving = false;
       this.sprite.setVelocity(0, 0);
-      playCharacterAnimation(this.sprite, this.character.id, 'idle');
+      playCharacterAnimation(this.sprite, this.character.id, playerMoving ? 'walk' : 'idle');
       this.updateCompanionShadow();
       return;
     }
@@ -109,7 +109,7 @@ export class CompanionController {
       this.followMoving = false;
     }
 
-    const moving = this.followMoving || Math.abs(this.sprite.body.velocity.x) > 24 || Math.abs(this.sprite.body.velocity.y) > 18;
+    const moving = playerMoving || this.followMoving || Math.abs(this.sprite.body.velocity.x) > 24 || Math.abs(this.sprite.body.velocity.y) > 18;
     const facing = moving && Math.abs(dx) > 4 ? Math.sign(dx) : playerFacing;
     this.sprite.setFlipX(facing < 0);
     this.sprite.y = Phaser.Math.Clamp(this.sprite.y, LANE_TOP, LANE_BOTTOM);

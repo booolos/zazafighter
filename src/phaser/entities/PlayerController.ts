@@ -87,7 +87,7 @@ export class PlayerController {
       return;
     }
 
-    this.sprite.setVelocity(moveX * this.def.stats.speed, moveY * this.def.stats.speed * 0.42);
+    this.sprite.setVelocity(moveX * this.def.stats.speed, moveY * this.def.stats.speed * 0.28);
     this.clampToLane();
 
     if (wantsAttack && this.attackCooldown <= 0) {

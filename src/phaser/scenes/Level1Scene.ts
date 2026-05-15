@@ -12,7 +12,7 @@ import { EnemyController } from '../entities/EnemyController';
 import { CompanionController } from '../entities/CompanionController';
 import { type HitboxProfile, getHurtboxProfile } from '../../game/content/combatProfiles';
 import {
-  WORLD_WIDTH, WORLD_HEIGHT, LANE_TOP, LANE_BOTTOM, LARGE_PROP_DEPTH, KEY_CAPTURE,
+  WORLD_WIDTH, WORLD_HEIGHT, AMBIENT_SIDEWALK_TOP, AMBIENT_SIDEWALK_BOTTOM, LANE_TOP, LANE_BOTTOM, LARGE_PROP_DEPTH, KEY_CAPTURE,
   SOI_DOG_ID, SOI_DOG_BUTTON_PORTRAIT, SOI_DOG_FOLLOW_OFFSET_X, SOI_DOG_FOLLOW_OFFSET_Y,
   SOI_DOG_SPECIAL_COOLDOWN_SECONDS, PICKUP_COLLECT_DISTANCE, PLAYER_DODGE_COOLDOWN_SECONDS, KNOCKBACK_COAST_SECONDS
 } from '../../game/constants';
@@ -35,6 +35,19 @@ type Pickup = {
   collected: boolean;
 };
 
+type AmbientNpc = {
+  sprite: ArcadeCharacterSprite;
+  characterId: string;
+  action: string;
+  homeX: number;
+  homeY: number;
+  runnerState: 'idle' | 'approach' | 'linger' | 'return';
+  nextActionAt: number;
+  targetX: number;
+  targetY: number;
+  speed: number;
+};
+
 type KeyboardControls = {
   left: Phaser.Input.Keyboard.Key[];
   right: Phaser.Input.Keyboard.Key[];
@@ -55,7 +68,7 @@ export class Level1Scene extends Phaser.Scene {
   level!: LevelDefinition;
   state!: GameSessionState;
   enemies: EnemyController[] = [];
-  ambientNpcs: ArcadeCharacterSprite[] = [];
+  ambientNpcs: AmbientNpc[] = [];
   destructibleProps: DestructibleProp[] = [];
   pickups: Pickup[] = [];
   companion?: CompanionController;
@@ -217,6 +230,7 @@ export class Level1Scene extends Phaser.Scene {
       );
     }
 
+    this.updateAmbientNpcs(dt);
     this.updatePickups(dt);
     this.updateDepths();
     this.checkWin();
@@ -241,18 +255,11 @@ export class Level1Scene extends Phaser.Scene {
       .setDepth(-20);
 
     const bgKey = this.level.backgroundKey ?? assetKeys.background;
-    this.addCoveredWorldImage(bgKey, 0.65, -15, 0.58)
+    this.addStageWorldImage(bgKey, -15)
       .setDepth(-15)
-      .setScrollFactor(0.65);
-    this.add.image(worldWidth / 2, worldHeight + 18, assetKeys.backgroundPlayLane)
-      .setOrigin(0.5, 1)
-      .setDisplaySize(worldWidth, 372)
-      .setDepth(-6)
       .setScrollFactor(1);
 
-    this.add.rectangle(worldWidth / 2, 590, worldWidth, 176, 0x050506, 0.22).setDepth(-2);
-    this.add.rectangle(worldWidth / 2, 610, worldWidth, 150, 0x050506, 0.16).setDepth(-5);
-    this.add.rectangle(worldWidth / 2, 492, worldWidth, 4, 0x00dfff, 0.14).setDepth(-4);
+    this.add.rectangle(worldWidth / 2, (LANE_TOP + LANE_BOTTOM) / 2, worldWidth, LANE_BOTTOM - LANE_TOP + 36, 0x050506, 0.08).setDepth(-5);
     this.createLevelDressing();
 
     for (const p of this.level.props) {
@@ -331,6 +338,29 @@ export class Level1Scene extends Phaser.Scene {
       .setDepth(depth);
   }
 
+  private addStageWorldImage(key: string, depth: number) {
+    const worldWidth = this.getResponsiveWorldWidth();
+    const worldHeight = this.getResponsiveWorldHeight();
+    const texture = this.textures.get(key);
+    const source = texture.getSourceImage() as HTMLImageElement | HTMLCanvasElement | undefined;
+    const sourceWidth = source?.width || worldWidth;
+    const sourceHeight = source?.height || worldHeight;
+    const scale = worldHeight / sourceHeight;
+    const tileWidth = sourceWidth * scale;
+    const stage = this.add.container(0, 0)
+      .setScrollFactor(1)
+      .setDepth(depth);
+
+    for (let x = tileWidth / 2; x < worldWidth + tileWidth; x += tileWidth) {
+      stage.add(this.add.image(x, worldHeight / 2, key)
+        .setOrigin(0.5)
+        .setScale(scale)
+        .setDepth(depth));
+    }
+
+    return stage;
+  }
+
   private createLevelDressing() {
     const { accent, haze, signText, signColor } = this.level.theme;
     const worldWidth = this.getResponsiveWorldWidth();
@@ -338,25 +368,18 @@ export class Level1Scene extends Phaser.Scene {
     this.add.rectangle(worldWidth / 2, worldHeight / 2, worldWidth, worldHeight, haze, 0.2)
       .setDepth(-14)
       .setBlendMode(Phaser.BlendModes.MULTIPLY);
-    this.add.rectangle(worldWidth / 2, 490, worldWidth, 3, accent, 0.32)
-      .setDepth(-3)
-      .setBlendMode(Phaser.BlendModes.ADD);
-    this.add.rectangle(worldWidth / 2, 635, worldWidth, 2, accent, 0.18)
-      .setDepth(-3)
-      .setBlendMode(Phaser.BlendModes.ADD);
-
     const sign = this.add.text(WORLD_WIDTH / 2, 118, signText, {
       color: Phaser.Display.Color.IntegerToColor(signColor).rgba,
       fontFamily: 'Impact, Arial Black, sans-serif',
       fontSize: '42px',
       stroke: '#050506',
       strokeThickness: 9
-    }).setOrigin(0.5).setDepth(-2).setAlpha(0.9);
+    }).setOrigin(0.5).setDepth(-2).setAlpha(0.44);
     sign.setShadow(0, 0, Phaser.Display.Color.IntegerToColor(signColor).rgba, 18, true, true);
 
     this.tweens.add({
       targets: sign,
-      alpha: 0.62,
+      alpha: 0.28,
       duration: 760,
       yoyo: true,
       repeat: -1,
@@ -388,14 +411,15 @@ export class Level1Scene extends Phaser.Scene {
 
     this.createAmbientNpcs();
 
-    const playerSprite = createCharacterSprite(this, playerDef, this.level.playerStart.x, this.level.playerStart.y, {
+    const playerStartY = Phaser.Math.Clamp(this.level.playerStart.y, LANE_TOP, LANE_BOTTOM);
+    const playerSprite = createCharacterSprite(this, playerDef, this.level.playerStart.x, playerStartY, {
       action: 'idle',
       collideWorldBounds: true,
       drag: 1200
     });
     this.playerController = new PlayerController(this, playerSprite, playerDef, playerId);
 
-    this.playerShadow = this.add.image(playerSprite.x, this.level.playerStart.y + 6, assetKeys.propPuddleDecal)
+    this.playerShadow = this.add.image(playerSprite.x, playerStartY + 6, assetKeys.propPuddleDecal)
       .setOrigin(0.5, 0.5)
       .setScale(0.42)
       .setAlpha(0.55)
@@ -421,7 +445,8 @@ export class Level1Scene extends Phaser.Scene {
       });
       sprite.body.enable = false;
       sprite.setAlpha(1);
-      sprite.setDepth(LANE_TOP - 26);
+      sprite.y = Phaser.Math.Clamp(sprite.y, AMBIENT_SIDEWALK_TOP, AMBIENT_SIDEWALK_BOTTOM);
+      sprite.setDepth(AMBIENT_SIDEWALK_BOTTOM - 2);
       this.ambientNpcs.push(sprite);
       
       if (this.isAmbientGirlId(ambient.id)) {
@@ -460,7 +485,6 @@ export class Level1Scene extends Phaser.Scene {
     const chosen: Array<{ id: string; x: number; y: number; flipX: boolean; action: string }> = [];
     const xMin = Math.max(290, this.level.playerStart.x - 230);
     const xMax = Math.min(WORLD_WIDTH - 260, this.level.exit.x - 170);
-    const laneYs = [590, 598, 606, 614];
     const shuffled = Phaser.Utils.Array.Shuffle([...girlPool]);
 
     for (let i = 0; i < count; i++) {
@@ -472,7 +496,7 @@ export class Level1Scene extends Phaser.Scene {
       chosen.push({
         id: character.id,
         x,
-        y: Phaser.Utils.Array.GetRandom(laneYs),
+        y: this.pickAmbientGirlY(),
         flipX: Phaser.Math.Between(0, 1) === 1,
         action: hasAnimation(character.id, action) ? action : 'idle'
       });
@@ -485,10 +509,16 @@ export class Level1Scene extends Phaser.Scene {
     return id.startsWith('soi-six-') || id.startsWith('npc-girl-');
   }
 
+  private pickAmbientGirlY() {
+    const upperHalf = Phaser.Math.FloatBetween(0, 1) < 0.72;
+    const min = upperHalf ? AMBIENT_SIDEWALK_TOP : Math.round((AMBIENT_SIDEWALK_TOP + AMBIENT_SIDEWALK_BOTTOM) / 2);
+    return Phaser.Math.Between(min, AMBIENT_SIDEWALK_BOTTOM);
+  }
+
   private createCompanion() {
     const character = getCharacter(SOI_DOG_ID);
     const x = this.level.playerStart.x - this.playerController.facing * SOI_DOG_FOLLOW_OFFSET_X;
-    const y = Phaser.Math.Clamp(this.level.playerStart.y + SOI_DOG_FOLLOW_OFFSET_Y, LANE_TOP, LANE_BOTTOM);
+    const y = Phaser.Math.Clamp(this.playerController.sprite.y + SOI_DOG_FOLLOW_OFFSET_Y, LANE_TOP, LANE_BOTTOM);
     const sprite = createCharacterSprite(this, character, x, y, {
       action: 'idle',
       collideWorldBounds: true,
@@ -505,7 +535,7 @@ export class Level1Scene extends Phaser.Scene {
 
   private makeEnemy(characterId: string, x: number, y: number, engageDelay: number): EnemyController {
     const character = getCharacter(characterId);
-    const sprite = createCharacterSprite(this, character, x, y, {
+    const sprite = createCharacterSprite(this, character, x, Phaser.Math.Clamp(y, LANE_TOP, LANE_BOTTOM), {
       action: 'idle',
       collideWorldBounds: true,
       drag: 900,
@@ -784,7 +814,7 @@ export class Level1Scene extends Phaser.Scene {
       this.companion.shadow.setDepth(this.companion.sprite.y - 2);
     }
     for (const npc of this.ambientNpcs) {
-      npc.setDepth(LANE_TOP - 26);
+      npc.setDepth(AMBIENT_SIDEWALK_BOTTOM - 2);
     }
     for (const prop of this.destructibleProps) {
       if (!prop.active) continue;

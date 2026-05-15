@@ -1,7 +1,9 @@
 export const WORLD_WIDTH = 2200;
 export const WORLD_HEIGHT = 720;
-export const LANE_TOP = 505;
-export const LANE_BOTTOM = 640;
+export const AMBIENT_SIDEWALK_TOP = 552;
+export const AMBIENT_SIDEWALK_BOTTOM = 594;
+export const LANE_TOP = 588;
+export const LANE_BOTTOM = 668;
 export const LARGE_PROP_DEPTH = LANE_TOP - 10;
 export const KEY_CAPTURE = 'W,A,S,D,UP,DOWN,LEFT,RIGHT,SPACE,J,C,I,SHIFT,K,U,O,E,L,P,R,ESC';
 
