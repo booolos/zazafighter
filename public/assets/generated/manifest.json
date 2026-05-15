@@ -23,6 +23,11 @@
       "key": "level1-pattaya-play-lane",
       "path": "assets/generated/backgrounds/level1-pattaya-play-lane.jpg",
       "role": "play lane texture"
+    },
+    {
+      "key": "soi-six-real-neon-v1-20260515",
+      "path": "assets/generated/backgrounds/soi-six-real-neon-v1-20260515.jpg",
+      "role": "generated Soi Six neon stage background"
     }
   ],
   "characters": [
@@ -179,6 +184,41 @@
       "path": "assets/generated/characters/enemies/indian-fighter-cream.png",
       "frameWidth": 256,
       "frameHeight": 256
+    },
+    {
+      "key": "soi-six-hd-dao",
+      "role": "npc",
+      "path": "assets/generated/characters/npcs/soi-six-hd-dao.png",
+      "frameWidth": 384,
+      "frameHeight": 384
+    },
+    {
+      "key": "soi-six-hd-kanda",
+      "role": "npc",
+      "path": "assets/generated/characters/npcs/soi-six-hd-kanda.png",
+      "frameWidth": 384,
+      "frameHeight": 384
+    },
+    {
+      "key": "soi-six-hd-mintra",
+      "role": "npc",
+      "path": "assets/generated/characters/npcs/soi-six-hd-mintra.png",
+      "frameWidth": 384,
+      "frameHeight": 384
+    },
+    {
+      "key": "soi-six-hd-ploy",
+      "role": "npc",
+      "path": "assets/generated/characters/npcs/soi-six-hd-ploy.png",
+      "frameWidth": 384,
+      "frameHeight": 384
+    },
+    {
+      "key": "soi-six-hd-mew",
+      "role": "npc",
+      "path": "assets/generated/characters/npcs/soi-six-hd-mew.png",
+      "frameWidth": 384,
+      "frameHeight": 384
     }
   ],
   "props": [
@@ -651,7 +691,7 @@
     {
       "character": "soi-dog",
       "action": "idle",
-      "path": "assets/generated/animations/soi-dog/idle.png",
+      "path": "assets/generated/animations/soi-dog/idle-standing-stable.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 256
@@ -659,7 +699,7 @@
     {
       "character": "soi-dog",
       "action": "walk",
-      "path": "assets/generated/animations/soi-dog/walk.png",
+      "path": "assets/generated/animations/soi-dog/walk-run-stable.png",
       "frames": 6,
       "frameWidth": 256,
       "frameHeight": 256
@@ -667,7 +707,7 @@
     {
       "character": "soi-dog",
       "action": "special-attack",
-      "path": "assets/generated/animations/soi-dog/special-attack.png",
+      "path": "assets/generated/animations/soi-dog/rush-attack-v2.png",
       "frames": 6,
       "frameWidth": 256,
       "frameHeight": 256
@@ -1511,6 +1551,62 @@
       "frames": 6,
       "frameWidth": 256,
       "frameHeight": 256
+    },
+    {
+      "character": "soi-six-hd-mew",
+      "action": "idle",
+      "path": "assets/generated/animations/soi-six-hd-mew/idle.png",
+      "frames": 10,
+      "frameWidth": 384,
+      "frameHeight": 384
+    },
+    {
+      "character": "soi-six-hd-mew",
+      "action": "talk",
+      "path": "assets/generated/animations/soi-six-hd-mew/talk.png",
+      "frames": 10,
+      "frameWidth": 384,
+      "frameHeight": 384
+    },
+    {
+      "character": "soi-six-hd-mew",
+      "action": "walk",
+      "path": "assets/generated/animations/soi-six-hd-mew/walk.png",
+      "frames": 10,
+      "frameWidth": 384,
+      "frameHeight": 384
+    },
+    {
+      "character": "soi-six-hd-mew",
+      "action": "run",
+      "path": "assets/generated/animations/soi-six-hd-mew/run.png",
+      "frames": 10,
+      "frameWidth": 384,
+      "frameHeight": 384
+    },
+    {
+      "character": "soi-six-hd-mew",
+      "action": "react",
+      "path": "assets/generated/animations/soi-six-hd-mew/react.png",
+      "frames": 4,
+      "frameWidth": 384,
+      "frameHeight": 384
+    },
+    {
+      "character": "soi-six-hd-mew",
+      "action": "cheer",
+      "path": "assets/generated/animations/soi-six-hd-mew/cheer.png",
+      "frames": 10,
+      "frameWidth": 384,
+      "frameHeight": 384
+    },
+    {
+      "character": "soi-six-hd-mew",
+      "action": "panic",
+      "path": "assets/generated/animations/soi-six-hd-mew/panic.png",
+      "frames": 10,
+      "frameWidth": 384,
+      "frameHeight": 384
     }
   ],
   "standards": {
@@ -1523,5 +1619,87 @@
     "Animation sheets are deterministic normalized sprint placeholders made from approved seed cutouts to prevent AI identity drift.",
     "Replace placeholder animation sheets with final hand-approved AI/edit strips when available, keeping the same paths and frame dimensions.",
     "Baht coin pickup was replaced with a deterministic BAHT coin icon after QA rejected a generated crypto-style symbol."
+  ],
+  "interactions": [
+    {
+      "character": "soi-six-hd-dao",
+      "kind": "feet-check-face",
+      "path": "assets/generated/interactions/feet-check/soi-six-hd-dao-face.png",
+      "frames": 4,
+      "frameWidth": 640,
+      "frameHeight": 720
+    },
+    {
+      "character": "soi-six-hd-dao",
+      "kind": "feet-check-heels",
+      "path": "assets/generated/interactions/feet-check/soi-six-hd-dao-heels-strip.png",
+      "frames": 10,
+      "frameWidth": 512,
+      "frameHeight": 512
+    },
+    {
+      "character": "soi-six-hd-kanda",
+      "kind": "feet-check-face",
+      "path": "assets/generated/interactions/feet-check/soi-six-hd-kanda-face.png",
+      "frames": 4,
+      "frameWidth": 640,
+      "frameHeight": 720
+    },
+    {
+      "character": "soi-six-hd-kanda",
+      "kind": "feet-check-heels",
+      "path": "assets/generated/interactions/feet-check/soi-six-hd-kanda-heels-strip.png",
+      "frames": 10,
+      "frameWidth": 512,
+      "frameHeight": 512
+    },
+    {
+      "character": "soi-six-hd-mintra",
+      "kind": "feet-check-face",
+      "path": "assets/generated/interactions/feet-check/soi-six-hd-mintra-face.png",
+      "frames": 4,
+      "frameWidth": 640,
+      "frameHeight": 720
+    },
+    {
+      "character": "soi-six-hd-mintra",
+      "kind": "feet-check-heels",
+      "path": "assets/generated/interactions/feet-check/soi-six-hd-mintra-heels-strip.png",
+      "frames": 10,
+      "frameWidth": 512,
+      "frameHeight": 512
+    },
+    {
+      "character": "soi-six-hd-ploy",
+      "kind": "feet-check-face",
+      "path": "assets/generated/interactions/feet-check/soi-six-hd-ploy-face.png",
+      "frames": 4,
+      "frameWidth": 640,
+      "frameHeight": 720
+    },
+    {
+      "character": "soi-six-hd-ploy",
+      "kind": "feet-check-heels",
+      "path": "assets/generated/interactions/feet-check/soi-six-hd-ploy-heels-strip.png",
+      "frames": 10,
+      "frameWidth": 512,
+      "frameHeight": 512
+    },
+    {
+      "character": "soi-six-hd-mew",
+      "kind": "feet-check-face",
+      "path": "assets/generated/interactions/feet-check/soi-six-hd-mew-face.png",
+      "frames": 4,
+      "frameWidth": 640,
+      "frameHeight": 720
+    },
+    {
+      "character": "soi-six-hd-mew",
+      "kind": "feet-check-heels",
+      "path": "assets/generated/interactions/feet-check/soi-six-hd-mew-heels-strip.png",
+      "frames": 10,
+      "frameWidth": 512,
+      "frameHeight": 512
+    }
   ]
 }

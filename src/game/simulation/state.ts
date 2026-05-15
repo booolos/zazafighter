@@ -21,6 +21,9 @@ export type HudSnapshot = {
   companionPortrait: string;
   companionReady: boolean;
   companionCooldownRatio: number;
+  feetCheckAvailable: boolean;
+  feetCheckActive: boolean;
+  feetCheckName?: string;
 };
 
 export type GameSessionState = {

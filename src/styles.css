@@ -521,6 +521,168 @@ button {
   pointer-events: none;
 }
 
+.feet-check-button {
+  position: absolute;
+  left: 50%;
+  bottom: max(130px, calc(env(safe-area-inset-bottom) + 116px));
+  display: grid;
+  gap: 2px;
+  min-width: 156px;
+  padding: 10px 18px 11px;
+  border: 2px solid rgba(255, 202, 58, 0.86);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 46, 154, 0.86), rgba(160, 44, 255, 0.82) 52%, rgba(0, 223, 255, 0.72)),
+    rgba(5, 6, 10, 0.88);
+  color: var(--paper);
+  pointer-events: auto;
+  cursor: pointer;
+  text-align: center;
+  transform: translateX(-50%);
+  box-shadow: 0 0 24px rgba(255, 46, 154, 0.34), 0 16px 34px rgba(0, 0, 0, 0.52);
+  touch-action: none;
+  z-index: 4;
+}
+
+.feet-check-button.hidden {
+  display: none;
+}
+
+.feet-check-button span {
+  color: #ffca3a;
+  font: 900 12px/1 Arial Black, Arial, sans-serif;
+}
+
+.feet-check-button strong {
+  color: #ffffff;
+  font: 900 20px/1 Impact, Arial Black, sans-serif;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.56);
+}
+
+.feet-check-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: max(18px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 46, 154, 0.2), transparent 0 34%),
+    radial-gradient(circle at 70% 52%, rgba(0, 223, 255, 0.14), transparent 0 38%),
+    rgba(4, 5, 8, 0.78);
+  backdrop-filter: blur(4px);
+  pointer-events: auto;
+  z-index: 8;
+}
+
+.feet-check-overlay.hidden {
+  display: none;
+}
+
+.feet-check-stage {
+  position: relative;
+  width: min(960px, 94vw);
+  height: min(540px, 76vh);
+  display: grid;
+  grid-template-columns: minmax(250px, 0.86fr) minmax(320px, 1.14fr);
+  gap: clamp(12px, 2vw, 22px);
+  padding: clamp(12px, 2vw, 20px);
+  border: 2px solid rgba(255, 202, 58, 0.76);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(9, 10, 16, 0.92), rgba(5, 6, 10, 0.96)),
+    rgba(5, 6, 10, 0.95);
+  box-shadow: 0 0 38px rgba(255, 46, 154, 0.24), 0 24px 70px rgba(0, 0, 0, 0.72);
+}
+
+.feet-check-face,
+.feet-check-foot {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.feet-check-face-strip {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+  background-size: 100% 100%;
+  user-select: none;
+  pointer-events: none;
+}
+
+.feet-check-face::after,
+.feet-check-foot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.feet-check-copy {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, rgba(5, 6, 10, 0.82), rgba(5, 6, 10, 0.28));
+}
+
+.feet-check-copy span {
+  color: #ffca3a;
+  font: 900 11px/1 Arial Black, Arial, sans-serif;
+}
+
+.feet-check-copy strong {
+  color: #ffffff;
+  font: 900 clamp(24px, 4vw, 44px)/0.94 Impact, Arial Black, sans-serif;
+}
+
+.feet-check-copy small {
+  color: rgba(244, 244, 242, 0.9);
+  font: 800 12px/1.2 Arial, sans-serif;
+}
+
+.feet-check-foot {
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+  background-color: #090a10;
+}
+
+.feet-check-exit {
+  position: absolute;
+  right: 18px;
+  bottom: 16px;
+  min-width: 112px;
+  padding: 11px 18px;
+  border: 2px solid rgba(255, 202, 58, 0.9);
+  border-radius: 8px;
+  background: rgba(5, 6, 10, 0.88);
+  color: var(--paper);
+  font: 900 16px/1 Arial Black, Arial, sans-serif;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+@keyframes feet-check-strip {
+  from {
+    background-position: 0 50%;
+  }
+
+  to {
+    background-position: 100% 50%;
+  }
+}
+
 #portrait-blocker {
   display: none;
   z-index: 20;
@@ -612,6 +774,25 @@ button {
 
   .pause-button {
     grid-area: pause;
+  }
+
+  .feet-check-stage {
+    width: min(94vw, 520px);
+    height: min(86dvh, 680px);
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(190px, 0.82fr) minmax(230px, 1fr);
+    padding: 10px;
+  }
+
+  .feet-check-copy {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .feet-check-exit {
+    right: 12px;
+    bottom: 12px;
   }
 }
 
@@ -708,6 +889,26 @@ button {
     bottom: -5px;
     padding: 2px 5px;
     font-size: 8px;
+  }
+
+  .feet-check-button {
+    bottom: max(86px, calc(env(safe-area-inset-bottom) + 76px));
+    min-width: 136px;
+    padding: 8px 14px 9px;
+  }
+
+  .feet-check-button strong {
+    font-size: 17px;
+  }
+
+  .feet-check-stage {
+    width: min(820px, 94vw);
+    height: min(360px, 82vh);
+    padding: 10px;
+  }
+
+  .feet-check-copy strong {
+    font-size: 26px;
   }
 }
 
@@ -806,5 +1007,32 @@ button {
   .control-label {
     bottom: -4px;
     font-size: 7px;
+  }
+
+  .feet-check-button {
+    bottom: max(62px, calc(env(safe-area-inset-bottom) + 56px));
+    min-width: 118px;
+    padding: 6px 10px 7px;
+  }
+
+  .feet-check-button span {
+    font-size: 9px;
+  }
+
+  .feet-check-button strong {
+    font-size: 14px;
+  }
+
+  .feet-check-stage {
+    height: min(286px, 82vh);
+    gap: 8px;
+  }
+
+  .feet-check-exit {
+    right: 12px;
+    bottom: 10px;
+    min-width: 92px;
+    padding: 8px 12px;
+    font-size: 13px;
   }
 }

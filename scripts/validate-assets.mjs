@@ -46,6 +46,34 @@ function assertFile(relativePath, label) {
   return true;
 }
 
+function readPngSize(relativePath, label) {
+  const fullPath = path.join(repoRoot, 'public', relativePath);
+  if (!fs.existsSync(fullPath)) {
+    fail(`${label} missing: public/${relativePath}`);
+    return undefined;
+  }
+  try {
+    const buffer = fs.readFileSync(fullPath);
+    const isPng = buffer.length >= 24
+      && buffer[0] === 0x89
+      && buffer[1] === 0x50
+      && buffer[2] === 0x4e
+      && buffer[3] === 0x47
+      && buffer[4] === 0x0d
+      && buffer[5] === 0x0a
+      && buffer[6] === 0x1a
+      && buffer[7] === 0x0a;
+    if (!isPng) throw new Error('invalid PNG signature');
+    return {
+      width: buffer.readUInt32BE(16),
+      height: buffer.readUInt32BE(20)
+    };
+  } catch (error) {
+    fail(`${label} must be a readable PNG: ${error.message}`);
+    return undefined;
+  }
+}
+
 function isKebabCase(value) {
   return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
 }
@@ -172,11 +200,36 @@ for (const character of registry.characters) {
     if (!isGeneratedAnimationFile(character.id, animation.file)) {
       fail(`${character.id}/${action} file must be a PNG under assets/generated/animations/${character.id}*`);
     }
-    if (animation.frameWidth !== 256 || animation.frameHeight !== 256) {
-      fail(`${character.id}/${action} must use 256x256 frames`);
+    const allowedFrameSizes = character.role === 'npc' ? [256, 384] : [256];
+    if (animation.frameWidth !== animation.frameHeight || !allowedFrameSizes.includes(animation.frameWidth)) {
+      fail(`${character.id}/${action} must use ${allowedFrameSizes.map((size) => `${size}x${size}`).join(' or ')} frames`);
     }
     if (animation.frames < 1) fail(`${character.id}/${action} has invalid frame count`);
     assertFile(animation.file, `${character.id}/${action}`);
+  }
+
+  if (character.feetCheck) {
+    const feetCheck = character.feetCheck;
+    assertFile(feetCheck.faceImage, `${character.id} feetCheck.faceImage`);
+    assertFile(feetCheck.stripImage, `${character.id} feetCheck.stripImage`);
+    for (const field of ['frames', 'frameWidth', 'frameHeight', 'fps']) {
+      assertNumber(feetCheck[field], `${character.id} feetCheck.${field}`, { min: 1 });
+    }
+    if (feetCheck.frameWidth !== 512 || feetCheck.frameHeight !== 512) {
+      fail(`${character.id} feetCheck must use 512x512 frames`);
+    }
+    const faceSize = readPngSize(feetCheck.faceImage, `${character.id} feetCheck.faceImage`);
+    const faceFrames = feetCheck.faceFrames ?? 1;
+    const faceFrameWidth = feetCheck.faceFrameWidth ?? faceSize?.width ?? 0;
+    const faceFrameHeight = feetCheck.faceFrameHeight ?? faceSize?.height ?? 0;
+    if (faceSize && (faceSize.width !== faceFrames * faceFrameWidth || faceSize.height !== faceFrameHeight)) {
+      fail(`${character.id} feetCheck.faceImage must be ${faceFrames * faceFrameWidth}x${faceFrameHeight}`);
+    }
+    const stripSize = readPngSize(feetCheck.stripImage, `${character.id} feetCheck.stripImage`);
+    const expectedStripWidth = feetCheck.frames * feetCheck.frameWidth;
+    if (stripSize && (stripSize.width !== expectedStripWidth || stripSize.height !== feetCheck.frameHeight)) {
+      fail(`${character.id} feetCheck.stripImage must be ${expectedStripWidth}x${feetCheck.frameHeight}`);
+    }
   }
 }
 
@@ -193,6 +246,12 @@ for (const item of generatedManifest.fx ?? []) {
   assertFile(item.path, `fx ${item.key}`);
   if (item.frameWidth !== 256 || item.frameHeight !== 256) {
     fail(`fx ${item.key} must use 256x256 frames`);
+  }
+}
+for (const item of generatedManifest.interactions ?? []) {
+  assertFile(item.path, `interaction ${item.character}/${item.kind}`);
+  if (item.kind === 'feet-check-heels' && (item.frameWidth !== 512 || item.frameHeight !== 512)) {
+    fail(`interaction ${item.character}/${item.kind} must use 512x512 frames`);
   }
 }
 

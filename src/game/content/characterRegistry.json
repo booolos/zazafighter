@@ -1038,7 +1038,7 @@
         "path": "assets/generated/characters/companions/soi-dog.png"
       },
       "render": {
-        "scale": 0.38,
+        "scale": 0.3,
         "originX": 0.5,
         "originY": 0.88
       },
@@ -1064,7 +1064,7 @@
       "animations": {
         "idle": {
           "key": "anim:soi-dog:idle",
-          "file": "assets/generated/animations/soi-dog/idle.png",
+          "file": "assets/generated/animations/soi-dog/idle-standing-stable.png",
           "frames": 4,
           "frameWidth": 256,
           "frameHeight": 256,
@@ -2215,6 +2215,576 @@
           "frameHeight": 256,
           "frameRate": 5,
           "repeat": 0
+        }
+      }
+    },
+    {
+      "id": "soi-six-hd-dao",
+      "displayName": "Dao",
+      "handle": "Sporty Soi 6 Runner",
+      "role": "npc",
+      "faction": "soi-six-nightlife",
+      "seed": {
+        "key": "character:soi-six-hd-dao:seed",
+        "path": "assets/generated/characters/npcs/soi-six-hd-dao.png"
+      },
+      "render": {
+        "scale": 0.235,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 70,
+        "speed": 142,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 0.82
+      },
+      "physics": {
+        "bodyWidth": 126,
+        "bodyHeight": 305,
+        "bodyOffsetX": 129,
+        "bodyOffsetY": 43
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-light",
+        "aiProfile": "idle-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:soi-six-hd-dao:idle",
+          "file": "assets/generated/animations/soi-six-hd-dao/idle.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:soi-six-hd-dao:talk",
+          "file": "assets/generated/animations/soi-six-hd-dao/talk.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 10,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:soi-six-hd-dao:walk",
+          "file": "assets/generated/animations/soi-six-hd-dao/walk.png",
+          "frames": 10,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 15,
+          "repeat": -1
+        },
+        "run": {
+          "key": "anim:soi-six-hd-dao:run",
+          "file": "assets/generated/animations/soi-six-hd-dao/run.png",
+          "frames": 11,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 22,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:soi-six-hd-dao:react",
+          "file": "assets/generated/animations/soi-six-hd-dao/react.png",
+          "frames": 4,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 11,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:soi-six-hd-dao:cheer",
+          "file": "assets/generated/animations/soi-six-hd-dao/cheer.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 10,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:soi-six-hd-dao:panic",
+          "file": "assets/generated/animations/soi-six-hd-dao/panic.png",
+          "frames": 11,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 22,
+          "repeat": -1
+        }
+      },
+      "feetCheck": {
+        "title": "FEET CHECK",
+        "subtitle": "Pink platforms, toes-forward POV tease.",
+        "faceImage": "assets/generated/interactions/feet-check/soi-six-hd-dao-face.png",
+        "faceFrames": 4,
+        "faceFrameWidth": 640,
+        "faceFrameHeight": 720,
+        "faceFps": 6,
+        "stripImage": "assets/generated/interactions/feet-check/soi-six-hd-dao-heels-strip.png",
+        "frames": 10,
+        "frameWidth": 512,
+        "frameHeight": 512,
+        "fps": 20
+      }
+    },
+    {
+      "id": "soi-six-hd-kanda",
+      "displayName": "Kanda",
+      "handle": "VIP Soi 6 Queen",
+      "role": "npc",
+      "faction": "soi-six-nightlife",
+      "seed": {
+        "key": "character:soi-six-hd-kanda:seed",
+        "path": "assets/generated/characters/npcs/soi-six-hd-kanda.png"
+      },
+      "render": {
+        "scale": 0.238,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 70,
+        "speed": 116,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 0.82
+      },
+      "physics": {
+        "bodyWidth": 126,
+        "bodyHeight": 305,
+        "bodyOffsetX": 129,
+        "bodyOffsetY": 43
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-light",
+        "aiProfile": "idle-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:soi-six-hd-kanda:idle",
+          "file": "assets/generated/animations/soi-six-hd-kanda/idle.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:soi-six-hd-kanda:talk",
+          "file": "assets/generated/animations/soi-six-hd-kanda/talk.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 10,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:soi-six-hd-kanda:walk",
+          "file": "assets/generated/animations/soi-six-hd-kanda/walk.png",
+          "frames": 10,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 15,
+          "repeat": -1
+        },
+        "run": {
+          "key": "anim:soi-six-hd-kanda:run",
+          "file": "assets/generated/animations/soi-six-hd-kanda/run.png",
+          "frames": 11,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 22,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:soi-six-hd-kanda:react",
+          "file": "assets/generated/animations/soi-six-hd-kanda/react.png",
+          "frames": 4,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 11,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:soi-six-hd-kanda:cheer",
+          "file": "assets/generated/animations/soi-six-hd-kanda/cheer.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 10,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:soi-six-hd-kanda:panic",
+          "file": "assets/generated/animations/soi-six-hd-kanda/panic.png",
+          "frames": 11,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 22,
+          "repeat": -1
+        }
+      },
+      "feetCheck": {
+        "title": "FEET CHECK",
+        "subtitle": "Gold-lit arch turn, heel slipping loose.",
+        "faceImage": "assets/generated/interactions/feet-check/soi-six-hd-kanda-face.png",
+        "faceFrames": 4,
+        "faceFrameWidth": 640,
+        "faceFrameHeight": 720,
+        "faceFps": 6,
+        "stripImage": "assets/generated/interactions/feet-check/soi-six-hd-kanda-heels-strip.png",
+        "frames": 10,
+        "frameWidth": 512,
+        "frameHeight": 512,
+        "fps": 20
+      }
+    },
+    {
+      "id": "soi-six-hd-mintra",
+      "displayName": "Mintra",
+      "handle": "Soi 6 Door Callout",
+      "role": "npc",
+      "faction": "soi-six-nightlife",
+      "seed": {
+        "key": "character:soi-six-hd-mintra:seed",
+        "path": "assets/generated/characters/npcs/soi-six-hd-mintra.png"
+      },
+      "render": {
+        "scale": 0.235,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 70,
+        "speed": 132,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 0.82
+      },
+      "physics": {
+        "bodyWidth": 126,
+        "bodyHeight": 305,
+        "bodyOffsetX": 129,
+        "bodyOffsetY": 43
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-light",
+        "aiProfile": "idle-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:soi-six-hd-mintra:idle",
+          "file": "assets/generated/animations/soi-six-hd-mintra/idle.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:soi-six-hd-mintra:talk",
+          "file": "assets/generated/animations/soi-six-hd-mintra/talk.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 10,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:soi-six-hd-mintra:walk",
+          "file": "assets/generated/animations/soi-six-hd-mintra/walk.png",
+          "frames": 10,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 15,
+          "repeat": -1
+        },
+        "run": {
+          "key": "anim:soi-six-hd-mintra:run",
+          "file": "assets/generated/animations/soi-six-hd-mintra/run.png",
+          "frames": 11,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 22,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:soi-six-hd-mintra:react",
+          "file": "assets/generated/animations/soi-six-hd-mintra/react.png",
+          "frames": 4,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 11,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:soi-six-hd-mintra:cheer",
+          "file": "assets/generated/animations/soi-six-hd-mintra/cheer.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 10,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:soi-six-hd-mintra:panic",
+          "file": "assets/generated/animations/soi-six-hd-mintra/panic.png",
+          "frames": 11,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 22,
+          "repeat": -1
+        }
+      },
+      "feetCheck": {
+        "title": "FEET CHECK",
+        "subtitle": "Violet heel side-angle, polished toe flex.",
+        "faceImage": "assets/generated/interactions/feet-check/soi-six-hd-mintra-face.png",
+        "faceFrames": 4,
+        "faceFrameWidth": 640,
+        "faceFrameHeight": 720,
+        "faceFps": 6,
+        "stripImage": "assets/generated/interactions/feet-check/soi-six-hd-mintra-heels-strip.png",
+        "frames": 10,
+        "frameWidth": 512,
+        "frameHeight": 512,
+        "fps": 20
+      }
+    },
+    {
+      "id": "soi-six-hd-ploy",
+      "displayName": "Ploy",
+      "handle": "Soi 6 Dancer",
+      "role": "npc",
+      "faction": "soi-six-nightlife",
+      "seed": {
+        "key": "character:soi-six-hd-ploy:seed",
+        "path": "assets/generated/characters/npcs/soi-six-hd-ploy.png"
+      },
+      "render": {
+        "scale": 0.235,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 70,
+        "speed": 138,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 0.82
+      },
+      "physics": {
+        "bodyWidth": 126,
+        "bodyHeight": 305,
+        "bodyOffsetX": 129,
+        "bodyOffsetY": 43
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-light",
+        "aiProfile": "idle-npc"
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:soi-six-hd-ploy:idle",
+          "file": "assets/generated/animations/soi-six-hd-ploy/idle.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:soi-six-hd-ploy:talk",
+          "file": "assets/generated/animations/soi-six-hd-ploy/talk.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 10,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:soi-six-hd-ploy:walk",
+          "file": "assets/generated/animations/soi-six-hd-ploy/walk.png",
+          "frames": 10,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 15,
+          "repeat": -1
+        },
+        "run": {
+          "key": "anim:soi-six-hd-ploy:run",
+          "file": "assets/generated/animations/soi-six-hd-ploy/run.png",
+          "frames": 11,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 22,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:soi-six-hd-ploy:react",
+          "file": "assets/generated/animations/soi-six-hd-ploy/react.png",
+          "frames": 4,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 11,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:soi-six-hd-ploy:cheer",
+          "file": "assets/generated/animations/soi-six-hd-ploy/cheer.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 10,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:soi-six-hd-ploy:panic",
+          "file": "assets/generated/animations/soi-six-hd-ploy/panic.png",
+          "frames": 11,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 22,
+          "repeat": -1
+        }
+      },
+      "feetCheck": {
+        "title": "FEET CHECK",
+        "subtitle": "Dancer heel roll, glossy neon nails.",
+        "faceImage": "assets/generated/interactions/feet-check/soi-six-hd-ploy-face.png",
+        "faceFrames": 4,
+        "faceFrameWidth": 640,
+        "faceFrameHeight": 720,
+        "faceFps": 6,
+        "stripImage": "assets/generated/interactions/feet-check/soi-six-hd-ploy-heels-strip.png",
+        "frames": 10,
+        "frameWidth": 512,
+        "frameHeight": 512,
+        "fps": 20
+      }
+    },
+    {
+      "id": "soi-six-hd-mew",
+      "displayName": "Mew",
+      "handle": "Soi 6 Platform Strut",
+      "role": "npc",
+      "faction": "soi-six-nightlife",
+      "seed": {
+        "key": "character:soi-six-hd-mew:seed",
+        "path": "assets/generated/characters/npcs/soi-six-hd-mew.png"
+      },
+      "render": {
+        "scale": 0.235,
+        "originX": 0.5,
+        "originY": 0.9
+      },
+      "stats": {
+        "maxHp": 70,
+        "speed": 146,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 0.82
+      },
+      "physics": {
+        "bodyWidth": 126,
+        "bodyHeight": 305,
+        "bodyOffsetX": 129,
+        "bodyOffsetY": 43
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-light",
+        "aiProfile": "idle-npc"
+      },
+      "feetCheck": {
+        "title": "FEET CHECK",
+        "subtitle": "Platform strut close-up, playful heel lift.",
+        "faceImage": "assets/generated/interactions/feet-check/soi-six-hd-mew-face.png",
+        "faceFrames": 4,
+        "faceFrameWidth": 640,
+        "faceFrameHeight": 720,
+        "faceFps": 6,
+        "stripImage": "assets/generated/interactions/feet-check/soi-six-hd-mew-heels-strip.png",
+        "frames": 10,
+        "frameWidth": 512,
+        "frameHeight": 512,
+        "fps": 20
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:soi-six-hd-mew:idle",
+          "file": "assets/generated/animations/soi-six-hd-mew/idle.png",
+          "frames": 10,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 10,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:soi-six-hd-mew:talk",
+          "file": "assets/generated/animations/soi-six-hd-mew/talk.png",
+          "frames": 10,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 12,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:soi-six-hd-mew:walk",
+          "file": "assets/generated/animations/soi-six-hd-mew/walk.png",
+          "frames": 10,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 18,
+          "repeat": -1
+        },
+        "run": {
+          "key": "anim:soi-six-hd-mew:run",
+          "file": "assets/generated/animations/soi-six-hd-mew/run.png",
+          "frames": 10,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 24,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:soi-six-hd-mew:react",
+          "file": "assets/generated/animations/soi-six-hd-mew/react.png",
+          "frames": 4,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 12,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:soi-six-hd-mew:cheer",
+          "file": "assets/generated/animations/soi-six-hd-mew/cheer.png",
+          "frames": 10,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 12,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:soi-six-hd-mew:panic",
+          "file": "assets/generated/animations/soi-six-hd-mew/panic.png",
+          "frames": 10,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 24,
+          "repeat": -1
         }
       }
     }

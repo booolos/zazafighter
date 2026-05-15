@@ -153,11 +153,7 @@ export class PlayerController {
   }
 
   private updateInvulnAlpha() {
-    if (this.invuln > 0) {
-      this.sprite.setAlpha(this.scene.time.now % 120 < 60 ? 0.58 : 1);
-    } else {
-      this.sprite.setAlpha(1);
-    }
+    this.sprite.setAlpha(1);
   }
 
   private updateShadow() {

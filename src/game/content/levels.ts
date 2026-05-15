@@ -188,8 +188,8 @@ export const levels: LevelDefinition[] = [
     exit: { x: 2075, y: 628 },
     ambientNpcs: [
       { id: 'soi-six-nina', x: 285, y: 598, flipX: false, action: 'idle' },
-      { id: 'soi-six-ruby', x: 785, y: 606, flipX: true, action: 'talk' },
-      { id: 'npc-girl-red', x: 450, y: 595, flipX: false, action: 'idle' },
+      { id: 'npc-girl-denim', x: 785, y: 606, flipX: true, action: 'talk' },
+      { id: 'npc-girl-silver', x: 450, y: 595, flipX: false, action: 'idle' },
       { id: 'npc-girl-black', x: 950, y: 600, flipX: true, action: 'idle' }
     ],
     enemyStarts: [
@@ -213,15 +213,15 @@ export const levels: LevelDefinition[] = [
     playerStart: { x: 455, y: 634 },
     vendor: { id: 'bar-promoter', x: 920, y: 586, flipX: true },
     exit: { x: 2050, y: 628 },
-    backgroundKey: assetKeys.backgroundSoiBuakhao,
+    backgroundKey: assetKeys.backgroundSoiSix,
     ambientBehavior: 'soi-six-runner',
     ambientNpcs: [
-      { id: 'soi-six-ruby', x: 350, y: 586, flipX: false, action: 'idle' },
-      { id: 'soi-six-nina', x: 620, y: 580, flipX: true, action: 'talk' },
-      { id: 'npc-girl-red', x: 920, y: 588, flipX: false, action: 'idle' },
-      { id: 'npc-girl-black', x: 1220, y: 574, flipX: true, action: 'cheer' },
-      { id: 'npc-girl-denim', x: 1530, y: 592, flipX: false, action: 'idle' },
-      { id: 'npc-girl-silver', x: 1810, y: 578, flipX: true, action: 'talk' }
+      { id: 'soi-six-hd-dao', x: 330, y: 586, flipX: false, action: 'cheer' },
+      { id: 'soi-six-hd-kanda', x: 620, y: 580, flipX: true, action: 'talk' },
+      { id: 'soi-six-hd-mintra', x: 910, y: 588, flipX: false, action: 'cheer' },
+      { id: 'soi-six-hd-ploy', x: 1210, y: 574, flipX: true, action: 'idle' },
+      { id: 'soi-six-hd-mew', x: 1515, y: 592, flipX: false, action: 'talk' },
+      { id: 'soi-six-hd-dao', x: 1810, y: 578, flipX: true, action: 'idle' }
     ],
     enemyStarts: [
       { id: 'indian-fighter-maroon', x: 1110, y: 620, engageDelay: 0 },
@@ -246,7 +246,7 @@ export const levels: LevelDefinition[] = [
     exit: { x: 1980, y: 560 },
     backgroundKey: assetKeys.backgroundWalkingStreet,
     ambientNpcs: [
-      { id: 'soi-six-ruby', x: 635, y: 594, flipX: false, action: 'cheer' },
+      { id: 'npc-girl-black', x: 635, y: 594, flipX: false, action: 'cheer' },
       { id: 'soi-six-nina', x: 830, y: 606, flipX: true, action: 'idle' },
       { id: 'npc-girl-denim', x: 500, y: 600, flipX: true, action: 'idle' },
       { id: 'npc-girl-silver', x: 1050, y: 595, flipX: false, action: 'idle' }
@@ -275,7 +275,7 @@ export const levels: LevelDefinition[] = [
     backgroundKey: assetKeys.backgroundSoiBuakhao,
     ambientNpcs: [
       { id: 'soi-six-nina', x: 630, y: 604, flipX: true, action: 'talk' },
-      { id: 'npc-girl-red', x: 850, y: 600, flipX: false, action: 'idle' },
+      { id: 'npc-girl-denim', x: 850, y: 600, flipX: false, action: 'idle' },
       { id: 'npc-girl-silver', x: 1250, y: 605, flipX: true, action: 'idle' }
     ],
     enemyStarts: [
@@ -300,7 +300,7 @@ export const levels: LevelDefinition[] = [
     vendor: { id: 'street-food-vendor', x: 1040, y: 575, flipX: true },
     exit: { x: 2040, y: 560 },
     ambientNpcs: [
-      { id: 'soi-six-ruby', x: 650, y: 602, flipX: false, action: 'idle' },
+      { id: 'npc-girl-silver', x: 650, y: 602, flipX: false, action: 'idle' },
       { id: 'soi-six-nina', x: 860, y: 620, flipX: true, action: 'cheer' },
       { id: 'npc-girl-black', x: 550, y: 600, flipX: false, action: 'idle' },
       { id: 'npc-girl-denim', x: 950, y: 605, flipX: true, action: 'idle' }
@@ -328,9 +328,9 @@ export const levels: LevelDefinition[] = [
     exit: { x: 2050, y: 560 },
     ambientNpcs: [
       { id: 'soi-six-nina', x: 650, y: 594, flipX: false, action: 'idle' },
-      { id: 'soi-six-ruby', x: 790, y: 604, flipX: true, action: 'talk' },
+      { id: 'npc-girl-black', x: 790, y: 604, flipX: true, action: 'talk' },
       { id: 'npc-girl-silver', x: 500, y: 600, flipX: false, action: 'idle' },
-      { id: 'npc-girl-red', x: 1150, y: 605, flipX: true, action: 'idle' }
+      { id: 'npc-girl-denim', x: 1150, y: 605, flipX: true, action: 'idle' }
     ],
     enemyStarts: [
       { id: 'indian-fighter-maroon', x: 1080, y: 620, engageDelay: 0 },
@@ -355,7 +355,7 @@ export const levels: LevelDefinition[] = [
     exit: { x: 2035, y: 560 },
     backgroundKey: assetKeys.backgroundBeachRoad,
     ambientNpcs: [
-      { id: 'soi-six-ruby', x: 620, y: 606, flipX: true, action: 'cheer' }
+      { id: 'npc-girl-silver', x: 620, y: 606, flipX: true, action: 'cheer' }
     ],
     enemyStarts: [
       { id: 'indian-fighter-maroon', x: 1110, y: 588, engageDelay: 0 },
@@ -381,7 +381,7 @@ export const levels: LevelDefinition[] = [
     backgroundKey: assetKeys.backgroundSoiBuakhao,
     ambientNpcs: [
       { id: 'npc-girl-denim', x: 610, y: 600, flipX: false, action: 'idle' },
-      { id: 'soi-six-ruby', x: 830, y: 604, flipX: true, action: 'talk' },
+      { id: 'npc-girl-silver', x: 830, y: 604, flipX: true, action: 'talk' },
       { id: 'npc-girl-black', x: 1180, y: 600, flipX: true, action: 'idle' }
     ],
     enemyStarts: [
@@ -409,7 +409,7 @@ export const levels: LevelDefinition[] = [
     ambientNpcs: [
       { id: 'npc-girl-silver', x: 590, y: 600, flipX: true, action: 'idle' },
       { id: 'soi-six-nina', x: 790, y: 604, flipX: false, action: 'talk' },
-      { id: 'npc-girl-red', x: 1110, y: 596, flipX: true, action: 'idle' }
+      { id: 'npc-girl-denim', x: 1110, y: 596, flipX: true, action: 'idle' }
     ],
     enemyStarts: [
       { id: 'indian-fighter-maroon', x: 1100, y: 588, engageDelay: 0 },
@@ -434,7 +434,7 @@ export const levels: LevelDefinition[] = [
     exit: { x: 2050, y: 560 },
     backgroundKey: assetKeys.backgroundWalkingStreet,
     ambientNpcs: [
-      { id: 'soi-six-ruby', x: 620, y: 604, flipX: false, action: 'cheer' },
+      { id: 'npc-girl-silver', x: 620, y: 604, flipX: false, action: 'cheer' },
       { id: 'soi-six-nina', x: 820, y: 606, flipX: true, action: 'cheer' },
       { id: 'npc-girl-black', x: 1080, y: 600, flipX: false, action: 'idle' }
     ],

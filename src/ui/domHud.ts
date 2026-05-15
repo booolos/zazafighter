@@ -6,7 +6,19 @@ type ButtonSpec = {
   label: string;
   ariaLabel: string;
   asset?: string;
-  action: keyof Pick<typeof touchState, 'jump' | 'dodge' | 'companionAttack' | 'pause'> | 'attackOrSuper';
+  action: keyof Pick<typeof touchState, 'jump' | 'dodge' | 'companionAttack' | 'feetCheck' | 'pause'> | 'attackOrSuper';
+};
+
+type FeetCheckDetail = {
+  name: string;
+  title: string;
+  subtitle: string;
+  faceImage: string;
+  faceFrames?: number;
+  faceFps?: number;
+  stripImage: string;
+  frames: number;
+  fps: number;
 };
 
 const uiAsset = (name: string) => `assets/generated/ui/${name}`;
@@ -51,12 +63,30 @@ export function setupDomHud() {
           <img class="pause-art" src="${uiAsset('pause-button.png')}" alt="" aria-hidden="true" draggable="false" />
         </button>
       </div>
+      <button class="feet-check-button hidden" data-action="feetCheck" type="button" aria-label="Feet check">
+        <span>FEET CHECK</span>
+        <strong data-feet-check-name></strong>
+      </button>
       <div class="mobile-controls">
         <div class="joystick" data-joystick role="group" aria-label="Movement joystick">
           <img class="joystick-art" src="${uiAsset('joystick-ring.png')}" alt="" aria-hidden="true" draggable="false" />
           <div class="stick" data-stick></div>
         </div>
         <div class="action-pad"></div>
+      </div>
+      <div class="feet-check-overlay hidden" data-feet-check-overlay aria-hidden="true">
+        <div class="feet-check-stage">
+          <section class="feet-check-face">
+            <div class="feet-check-face-strip" data-feet-check-face alt="" aria-hidden="true"></div>
+            <div class="feet-check-copy">
+              <span data-feet-check-kicker>SOI 6</span>
+              <strong data-feet-check-title>FEET CHECK</strong>
+              <small data-feet-check-subtitle></small>
+            </div>
+          </section>
+          <section class="feet-check-foot" data-feet-check-strip aria-hidden="true"></section>
+          <button class="feet-check-exit" data-feet-check-exit type="button">EXIT</button>
+        </div>
       </div>
     </div>
   `;
@@ -79,6 +109,7 @@ export function setupDomHud() {
 
   bindButtons(root);
   bindJoystick(root);
+  bindFeetCheckOverlay(root);
 
   window.addEventListener('slap:hud', (event) => {
     const next = (event as CustomEvent<HudSnapshot>).detail;
@@ -97,6 +128,14 @@ export function setupDomHud() {
     resetHudVisualState(root);
     setHudActive(root, false);
   });
+
+  window.addEventListener('slap:feet-check-open', (event) => {
+    renderFeetCheckOverlay(root, (event as CustomEvent<FeetCheckDetail>).detail);
+  });
+
+  window.addEventListener('slap:feet-check-close', () => {
+    hideFeetCheckOverlay(root);
+  });
 }
 
 function setHudActive(root: HTMLElement, active: boolean) {
@@ -113,6 +152,7 @@ function resetHudVisualState(root: HTMLElement) {
   });
   renderSlapButton(root, false);
   renderRushButton(root, true, 0);
+  renderFeetCheckButton(root, null);
   root.querySelectorAll<HTMLButtonElement>('.action-button').forEach((button) => {
     button.disabled = false;
     button.classList.remove('is-cooling');
@@ -135,6 +175,8 @@ function bindButtons(root: HTMLElement) {
         if (isRushReady()) touchState.dodge = true;
       } else if (action === 'companionAttack') {
         if (isCompanionReady()) touchState.companionAttack = true;
+      } else if (action === 'feetCheck') {
+        if (isFeetCheckAvailable()) touchState.feetCheck = true;
       } else {
         touchState[action] = true;
       }
@@ -153,6 +195,24 @@ function bindButtons(root: HTMLElement) {
     button.addEventListener('dblclick', (event) => event.preventDefault());
     button.addEventListener('contextmenu', (event) => event.preventDefault());
   });
+}
+
+function bindFeetCheckOverlay(root: HTMLElement) {
+  const exit = root.querySelector<HTMLButtonElement>('[data-feet-check-exit]');
+  if (!exit) return;
+  const fire = (event: PointerEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    window.dispatchEvent(new CustomEvent('slap:feet-check-exit'));
+  };
+  exit.addEventListener('pointerdown', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  });
+  exit.addEventListener('pointerup', fire);
+  exit.addEventListener('touchstart', preventTouchDefault, { passive: false });
+  exit.addEventListener('touchmove', preventTouchDefault, { passive: false });
+  exit.addEventListener('touchend', preventTouchDefault, { passive: false });
 }
 
 function bindJoystick(root: HTMLElement) {
@@ -224,9 +284,10 @@ function renderHud(root: HTMLElement, hud: HudSnapshot) {
   root.querySelector<HTMLElement>('[data-hp-bar]')!.style.width = `${hp * 100}%`;
   root.querySelector<HTMLElement>('[data-meter-bar]')!.style.width = `${meter * 100}%`;
   const hudEl = root.querySelector<HTMLElement>('[data-hud]');
-  gameplayControlsLocked = hud.paused || hud.hp <= 0 || hud.objective === `${hud.levelTitle} clear`;
+  gameplayControlsLocked = hud.paused || hud.feetCheckActive || hud.hp <= 0 || hud.objective === `${hud.levelTitle} clear`;
   hudEl?.classList.toggle('is-paused', hud.paused);
   hudEl?.classList.toggle('is-controls-locked', gameplayControlsLocked);
+  hudEl?.classList.toggle('is-feet-checking', hud.feetCheckActive);
   if (gameplayControlsLocked) clearTouchState();
   const portrait = root.querySelector<HTMLImageElement>('[data-player-portrait]');
   if (portrait && hud.portrait && portrait.dataset.src !== hud.portrait) {
@@ -238,6 +299,7 @@ function renderHud(root: HTMLElement, hud: HudSnapshot) {
   renderSlapButton(root, meter >= 1);
   renderRushButton(root, hud.rushReady, hud.rushCooldownRatio);
   renderCompanionButton(root, hud);
+  renderFeetCheckButton(root, hud);
 }
 
 function ratio(value: number, max: number) {
@@ -301,6 +363,60 @@ function renderCompanionButton(root: HTMLElement, hud: HudSnapshot) {
 
 function isCompanionReady() {
   return lastHud?.companionReady ?? true;
+}
+
+function renderFeetCheckButton(root: HTMLElement, hud: HudSnapshot | null) {
+  const button = root.querySelector<HTMLButtonElement>('.feet-check-button');
+  if (!button) return;
+  const visible = Boolean(hud?.feetCheckAvailable && !hud.feetCheckActive && !hud.paused && hud.hp > 0);
+  button.classList.toggle('hidden', !visible);
+  button.disabled = !visible;
+  const name = button.querySelector<HTMLElement>('[data-feet-check-name]');
+  if (name) name.textContent = hud?.feetCheckName ?? '';
+}
+
+function isFeetCheckAvailable() {
+  return Boolean(lastHud?.feetCheckAvailable && !lastHud.feetCheckActive);
+}
+
+function renderFeetCheckOverlay(root: HTMLElement, detail: FeetCheckDetail) {
+  const overlay = root.querySelector<HTMLElement>('[data-feet-check-overlay]');
+  if (!overlay) return;
+  const face = overlay.querySelector<HTMLElement>('[data-feet-check-face]');
+  const strip = overlay.querySelector<HTMLElement>('[data-feet-check-strip]');
+  const title = overlay.querySelector<HTMLElement>('[data-feet-check-title]');
+  const subtitle = overlay.querySelector<HTMLElement>('[data-feet-check-subtitle]');
+  const kicker = overlay.querySelector<HTMLElement>('[data-feet-check-kicker]');
+  if (face) {
+    const faceFrames = Math.max(1, detail.faceFrames ?? 1);
+    const faceFps = Math.max(1, detail.faceFps ?? Math.min(10, faceFrames));
+    face.style.backgroundImage = `url("${detail.faceImage}")`;
+    face.style.backgroundSize = `${faceFrames * 100}% 100%`;
+    face.style.animation = faceFrames > 1 ? `feet-check-strip ${faceFrames / faceFps}s steps(${faceFrames}) infinite` : '';
+  }
+  if (title) title.textContent = detail.title;
+  if (subtitle) subtitle.textContent = detail.subtitle;
+  if (kicker) kicker.textContent = detail.name.toUpperCase();
+  if (strip) {
+    const frames = Math.max(1, detail.frames);
+    const fps = Math.max(1, detail.fps);
+    strip.style.backgroundImage = `url("${detail.stripImage}")`;
+    strip.style.backgroundSize = `${frames * 100}% 100%`;
+    strip.style.animation = `feet-check-strip ${frames / fps}s steps(${frames}) infinite`;
+  }
+  overlay.classList.remove('hidden');
+  overlay.setAttribute('aria-hidden', 'false');
+}
+
+function hideFeetCheckOverlay(root: HTMLElement) {
+  const overlay = root.querySelector<HTMLElement>('[data-feet-check-overlay]');
+  if (!overlay) return;
+  overlay.classList.add('hidden');
+  overlay.setAttribute('aria-hidden', 'true');
+  const strip = overlay.querySelector<HTMLElement>('[data-feet-check-strip]');
+  if (strip) strip.style.animation = '';
+  const face = overlay.querySelector<HTMLElement>('[data-feet-check-face]');
+  if (face) face.style.animation = '';
 }
 
 function clearTouchState() {

@@ -28,12 +28,17 @@ export class CompanionController {
   parkedUntil = 0;
   private followEscapeDistance = 128;
   private followSettleDistance = 46;
+  private readonly baseScaleX: number;
+  private readonly baseScaleY: number;
 
   constructor(scene: Level1Scene, sprite: ArcadeCharacterSprite, character: CharacterDefinition, shadow: Phaser.GameObjects.Image) {
     this.scene = scene;
     this.sprite = sprite;
     this.character = character;
     this.shadow = shadow;
+    this.baseScaleX = Math.abs(sprite.scaleX);
+    this.baseScaleY = Math.abs(sprite.scaleY);
+    this.lockVisuals();
   }
 
   update(dt: number, wantsAttack: boolean, playerX: number, playerY: number, playerFacing: number, playerMoving: boolean) {
@@ -166,7 +171,13 @@ export class CompanionController {
   }
 
   private updateCompanionShadow() {
+    this.lockVisuals();
     this.shadow.setPosition(this.sprite.x, this.sprite.y + 3);
     this.shadow.setDepth(this.sprite.y - 2);
+  }
+
+  private lockVisuals() {
+    this.sprite.setAlpha(1);
+    this.sprite.setScale(this.baseScaleX, this.baseScaleY);
   }
 }

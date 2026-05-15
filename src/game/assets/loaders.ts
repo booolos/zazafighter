@@ -9,6 +9,7 @@ export function loadCoreAssets(scene: Phaser.Scene) {
   scene.load.image(assetKeys.backgroundWalkingStreet, assetPaths.backgroundWalkingStreet);
   scene.load.image(assetKeys.backgroundBeachRoad, assetPaths.backgroundBeachRoad);
   scene.load.image(assetKeys.backgroundSoiBuakhao, assetPaths.backgroundSoiBuakhao);
+  scene.load.image(assetKeys.backgroundSoiSix, assetPaths.backgroundSoiSix);
   scene.load.image(assetKeys.backgroundThumb, assetPaths.backgroundThumb);
   scene.load.image(assetKeys.uiObjectiveChip, assetPaths.uiObjectiveChip);
   scene.load.image(assetKeys.uiDialogueFrame, assetPaths.uiDialogueFrame);

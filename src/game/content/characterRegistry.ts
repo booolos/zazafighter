@@ -12,6 +12,21 @@ export type AnimationDefinition = {
   repeat: number;
 };
 
+export type FeetCheckDefinition = {
+  title: string;
+  subtitle: string;
+  faceImage: string;
+  faceFrames?: number;
+  faceFrameWidth?: number;
+  faceFrameHeight?: number;
+  faceFps?: number;
+  stripImage: string;
+  frames: number;
+  frameWidth: number;
+  frameHeight: number;
+  fps: number;
+};
+
 export type CharacterDefinition = {
   id: string;
   displayName: string;
@@ -47,6 +62,7 @@ export type CharacterDefinition = {
     aiProfile: string;
   };
   animations: Record<string, AnimationDefinition>;
+  feetCheck?: FeetCheckDefinition;
 };
 
 export type CharacterRegistry = {

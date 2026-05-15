@@ -5,7 +5,7 @@ export const AMBIENT_SIDEWALK_BOTTOM = 594;
 export const LANE_TOP = 588;
 export const LANE_BOTTOM = 668;
 export const LARGE_PROP_DEPTH = LANE_TOP - 10;
-export const KEY_CAPTURE = 'W,A,S,D,UP,DOWN,LEFT,RIGHT,SPACE,J,C,I,SHIFT,K,U,O,E,L,P,R,ESC';
+export const KEY_CAPTURE = 'W,A,S,D,UP,DOWN,LEFT,RIGHT,SPACE,J,C,I,SHIFT,K,U,O,F,E,L,P,R,ESC';
 
 export const PLAYER_DODGE_SECONDS = 0.48;
 export const PLAYER_DODGE_COOLDOWN_SECONDS = 5;

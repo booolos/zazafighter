@@ -7,6 +7,7 @@ export type TouchAction =
   | 'jump'
   | 'dodge'
   | 'companionAttack'
+  | 'feetCheck'
   | 'super'
   | 'pause';
 
@@ -17,6 +18,7 @@ export type TouchState = {
   jump: boolean;
   dodge: boolean;
   companionAttack: boolean;
+  feetCheck: boolean;
   super: boolean;
   pause: boolean;
 };
@@ -28,6 +30,7 @@ export const touchState: TouchState = {
   jump: false,
   dodge: false,
   companionAttack: false,
+  feetCheck: false,
   super: false,
   pause: false
 };
@@ -37,6 +40,7 @@ export function clearMomentaryActions() {
   touchState.jump = false;
   touchState.dodge = false;
   touchState.companionAttack = false;
+  touchState.feetCheck = false;
   touchState.super = false;
   touchState.pause = false;
 }
