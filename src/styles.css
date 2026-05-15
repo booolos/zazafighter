@@ -52,6 +52,7 @@ button {
   -webkit-user-select: none;
   user-select: none;
   touch-action: none;
+  -ms-touch-action: none;
 }
 
 #hud-root,
@@ -276,6 +277,8 @@ button {
   color: var(--paper);
   pointer-events: auto;
   cursor: pointer;
+  touch-action: manipulation;
+  -ms-touch-action: manipulation;
   filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.42));
   transition: filter 140ms ease, transform 110ms ease;
 }
@@ -323,6 +326,7 @@ button {
   aspect-ratio: 1;
   pointer-events: auto;
   touch-action: none;
+  -ms-touch-action: none;
   opacity: 0.92;
   filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.46));
   transition: filter 140ms ease, transform 110ms ease;
@@ -386,6 +390,7 @@ button {
   font: 900 clamp(14px, 2vw, 20px)/1 Arial, sans-serif;
   overflow: visible;
   touch-action: none;
+  -ms-touch-action: none;
   -webkit-touch-callout: none;
   transition: filter 140ms ease, transform 110ms ease;
 }
@@ -503,8 +508,17 @@ button {
   cursor: default;
 }
 
-.hud.is-paused .mobile-controls {
+.hud.is-paused .mobile-controls,
+.hud.is-controls-locked .mobile-controls {
   opacity: 0.28;
+  pointer-events: none;
+}
+
+.hud.is-paused .joystick,
+.hud.is-paused .action-button,
+.hud.is-controls-locked .joystick,
+.hud.is-controls-locked .action-button {
+  pointer-events: none;
 }
 
 #portrait-blocker {
@@ -694,5 +708,103 @@ button {
     bottom: -5px;
     padding: 2px 5px;
     font-size: 8px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 390px) {
+  .hud-top {
+    top: max(6px, env(safe-area-inset-top));
+    grid-template-columns: minmax(182px, 34vw) minmax(96px, 1fr) clamp(38px, 5vw, 46px);
+    gap: 6px;
+  }
+
+  .fighter-card {
+    grid-template-columns: 36px minmax(0, 1fr);
+    min-height: 50px;
+    padding: 5px 8px;
+    gap: 7px;
+  }
+
+  .portrait {
+    width: 36px;
+    height: 36px;
+  }
+
+  .fighter-info {
+    gap: 2px;
+  }
+
+  .fighter-card strong {
+    font-size: clamp(14px, 2vw, 18px);
+  }
+
+  .eyebrow {
+    margin-bottom: 2px;
+  }
+
+  .bars {
+    gap: 2px;
+    margin-top: 0;
+  }
+
+  .bar {
+    height: 9px;
+  }
+
+  .objective-chip {
+    min-height: 36px;
+    max-width: min(360px, 42vw);
+    padding: 6px 18px 5px;
+  }
+
+  .objective-chip strong {
+    -webkit-line-clamp: 1;
+  }
+
+  .pause-button {
+    width: clamp(38px, 5vw, 46px);
+  }
+
+  .mobile-controls {
+    bottom: max(3px, env(safe-area-inset-bottom));
+    padding-inline: max(6px, env(safe-area-inset-left));
+    opacity: 0.72;
+  }
+
+  .joystick {
+    width: clamp(58px, 8.4vw, 74px);
+    opacity: 0.68;
+  }
+
+  .action-pad {
+    width: clamp(122px, 17vw, 152px);
+    height: clamp(82px, 11.2vw, 98px);
+  }
+
+  .btn-slap {
+    width: clamp(54px, 7.2vw, 68px);
+  }
+
+  .btn-jump,
+  .btn-dodge,
+  .btn-dang {
+    width: clamp(38px, 5vw, 48px);
+  }
+
+  .btn-jump {
+    left: 5px;
+  }
+
+  .btn-dodge {
+    bottom: 4px;
+  }
+
+  .btn-dang {
+    right: 8px;
+  }
+
+  .control-label {
+    bottom: -4px;
+    font-size: 7px;
   }
 }

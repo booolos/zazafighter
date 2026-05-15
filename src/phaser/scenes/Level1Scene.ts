@@ -94,6 +94,7 @@ export class Level1Scene extends Phaser.Scene {
     const worldHeight = this.getResponsiveWorldHeight();
     this.physics.world.setBounds(0, 0, worldWidth, worldHeight);
     this.cameras.main.setBounds(0, 0, worldWidth, worldHeight);
+    this.cameras.main.setZoom(this.getResponsiveCameraZoom());
     this.cameras.main.setBackgroundColor('#07080c');
     this.cameras.main.setRoundPixels(true);
     this.input.setTopOnly(true);
@@ -234,6 +235,7 @@ export class Level1Scene extends Phaser.Scene {
       .setDepth(-15)
       .setScrollFactor(0.65);
 
+    this.add.rectangle(worldWidth / 2, 590, worldWidth, 176, 0x050506, 0.22).setDepth(-2);
     this.add.rectangle(worldWidth / 2, 610, worldWidth, 150, 0x050506, 0.16).setDepth(-5);
     this.add.rectangle(worldWidth / 2, 492, worldWidth, 4, 0x00dfff, 0.14).setDepth(-4);
     this.createLevelDressing();
@@ -339,11 +341,20 @@ export class Level1Scene extends Phaser.Scene {
   }
 
   private getResponsiveWorldWidth() {
-    return Math.max(WORLD_WIDTH, Math.ceil(this.scale.width));
+    return Math.max(WORLD_WIDTH, Math.ceil(this.scale.width / this.getResponsiveCameraZoom()));
   }
 
   private getResponsiveWorldHeight() {
-    return Math.max(WORLD_HEIGHT, Math.ceil(this.scale.height));
+    return Math.max(WORLD_HEIGHT, Math.ceil(this.scale.height / this.getResponsiveCameraZoom()));
+  }
+
+  private getResponsiveCameraZoom() {
+    const viewportWidth = window.innerWidth || this.scale.width;
+    const viewportHeight = window.innerHeight || this.scale.height;
+    if (viewportWidth > viewportHeight && viewportHeight <= 430) {
+      return Phaser.Math.Clamp(viewportHeight / 470, 0.84, 0.92);
+    }
+    return 1;
   }
 
   private createActors() {
@@ -403,8 +414,8 @@ export class Level1Scene extends Phaser.Scene {
         flipX: ambient.flipX
       });
       sprite.body.enable = false;
-      sprite.setAlpha(0.92);
-      sprite.setDepth(sprite.y - 16);
+      sprite.setAlpha(0.72);
+      sprite.setDepth(LANE_TOP - 26);
       this.ambientNpcs.push(sprite);
       
       if (this.isAmbientGirlId(ambient.id)) {
@@ -774,11 +785,12 @@ export class Level1Scene extends Phaser.Scene {
       this.companion.shadow.setDepth(this.companion.sprite.y - 2);
     }
     for (const npc of this.ambientNpcs) {
-      npc.setDepth(npc.y - 16);
+      npc.setDepth(LANE_TOP - 26);
     }
     for (const prop of this.destructibleProps) {
       if (!prop.active) continue;
       prop.sprite.setDepth(prop.occludes ? prop.sprite.y + 4 : LARGE_PROP_DEPTH);
+      prop.sprite.setAlpha(prop.occludes && this.isActorBehindProp(prop) ? 0.42 : 1);
     }
     for (const pickup of this.pickups) {
       if (!pickup.collected) pickup.sprite.setDepth(pickup.sprite.y + 24);
@@ -796,6 +808,16 @@ export class Level1Scene extends Phaser.Scene {
     if (Math.abs(this.playerController.sprite.x - exit.x) < 112 && Math.abs(this.playerController.sprite.y - exit.y) < 105) {
       this.completeRouteStop();
     }
+  }
+
+  private isActorBehindProp(prop: DestructibleProp) {
+    const actors = [this.playerController.sprite, this.companion?.sprite, ...this.enemies.filter((enemy) => enemy.active).map((enemy) => enemy.sprite)]
+      .filter((sprite): sprite is ArcadeCharacterSprite => Boolean(sprite));
+    return actors.some((sprite) => {
+      const closeX = Math.abs(sprite.x - prop.sprite.x) < Math.max(72, prop.hitbox.width * 0.72);
+      const sameLane = sprite.y > prop.sprite.y - Math.max(90, prop.hitbox.height * 1.4) && sprite.y <= prop.sprite.y + 18;
+      return closeX && sameLane;
+    });
   }
 
   private completeRouteStop() {

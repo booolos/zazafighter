@@ -182,7 +182,7 @@
       "animations": {
         "idle": {
           "key": "anim:big-ink:idle",
-          "file": "assets/generated/animations/big-ink/idle.png",
+          "file": "assets/generated/animations/big-ink-v2/idle.png",
           "frames": 4,
           "frameWidth": 256,
           "frameHeight": 256,
@@ -191,7 +191,7 @@
         },
         "walk": {
           "key": "anim:big-ink:walk",
-          "file": "assets/generated/animations/big-ink/walk.png",
+          "file": "assets/generated/animations/big-ink-v2/walk.png",
           "frames": 6,
           "frameWidth": 256,
           "frameHeight": 256,
@@ -290,7 +290,7 @@
         },
         "smoking-idle": {
           "key": "anim:big-ink:smoking-idle",
-          "file": "assets/generated/animations/big-ink/smoking-idle.png",
+          "file": "assets/generated/animations/big-ink-v2/smoking-idle.png",
           "frames": 6,
           "frameWidth": 256,
           "frameHeight": 256,
@@ -1073,7 +1073,7 @@
         },
         "walk": {
           "key": "anim:soi-dog:walk",
-          "file": "assets/generated/animations/soi-dog/walk.png",
+          "file": "assets/generated/animations/soi-dog/walk-run-v2.png",
           "frames": 6,
           "frameWidth": 256,
           "frameHeight": 256,
@@ -1082,7 +1082,7 @@
         },
         "special-attack": {
           "key": "anim:soi-dog:special-attack",
-          "file": "assets/generated/animations/soi-dog/special-attack.png",
+          "file": "assets/generated/animations/soi-dog/rush-attack-v2.png",
           "frames": 6,
           "frameWidth": 256,
           "frameHeight": 256,

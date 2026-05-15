@@ -74,8 +74,10 @@ function expectedSeedPath(character) {
   return assetPath('assets/generated/characters', seedFoldersByRole[character.role], `${character.id}.png`);
 }
 
-function expectedAnimationFile(characterId, action) {
-  return `assets/generated/animations/${characterId}/${action}.png`;
+function isGeneratedAnimationFile(characterId, file) {
+  if (typeof file !== 'string') return false;
+  const prefix = `assets/generated/animations/${characterId}`;
+  return file.startsWith(prefix) && file.endsWith('.png') && !file.includes('..');
 }
 
 function validateCombatProfiles() {
@@ -167,9 +169,8 @@ for (const character of registry.characters) {
     if (animation.key !== `anim:${character.id}:${action}`) {
       fail(`${character.id}/${action} key must be anim:${character.id}:${action}`);
     }
-    const animationFile = expectedAnimationFile(character.id, action);
-    if (animation.file !== animationFile) {
-      fail(`${character.id}/${action} file must be ${animationFile}`);
+    if (!isGeneratedAnimationFile(character.id, animation.file)) {
+      fail(`${character.id}/${action} file must be a PNG under assets/generated/animations/${character.id}*`);
     }
     if (animation.frameWidth !== 256 || animation.frameHeight !== 256) {
       fail(`${character.id}/${action} must use 256x256 frames`);

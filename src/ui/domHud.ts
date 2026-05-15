@@ -20,6 +20,7 @@ const buttons: ButtonSpec[] = [
 
 let lastHud: HudSnapshot | null = null;
 let hudIsActive = false;
+let gameplayControlsLocked = false;
 
 export function setupDomHud() {
   const root = document.getElementById('hud-root');
@@ -93,9 +94,7 @@ export function setupDomHud() {
 
   window.addEventListener('slap:hud-reset', () => {
     lastHud = null;
-    root.querySelectorAll<HTMLElement>('.bar i').forEach((bar) => {
-      bar.style.width = '100%';
-    });
+    resetHudVisualState(root);
     setHudActive(root, false);
   });
 }
@@ -106,11 +105,29 @@ function setHudActive(root: HTMLElement, active: boolean) {
   if (!active) clearTouchState();
 }
 
+function resetHudVisualState(root: HTMLElement) {
+  gameplayControlsLocked = false;
+  root.querySelector('[data-hud]')?.classList.remove('is-paused', 'is-controls-locked');
+  root.querySelectorAll<HTMLElement>('.bar i').forEach((bar) => {
+    bar.style.width = '100%';
+  });
+  renderSlapButton(root, false);
+  renderRushButton(root, true, 0);
+  root.querySelectorAll<HTMLButtonElement>('.action-button').forEach((button) => {
+    button.disabled = false;
+    button.classList.remove('is-cooling');
+    button.dataset.cooldown = '';
+  });
+  clearTouchState();
+}
+
 function bindButtons(root: HTMLElement) {
   root.querySelectorAll<HTMLButtonElement>('[data-action]').forEach((button) => {
     const action = button.dataset.action as ButtonSpec['action'];
     const down = (event: PointerEvent) => {
       event.preventDefault();
+      event.stopPropagation();
+      if (gameplayControlsLocked && action !== 'pause') return;
       if (action === 'attackOrSuper') {
         if (isSuperReady()) touchState.super = true;
         else touchState.attack = true;
@@ -125,10 +142,14 @@ function bindButtons(root: HTMLElement) {
     };
     const up = (event: PointerEvent) => {
       event.preventDefault();
+      event.stopPropagation();
     };
     button.addEventListener('pointerdown', down);
     button.addEventListener('pointerup', up);
     button.addEventListener('pointercancel', up);
+    button.addEventListener('touchstart', preventTouchDefault, { passive: false });
+    button.addEventListener('touchmove', preventTouchDefault, { passive: false });
+    button.addEventListener('touchend', preventTouchDefault, { passive: false });
     button.addEventListener('dblclick', (event) => event.preventDefault());
     button.addEventListener('contextmenu', (event) => event.preventDefault());
   });
@@ -150,6 +171,8 @@ function bindJoystick(root: HTMLElement) {
 
   const move = (event: PointerEvent) => {
     if (activePointer !== event.pointerId) return;
+    event.preventDefault();
+    event.stopPropagation();
     const rect = joystick.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
@@ -167,19 +190,32 @@ function bindJoystick(root: HTMLElement) {
 
   joystick.addEventListener('pointerdown', (event) => {
     event.preventDefault();
+    event.stopPropagation();
+    if (gameplayControlsLocked) return;
     activePointer = event.pointerId;
     joystick.classList.add('is-dragging');
     joystick.setPointerCapture(event.pointerId);
     move(event);
   });
   joystick.addEventListener('pointermove', move);
-  joystick.addEventListener('pointerup', reset);
-  joystick.addEventListener('pointercancel', reset);
+  joystick.addEventListener('pointerup', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    reset();
+  });
+  joystick.addEventListener('pointercancel', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    reset();
+  });
+  joystick.addEventListener('touchstart', preventTouchDefault, { passive: false });
+  joystick.addEventListener('touchmove', preventTouchDefault, { passive: false });
+  joystick.addEventListener('touchend', preventTouchDefault, { passive: false });
 }
 
 function renderHud(root: HTMLElement, hud: HudSnapshot) {
-  const hp = Math.max(0, Math.min(1, hud.hp / hud.maxHp));
-  const meter = Math.max(0, Math.min(1, hud.meter / hud.maxMeter));
+  const hp = ratio(hud.hp, hud.maxHp);
+  const meter = ratio(hud.meter, hud.maxMeter);
   if (!hudIsActive) setHudActive(root, true);
   root.querySelector<HTMLElement>('[data-player-name]')!.textContent = hud.playerName;
   root.querySelector<HTMLElement>('[data-player-handle]')!.textContent = hud.handle;
@@ -187,7 +223,11 @@ function renderHud(root: HTMLElement, hud: HudSnapshot) {
   root.querySelector<HTMLElement>('[data-objective]')!.textContent = hud.objective;
   root.querySelector<HTMLElement>('[data-hp-bar]')!.style.width = `${hp * 100}%`;
   root.querySelector<HTMLElement>('[data-meter-bar]')!.style.width = `${meter * 100}%`;
-  root.querySelector<HTMLElement>('[data-hud]')?.classList.toggle('is-paused', hud.paused);
+  const hudEl = root.querySelector<HTMLElement>('[data-hud]');
+  gameplayControlsLocked = hud.paused || hud.hp <= 0 || hud.objective === `${hud.levelTitle} clear`;
+  hudEl?.classList.toggle('is-paused', hud.paused);
+  hudEl?.classList.toggle('is-controls-locked', gameplayControlsLocked);
+  if (gameplayControlsLocked) clearTouchState();
   const portrait = root.querySelector<HTMLImageElement>('[data-player-portrait]');
   if (portrait && hud.portrait && portrait.dataset.src !== hud.portrait) {
     portrait.src = hud.portrait;
@@ -198,6 +238,16 @@ function renderHud(root: HTMLElement, hud: HudSnapshot) {
   renderSlapButton(root, meter >= 1);
   renderRushButton(root, hud.rushReady, hud.rushCooldownRatio);
   renderCompanionButton(root, hud);
+}
+
+function ratio(value: number, max: number) {
+  if (max <= 0) return 0;
+  return Math.max(0, Math.min(1, value / max));
+}
+
+function preventTouchDefault(event: TouchEvent) {
+  event.preventDefault();
+  event.stopPropagation();
 }
 
 function renderSlapButton(root: HTMLElement, superReady: boolean) {
