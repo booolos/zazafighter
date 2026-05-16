@@ -1717,8 +1717,8 @@
     {
       "character": "soi-six-hd-ploy",
       "kind": "feet-check-face",
-      "path": "assets/generated/interactions/feet-check/soi-six-premium/soi-six-hd-ploy-face.png",
-      "frames": 16,
+      "path": "assets/generated/interactions/feet-check/soi-six-hd-ploy-face.png",
+      "frames": 12,
       "frameWidth": 640,
       "frameHeight": 720
     },
