@@ -175,6 +175,46 @@ const shutter = (x: number, y: number): LevelPropDefinition => ({
   depth: -8
 });
 
+const walkingStreetNightlife: LevelAmbientNpcDefinition[] = [
+  { id: 'soi-six-nina', x: 285, y: 598, flipX: false, action: 'idle' },
+  { id: 'npc-girl-denim', x: 785, y: 606, flipX: true, action: 'talk' },
+  { id: 'npc-girl-silver', x: 450, y: 595, flipX: false, action: 'idle' },
+  { id: 'npc-girl-black', x: 950, y: 600, flipX: true, action: 'idle' }
+];
+
+const soiSixBarfront: LevelAmbientNpcDefinition[] = [
+  { id: 'soi-six-hd-dao', x: 330, y: 586, flipX: false, action: 'cheer' },
+  { id: 'soi-six-hd-ploy', x: 650, y: 578, flipX: true, action: 'talk' },
+  { id: 'soi-six-hd-mew', x: 955, y: 592, flipX: false, action: 'cheer' },
+  { id: 'soi-six-ruby', x: 1240, y: 588, flipX: true, action: 'idle' },
+  { id: 'soi-six-nina', x: 1515, y: 592, flipX: false, action: 'talk' },
+  { id: 'soi-six-hd-ploy', x: 1810, y: 578, flipX: true, action: 'idle' }
+];
+
+const metroNightlife: LevelAmbientNpcDefinition[] = [
+  { id: 'npc-girl-black', x: 635, y: 594, flipX: false, action: 'cheer' },
+  { id: 'soi-six-nina', x: 830, y: 606, flipX: true, action: 'idle' },
+  { id: 'npc-girl-denim', x: 500, y: 600, flipX: true, action: 'idle' },
+  { id: 'npc-girl-silver', x: 1050, y: 595, flipX: false, action: 'idle' }
+];
+
+const beachParty: LevelAmbientNpcDefinition[] = [
+  { id: 'soi-six-ruby', x: 615, y: 604, flipX: false, action: 'cheer' },
+  { id: 'soi-six-hd-mew', x: 875, y: 596, flipX: true, action: 'talk' },
+  { id: 'npc-girl-denim', x: 1130, y: 606, flipX: false, action: 'idle' }
+];
+
+const marketCasual: LevelAmbientNpcDefinition[] = [
+  { id: 'npc-girl-denim', x: 610, y: 600, flipX: false, action: 'idle' },
+  { id: 'npc-girl-silver', x: 830, y: 604, flipX: true, action: 'talk' },
+  { id: 'npc-girl-black', x: 1180, y: 600, flipX: true, action: 'idle' }
+];
+
+const quietRiversideCasual: LevelAmbientNpcDefinition[] = [
+  { id: 'npc-girl-denim', x: 660, y: 598, flipX: false, action: 'idle' },
+  { id: 'npc-girl-silver', x: 930, y: 600, flipX: true, action: 'talk' }
+];
+
 export const levels: LevelDefinition[] = [
   {
     id: 'pattaya-walking-street',
@@ -187,12 +227,7 @@ export const levels: LevelDefinition[] = [
     vendor: { id: 'weed-vendor', x: 1095, y: 570, flipX: true },
     exit: { x: 2075, y: 628 },
     backgroundKey: assetKeys.backgroundWalkingStreet,
-    ambientNpcs: [
-      { id: 'soi-six-nina', x: 285, y: 598, flipX: false, action: 'idle' },
-      { id: 'npc-girl-denim', x: 785, y: 606, flipX: true, action: 'talk' },
-      { id: 'npc-girl-silver', x: 450, y: 595, flipX: false, action: 'idle' },
-      { id: 'npc-girl-black', x: 950, y: 600, flipX: true, action: 'idle' }
-    ],
+    ambientNpcs: walkingStreetNightlife,
     enemyStarts: [
       { id: 'indian-fighter-maroon', x: 1325, y: 626, engageDelay: 0 },
       { id: 'indian-fighter-maroon', x: 1510, y: 654, engageDelay: 2.4 },
@@ -216,14 +251,7 @@ export const levels: LevelDefinition[] = [
     exit: { x: 2050, y: 628 },
     backgroundKey: assetKeys.backgroundSoiSix,
     ambientBehavior: 'soi-six-runner',
-    ambientNpcs: [
-      { id: 'soi-six-hd-dao', x: 330, y: 586, flipX: false, action: 'cheer' },
-      { id: 'soi-six-hd-kanda', x: 620, y: 580, flipX: true, action: 'talk' },
-      { id: 'soi-six-hd-mintra', x: 910, y: 588, flipX: false, action: 'cheer' },
-      { id: 'soi-six-hd-ploy', x: 1210, y: 574, flipX: true, action: 'idle' },
-      { id: 'soi-six-hd-mew', x: 1515, y: 592, flipX: false, action: 'talk' },
-      { id: 'soi-six-hd-dao', x: 1810, y: 578, flipX: true, action: 'idle' }
-    ],
+    ambientNpcs: soiSixBarfront,
     enemyStarts: [
       { id: 'indian-fighter-maroon', x: 1110, y: 620, engageDelay: 0 },
       { id: 'indian-fighter-maroon', x: 1375, y: 652, engageDelay: 1.4 },
@@ -246,12 +274,7 @@ export const levels: LevelDefinition[] = [
     vendor: { id: 'bar-promoter', x: 910, y: 586, flipX: true },
     exit: { x: 1980, y: 560 },
     backgroundKey: assetKeys.backgroundBangkokSukhumvit,
-    ambientNpcs: [
-      { id: 'npc-girl-black', x: 635, y: 594, flipX: false, action: 'cheer' },
-      { id: 'soi-six-nina', x: 830, y: 606, flipX: true, action: 'idle' },
-      { id: 'npc-girl-denim', x: 500, y: 600, flipX: true, action: 'idle' },
-      { id: 'npc-girl-silver', x: 1050, y: 595, flipX: false, action: 'idle' }
-    ],
+    ambientNpcs: metroNightlife,
     enemyStarts: [
       { id: 'indian-fighter-maroon', x: 1150, y: 590, engageDelay: 0 },
       { id: 'indian-fighter-maroon', x: 1370, y: 624, engageDelay: 1.4 },
@@ -275,9 +298,9 @@ export const levels: LevelDefinition[] = [
     exit: { x: 2050, y: 560 },
     backgroundKey: assetKeys.backgroundPhuketBanglaRoad,
     ambientNpcs: [
-      { id: 'soi-six-nina', x: 630, y: 604, flipX: true, action: 'talk' },
-      { id: 'npc-girl-denim', x: 850, y: 600, flipX: false, action: 'idle' },
-      { id: 'npc-girl-silver', x: 1250, y: 605, flipX: true, action: 'idle' }
+      { id: 'soi-six-ruby', x: 620, y: 604, flipX: true, action: 'talk' },
+      { id: 'soi-six-hd-mew', x: 870, y: 596, flipX: false, action: 'idle' },
+      { id: 'npc-girl-denim', x: 1200, y: 605, flipX: true, action: 'idle' }
     ],
     enemyStarts: [
       { id: 'indian-fighter-maroon', x: 1175, y: 588, engageDelay: 0 },
@@ -302,10 +325,9 @@ export const levels: LevelDefinition[] = [
     exit: { x: 2040, y: 560 },
     backgroundKey: assetKeys.backgroundChiangMaiNimman,
     ambientNpcs: [
-      { id: 'npc-girl-silver', x: 650, y: 602, flipX: false, action: 'idle' },
-      { id: 'soi-six-nina', x: 860, y: 620, flipX: true, action: 'cheer' },
-      { id: 'npc-girl-black', x: 550, y: 600, flipX: false, action: 'idle' },
-      { id: 'npc-girl-denim', x: 950, y: 605, flipX: true, action: 'idle' }
+      { id: 'npc-girl-denim', x: 600, y: 602, flipX: false, action: 'idle' },
+      { id: 'npc-girl-silver', x: 850, y: 604, flipX: true, action: 'talk' },
+      { id: 'npc-girl-black', x: 1060, y: 600, flipX: false, action: 'idle' }
     ],
     enemyStarts: [
       { id: 'indian-fighter-maroon', x: 1160, y: 590, engageDelay: 0 },
@@ -329,12 +351,7 @@ export const levels: LevelDefinition[] = [
     vendor: { id: 'street-food-vendor', x: 920, y: 590, flipX: true },
     exit: { x: 2050, y: 560 },
     backgroundKey: assetKeys.backgroundKrabiAoNang,
-    ambientNpcs: [
-      { id: 'soi-six-nina', x: 650, y: 594, flipX: false, action: 'idle' },
-      { id: 'npc-girl-black', x: 790, y: 604, flipX: true, action: 'talk' },
-      { id: 'npc-girl-silver', x: 500, y: 600, flipX: false, action: 'idle' },
-      { id: 'npc-girl-denim', x: 1150, y: 605, flipX: true, action: 'idle' }
-    ],
+    ambientNpcs: beachParty,
     enemyStarts: [
       { id: 'indian-fighter-maroon', x: 1080, y: 620, engageDelay: 0 },
       { id: 'indian-fighter-maroon', x: 1300, y: 585, engageDelay: 1.2 },
@@ -358,7 +375,9 @@ export const levels: LevelDefinition[] = [
     exit: { x: 2035, y: 560 },
     backgroundKey: assetKeys.backgroundKohSamuiChaweng,
     ambientNpcs: [
-      { id: 'npc-girl-silver', x: 620, y: 606, flipX: true, action: 'cheer' }
+      { id: 'soi-six-hd-mew', x: 620, y: 596, flipX: true, action: 'cheer' },
+      { id: 'soi-six-ruby', x: 880, y: 604, flipX: false, action: 'idle' },
+      { id: 'npc-girl-denim', x: 1125, y: 606, flipX: true, action: 'talk' }
     ],
     enemyStarts: [
       { id: 'indian-fighter-maroon', x: 1110, y: 588, engageDelay: 0 },
@@ -382,11 +401,7 @@ export const levels: LevelDefinition[] = [
     vendor: { id: 'street-food-vendor', x: 990, y: 590, flipX: true },
     exit: { x: 2045, y: 560 },
     backgroundKey: assetKeys.backgroundHuaHinNightMarket,
-    ambientNpcs: [
-      { id: 'npc-girl-denim', x: 610, y: 600, flipX: false, action: 'idle' },
-      { id: 'npc-girl-silver', x: 830, y: 604, flipX: true, action: 'talk' },
-      { id: 'npc-girl-black', x: 1180, y: 600, flipX: true, action: 'idle' }
-    ],
+    ambientNpcs: marketCasual,
     enemyStarts: [
       { id: 'indian-fighter-maroon', x: 1120, y: 590, engageDelay: 0 },
       { id: 'indian-fighter-maroon', x: 1365, y: 618, engageDelay: 1.7 },
@@ -409,11 +424,7 @@ export const levels: LevelDefinition[] = [
     vendor: { id: 'thai-tattoo-artist', x: 1010, y: 584, flipX: true },
     exit: { x: 2030, y: 560 },
     backgroundKey: assetKeys.backgroundAyutthayaRiverside,
-    ambientNpcs: [
-      { id: 'npc-girl-silver', x: 590, y: 600, flipX: true, action: 'idle' },
-      { id: 'soi-six-nina', x: 790, y: 604, flipX: false, action: 'talk' },
-      { id: 'npc-girl-denim', x: 1110, y: 596, flipX: true, action: 'idle' }
-    ],
+    ambientNpcs: quietRiversideCasual,
     enemyStarts: [
       { id: 'indian-fighter-maroon', x: 1100, y: 588, engageDelay: 0 },
       { id: 'indian-fighter-maroon', x: 1340, y: 624, engageDelay: 1.4 },
@@ -436,11 +447,7 @@ export const levels: LevelDefinition[] = [
     vendor: { id: 'bar-promoter', x: 940, y: 586, flipX: true },
     exit: { x: 2050, y: 560 },
     backgroundKey: assetKeys.backgroundKohPhanganHaadRin,
-    ambientNpcs: [
-      { id: 'npc-girl-silver', x: 620, y: 604, flipX: false, action: 'cheer' },
-      { id: 'soi-six-nina', x: 820, y: 606, flipX: true, action: 'cheer' },
-      { id: 'npc-girl-black', x: 1080, y: 600, flipX: false, action: 'idle' }
-    ],
+    ambientNpcs: beachParty,
     enemyStarts: [
       { id: 'indian-fighter-maroon', x: 1125, y: 590, engageDelay: 0 },
       { id: 'indian-fighter-maroon', x: 1360, y: 624, engageDelay: 1.5 },

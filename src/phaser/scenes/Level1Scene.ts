@@ -129,6 +129,27 @@ const DEFAULT_AMBIENT_PERSONALITY: AmbientPersonality = {
 };
 
 const AMBIENT_PERSONALITIES: Record<string, AmbientPersonality> = {
+  'soi-six-ruby': {
+    ...DEFAULT_AMBIENT_PERSONALITY,
+    idleActions: ['idle', 'cheer', 'talk'],
+    calloutActions: ['cheer', 'talk'],
+    runChance: 0.04,
+    returnRunChance: 0.05,
+    runBackChance: 0.08,
+    approachDelayMs: [7600, 13600],
+    restDelayMs: [8200, 14800],
+    gestureDelayMs: [3200, 7200],
+    gestureDurationMs: [1300, 2300],
+    lingerMs: [1400, 2500],
+    touchLingerMs: [700, 1180],
+    targetOffsetX: [54, 80],
+    targetOffsetY: [-10, 4],
+    walkSpeed: [58, 88],
+    runSpeed: [138, 180],
+    idleTimeScale: [0.68, 0.88],
+    walkTimeScale: [0.58, 0.78],
+    runTimeScale: [0.8, 1.0]
+  },
   'soi-six-hd-dao': {
     ...DEFAULT_AMBIENT_PERSONALITY,
     idleActions: ['idle', 'talk', 'cheer'],
@@ -327,7 +348,7 @@ const AMBIENT_PERSONALITIES: Record<string, AmbientPersonality> = {
   }
 };
 
-const REJECTED_AMBIENT_GIRL_IDS = new Set(['soi-six-ruby', 'soi-six-thai-pim', 'npc-girl-red']);
+const REJECTED_AMBIENT_GIRL_IDS = new Set(['soi-six-thai-pim', 'npc-girl-red']);
 
 type KeyboardControls = {
   left: Phaser.Input.Keyboard.Key[];
