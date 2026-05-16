@@ -96,15 +96,15 @@ type FeetCheckDetail = {
   fps: number;
 };
 
-const AMBIENT_GIRL_MOTION_SCALE = 0.45;
-const AMBIENT_GIRL_ANIM_SCALE = 0.48;
+const AMBIENT_GIRL_MOTION_SCALE = 0.62;
+const AMBIENT_GIRL_ANIM_SCALE = 0.56;
 const AMBIENT_GIRL_STRIP_TIME_SCALE_MIN = 0.24;
 const AMBIENT_GIRL_STRIP_TIME_SCALE_MAX = 0.38;
 const AMBIENT_GIRL_TTS_MIN = 0.14;
 const AMBIENT_GIRL_VISUAL_SCALE = 1.25;
 const SOI_SIX_AMBIENT_MIN = 4;
 const SOI_SIX_AMBIENT_MAX = 5;
-const SOI_SIX_MAX_ACTIVE_MOVERS = 0;
+const SOI_SIX_MAX_ACTIVE_MOVERS = 1;
 const SOI_SIX_MAX_ACTIVE_GESTURES = 1;
 
 const DEFAULT_AMBIENT_PERSONALITY: AmbientPersonality = {
@@ -920,10 +920,10 @@ export class Level1Scene extends Phaser.Scene {
           continue;
         }
 
-        const shouldApproachCasey = Phaser.Math.FloatBetween(0, 1) < 0.08;
+        const shouldApproachCasey = Phaser.Math.FloatBetween(0, 1) < 0.64;
         npc.runnerState = shouldApproachCasey ? 'approach' : 'stroll';
         activeMovers += 1;
-        npc.motion = shouldApproachCasey ? this.pickAmbientMotion(npc.personality.runChance) : 'walk';
+        npc.motion = shouldApproachCasey ? 'run' : 'walk';
         npc.returnMotion = this.pickAmbientMotion(npc.personality.returnRunChance);
         npc.runBackAfterTouch = Phaser.Math.FloatBetween(0, 1) < npc.personality.runBackChance;
         if (shouldApproachCasey) {

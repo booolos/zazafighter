@@ -1,0 +1,3 @@
+display_name: Zaza Character Asset Pipeline
+short_description: Ship exact Zaza game character frames.
+default_prompt: Use this skill to generate one high-definition Zaza Fighter character at a time, then pack exact sprite, portrait, and feet-check frames for the game.

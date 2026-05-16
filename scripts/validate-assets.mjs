@@ -200,7 +200,7 @@ for (const character of registry.characters) {
     if (!isGeneratedAnimationFile(character.id, animation.file)) {
       fail(`${character.id}/${action} file must be a PNG under assets/generated/animations/${character.id}*`);
     }
-    const allowedFrameSizes = character.role === 'npc' ? [256, 384] : [256];
+    const allowedFrameSizes = character.role === 'npc' ? [256, 384, 512, 1024] : [256];
     if (animation.frameWidth !== animation.frameHeight || !allowedFrameSizes.includes(animation.frameWidth)) {
       fail(`${character.id}/${action} must use ${allowedFrameSizes.map((size) => `${size}x${size}`).join(' or ')} frames`);
     }

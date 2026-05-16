@@ -1,0 +1,154 @@
+{
+  "dao": {
+    "source": "/Users/booolos/Desktop/zazafighter/public/assets/generated/interactions/feet-check/soi-six-hd-dao-face.png",
+    "final": "/Users/booolos/Desktop/zazafighter/art-source/generated/agent-portraits-dao-kanda-20260516/final/soi-six-hd-dao-portrait-strip-640x720-12f.png",
+    "contact": "/Users/booolos/Desktop/zazafighter/art-source/generated/agent-portraits-dao-kanda-20260516/preview/soi-six-hd-dao-portrait-contact-12f.png",
+    "dimensions": [
+      7680,
+      720
+    ],
+    "frame_count": 12,
+    "adjacent_rms_diffs": [
+      53.64,
+      50.75,
+      52.72,
+      57.13,
+      54.11,
+      50.91,
+      46.95,
+      54.38,
+      54.13,
+      56.03,
+      56.27
+    ],
+    "low_adjacent_diff_pairs_starting_frame": [],
+    "crop_flags": [
+      "frame 01: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 02: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 03: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 04: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 05: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 06: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 07: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 08: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 09: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 10: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 11: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 12: content touches edge bbox=(0, 0, 640, 720)"
+    ],
+    "bbox_samples": [
+      [
+        0,
+        0,
+        640,
+        720
+      ],
+      [
+        0,
+        0,
+        640,
+        720
+      ],
+      [
+        0,
+        0,
+        640,
+        720
+      ],
+      [
+        0,
+        0,
+        640,
+        720
+      ],
+      [
+        0,
+        0,
+        640,
+        720
+      ],
+      [
+        0,
+        0,
+        640,
+        720
+      ]
+    ]
+  },
+  "kanda": {
+    "source": "/Users/booolos/Desktop/zazafighter/public/assets/generated/interactions/feet-check/soi-six-hd-kanda-face.png",
+    "final": "/Users/booolos/Desktop/zazafighter/art-source/generated/agent-portraits-dao-kanda-20260516/final/soi-six-hd-kanda-portrait-strip-640x720-12f.png",
+    "contact": "/Users/booolos/Desktop/zazafighter/art-source/generated/agent-portraits-dao-kanda-20260516/preview/soi-six-hd-kanda-portrait-contact-12f.png",
+    "dimensions": [
+      7680,
+      720
+    ],
+    "frame_count": 12,
+    "adjacent_rms_diffs": [
+      18.99,
+      23.8,
+      27.23,
+      25.81,
+      20.22,
+      17.07,
+      20.95,
+      23.58,
+      22.88,
+      20.77,
+      22.01
+    ],
+    "low_adjacent_diff_pairs_starting_frame": [],
+    "crop_flags": [
+      "frame 01: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 02: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 03: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 04: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 05: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 06: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 07: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 08: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 09: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 10: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 11: content touches edge bbox=(0, 0, 640, 720)",
+      "frame 12: content touches edge bbox=(0, 0, 640, 720)"
+    ],
+    "bbox_samples": [
+      [
+        0,
+        0,
+        640,
+        720
+      ],
+      [
+        0,
+        0,
+        640,
+        720
+      ],
+      [
+        0,
+        0,
+        640,
+        720
+      ],
+      [
+        0,
+        0,
+        640,
+        720
+      ],
+      [
+        0,
+        0,
+        640,
+        720
+      ],
+      [
+        0,
+        0,
+        640,
+        720
+      ]
+    ]
+  }
+}

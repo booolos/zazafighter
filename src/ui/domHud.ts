@@ -40,7 +40,7 @@ let lastHud: HudSnapshot | null = null;
 let hudIsActive = false;
 let gameplayControlsLocked = false;
 let feetCheckRenderToken = 0;
-const FEET_CHECK_ASSET_VERSION = '20260516-v8';
+const FEET_CHECK_ASSET_VERSION = '20260516-v10';
 const feetCheckImageCache = new Map<string, Promise<HTMLImageElement>>();
 const feetCheckStripAnimators = new WeakMap<HTMLElement, {
   frame: number;
@@ -430,7 +430,7 @@ async function renderFeetCheckOverlay(root: HTMLElement, detail: FeetCheckDetail
   overlay.setAttribute('aria-hidden', 'false');
   if (face) {
     const faceFrames = Math.max(1, detail.faceFrames ?? 1);
-    const faceFps = Math.max(1, Math.min(detail.faceFps ?? 14, 18));
+    const faceFps = Math.max(1, Math.min(detail.faceFps ?? 8, 12));
     configureFeetCheckStrip(face, faceImage, faceFrames, faceFps, detail.faceFrameWidth, detail.faceFrameHeight, 'contain');
   }
   if (strip) {
