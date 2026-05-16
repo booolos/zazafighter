@@ -38,8 +38,19 @@ let lastHud: HudSnapshot | null = null;
 let hudIsActive = false;
 let gameplayControlsLocked = false;
 let feetCheckRenderToken = 0;
-const feetCheckImageCache = new Map<string, Promise<void>>();
-const feetCheckStripAnimators = new WeakMap<HTMLElement, { frame: number; frames: number; fps: number; rafId?: number; lastTime: number; rail: HTMLImageElement }>();
+const feetCheckImageCache = new Map<string, Promise<HTMLImageElement>>();
+const feetCheckStripAnimators = new WeakMap<HTMLElement, {
+  frame: number;
+  frames: number;
+  fps: number;
+  frameWidth: number;
+  frameHeight: number;
+  rafId?: number;
+  lastTime: number;
+  image: HTMLImageElement;
+  canvas: HTMLCanvasElement;
+  context: CanvasRenderingContext2D;
+}>();
 
 export function setupDomHud() {
   const root = document.getElementById('hud-root');
@@ -54,7 +65,7 @@ export function setupDomHud() {
           </div>
           <div class="fighter-info">
             <span class="eyebrow" data-player-handle>GREEN CAP</span>
-            <strong data-player-name>Kiko</strong>
+            <strong data-player-name>Lucas</strong>
             <span class="score-row"><span class="score-icon" aria-hidden="true">★</span><span data-player-score>0</span></span>
           </div>
           <div class="bars">
@@ -71,9 +82,12 @@ export function setupDomHud() {
         </button>
       </div>
       <button class="feet-check-button hidden" data-action="feetCheck" type="button" aria-label="Feet check">
-        <span>TAP</span>
-        <strong>FEET CHECK</strong>
-        <small data-feet-check-name></small>
+        <span class="feet-check-icon" aria-hidden="true"></span>
+        <span class="feet-check-label">
+          <span>READY</span>
+          <strong>FEET CHECK</strong>
+          <small data-feet-check-name></small>
+        </span>
       </button>
       <div class="mobile-controls">
         <div class="joystick" data-joystick role="group" aria-label="Movement joystick">
@@ -398,7 +412,7 @@ async function renderFeetCheckOverlay(root: HTMLElement, detail: FeetCheckDetail
   const overlay = root.querySelector<HTMLElement>('[data-feet-check-overlay]');
   if (!overlay) return;
   const renderToken = ++feetCheckRenderToken;
-  await Promise.all([preloadFeetCheckImage(detail.faceImage), preloadFeetCheckImage(detail.stripImage)]);
+  const [faceImage, stripImage] = await Promise.all([preloadFeetCheckImage(detail.faceImage), preloadFeetCheckImage(detail.stripImage)]);
   if (renderToken !== feetCheckRenderToken) return;
   const face = overlay.querySelector<HTMLElement>('[data-feet-check-face]');
   const strip = overlay.querySelector<HTMLElement>('[data-feet-check-strip]');
@@ -408,7 +422,7 @@ async function renderFeetCheckOverlay(root: HTMLElement, detail: FeetCheckDetail
   if (face) {
     const faceFrames = Math.max(1, detail.faceFrames ?? 1);
     const faceFps = Math.max(1, detail.faceFps ?? 10);
-    configureFeetCheckStrip(face, detail.faceImage, faceFrames, faceFps, detail.faceFrameWidth, detail.faceFrameHeight);
+    configureFeetCheckStrip(face, faceImage, faceFrames, faceFps, detail.faceFrameWidth, detail.faceFrameHeight);
   }
   if (title) title.textContent = detail.title;
   if (subtitle) subtitle.textContent = detail.subtitle;
@@ -416,7 +430,7 @@ async function renderFeetCheckOverlay(root: HTMLElement, detail: FeetCheckDetail
   if (strip) {
     const frames = Math.max(1, detail.frames);
     const fps = Math.max(1, detail.fps ?? 12);
-    configureFeetCheckStrip(strip, detail.stripImage, frames, fps, detail.frameWidth, detail.frameHeight);
+    configureFeetCheckStrip(strip, stripImage, frames, fps, detail.frameWidth, detail.frameHeight);
   }
   overlay.classList.remove('hidden');
   overlay.setAttribute('aria-hidden', 'false');
@@ -425,17 +439,17 @@ async function renderFeetCheckOverlay(root: HTMLElement, detail: FeetCheckDetail
 function preloadFeetCheckImage(src: string) {
   const cached = feetCheckImageCache.get(src);
   if (cached) return cached;
-  const load = new Promise<void>((resolve) => {
+  const load = new Promise<HTMLImageElement>((resolve) => {
     const image = new Image();
-    image.onload = () => resolve();
-    image.onerror = () => resolve();
+    image.onload = () => resolve(image);
+    image.onerror = () => resolve(image);
     image.src = src;
   });
   feetCheckImageCache.set(src, load);
   return load;
 }
 
-function configureFeetCheckStrip(element: HTMLElement, image: string, frames: number, fps: number, frameWidth?: number, frameHeight?: number) {
+function configureFeetCheckStrip(element: HTMLElement, image: HTMLImageElement, frames: number, fps: number, frameWidth?: number, frameHeight?: number) {
   stopFeetCheckStrip(element);
   element.style.animation = 'none';
   element.style.transform = '';
@@ -446,36 +460,48 @@ function configureFeetCheckStrip(element: HTMLElement, image: string, frames: nu
   element.style.backgroundSize = '100% 100%';
   element.replaceChildren();
 
-  const rail = document.createElement('img');
-  rail.src = image;
-  rail.alt = '';
-  rail.draggable = false;
-  rail.setAttribute('aria-hidden', 'true');
-  rail.style.position = 'absolute';
-  rail.style.inset = '0 auto 0 0';
-  rail.style.width = `${frames * 100}%`;
-  rail.style.height = '100%';
-  rail.style.maxWidth = 'none';
-  rail.style.objectFit = 'fill';
-  rail.style.transform = 'translate3d(0, 0, 0)';
-  rail.style.backfaceVisibility = 'hidden';
-  rail.style.willChange = 'transform';
-  rail.style.userSelect = 'none';
-  rail.style.pointerEvents = 'none';
-  if (frameWidth && frameHeight) {
-    rail.style.aspectRatio = `${frames * frameWidth} / ${frameHeight}`;
+  if (!image.naturalWidth || !image.naturalHeight) {
+    element.style.backgroundImage = `url("${image.src}")`;
+    return;
   }
-  element.appendChild(rail);
-  if (frames <= 1) return;
+
+  const sourceWidth = image.naturalWidth || (frameWidth ? frameWidth * frames : frames);
+  const sourceHeight = image.naturalHeight || frameHeight || 1;
+  const resolvedFrameWidth = Math.max(1, Math.round(frameWidth ?? sourceWidth / frames));
+  const resolvedFrameHeight = Math.max(1, Math.round(frameHeight ?? sourceHeight));
+  const dpr = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.round(resolvedFrameWidth * dpr);
+  canvas.height = Math.round(resolvedFrameHeight * dpr);
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
+  canvas.style.display = 'block';
+  canvas.setAttribute('aria-hidden', 'true');
+  const context = canvas.getContext('2d');
+  if (!context) return;
+  context.imageSmoothingEnabled = true;
+  context.imageSmoothingQuality = 'high';
+  context.setTransform(dpr, 0, 0, dpr, 0, 0);
+  element.appendChild(canvas);
 
   const state = {
     frame: 0,
     frames,
     fps: Math.max(1, Math.round(fps)),
+    frameWidth: resolvedFrameWidth,
+    frameHeight: resolvedFrameHeight,
     lastTime: performance.now(),
     rafId: undefined as number | undefined,
-    rail
+    image,
+    canvas,
+    context
   };
+  drawFeetCheckFrame(state);
+  if (frames <= 1) {
+    feetCheckStripAnimators.set(element, state);
+    return;
+  }
+
   const step = (now: number) => {
     const frameDurationMs = 1000 / state.fps;
     const elapsedMs = now - state.lastTime;
@@ -483,12 +509,32 @@ function configureFeetCheckStrip(element: HTMLElement, image: string, frames: nu
     if (elapsedMs >= frameDurationMs) {
       state.frame = (state.frame + skip) % state.frames;
       state.lastTime += skip * frameDurationMs;
-      rail.style.transform = `translate3d(-${(state.frame * 100) / state.frames}%, 0, 0)`;
+      drawFeetCheckFrame(state);
     }
     state.rafId = requestAnimationFrame(step);
   };
   state.rafId = requestAnimationFrame(step);
   feetCheckStripAnimators.set(element, state);
+}
+
+function drawFeetCheckFrame(state: NonNullable<ReturnType<typeof feetCheckStripAnimators.get>>) {
+  const { canvas, context, frame, frames, frameWidth, frameHeight, image } = state;
+  const sourceWidth = image.naturalWidth || frames * frameWidth;
+  const sourceHeight = image.naturalHeight || frameHeight;
+  const sourceFrameWidth = sourceWidth / frames;
+  const sx = Math.min(sourceWidth - sourceFrameWidth, frame * sourceFrameWidth);
+  context.clearRect(0, 0, frameWidth, frameHeight);
+  context.drawImage(
+    image,
+    sx,
+    0,
+    sourceFrameWidth,
+    sourceHeight,
+    0,
+    0,
+    frameWidth,
+    frameHeight
+  );
 }
 
 function hideFeetCheckOverlay(root: HTMLElement) {

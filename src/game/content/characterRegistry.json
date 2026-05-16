@@ -2,7 +2,7 @@
   "characters": [
     {
       "id": "kiko",
-      "displayName": "Kiko",
+      "displayName": "Lucas",
       "handle": "Green Cap",
       "role": "player",
       "faction": "heroes",
@@ -752,6 +752,20 @@
           "frameRate": 7,
           "repeat": -1
         }
+      },
+      "feetCheck": {
+        "title": "FEET CHECK",
+        "subtitle": "Pink platform tilt, playful toe flex.",
+        "faceImage": "assets/generated/interactions/feet-check/soi-six-ruby-face.png",
+        "faceFrames": 12,
+        "faceFrameWidth": 640,
+        "faceFrameHeight": 720,
+        "faceFps": 10,
+        "stripImage": "assets/generated/interactions/feet-check/soi-six-ruby-heels-strip.png",
+        "frames": 10,
+        "frameWidth": 512,
+        "frameHeight": 512,
+        "fps": 16
       }
     },
     {
@@ -843,6 +857,20 @@
           "frameRate": 7,
           "repeat": -1
         }
+      },
+      "feetCheck": {
+        "title": "FEET CHECK",
+        "subtitle": "Black heel-boot tilt, neon polish detail.",
+        "faceImage": "assets/generated/interactions/feet-check/soi-six-nina-face.png",
+        "faceFrames": 12,
+        "faceFrameWidth": 640,
+        "faceFrameHeight": 720,
+        "faceFps": 10,
+        "stripImage": "assets/generated/interactions/feet-check/soi-six-nina-heels-strip.png",
+        "frames": 10,
+        "frameWidth": 512,
+        "frameHeight": 512,
+        "fps": 16
       }
     },
     {
@@ -1616,6 +1644,20 @@
           "frameRate": 6,
           "repeat": -1
         }
+      },
+      "feetCheck": {
+        "title": "FEET CHECK",
+        "subtitle": "Glossy red heel slip on wet pavement.",
+        "faceImage": "assets/generated/interactions/feet-check/npc-girl-red-face.png",
+        "faceFrames": 12,
+        "faceFrameWidth": 640,
+        "faceFrameHeight": 720,
+        "faceFps": 10,
+        "stripImage": "assets/generated/interactions/feet-check/npc-girl-red-heels-strip.png",
+        "frames": 10,
+        "frameWidth": 512,
+        "frameHeight": 512,
+        "fps": 16
       }
     },
     {
@@ -1707,6 +1749,20 @@
           "frameRate": 6,
           "repeat": -1
         }
+      },
+      "feetCheck": {
+        "title": "FEET CHECK",
+        "subtitle": "Black-gold heel roll, confident arch turn.",
+        "faceImage": "assets/generated/interactions/feet-check/npc-girl-black-face.png",
+        "faceFrames": 12,
+        "faceFrameWidth": 640,
+        "faceFrameHeight": 720,
+        "faceFps": 10,
+        "stripImage": "assets/generated/interactions/feet-check/npc-girl-black-heels-strip.png",
+        "frames": 10,
+        "frameWidth": 512,
+        "frameHeight": 512,
+        "fps": 16
       }
     },
     {
@@ -1798,6 +1854,20 @@
           "frameRate": 6,
           "repeat": -1
         }
+      },
+      "feetCheck": {
+        "title": "FEET CHECK",
+        "subtitle": "Light sandal slip, denim-night toe flex.",
+        "faceImage": "assets/generated/interactions/feet-check/npc-girl-denim-face.png",
+        "faceFrames": 12,
+        "faceFrameWidth": 640,
+        "faceFrameHeight": 720,
+        "faceFps": 10,
+        "stripImage": "assets/generated/interactions/feet-check/npc-girl-denim-heels-strip.png",
+        "frames": 10,
+        "frameWidth": 512,
+        "frameHeight": 512,
+        "fps": 16
       }
     },
     {
@@ -1889,6 +1959,20 @@
           "frameRate": 6,
           "repeat": -1
         }
+      },
+      "feetCheck": {
+        "title": "FEET CHECK",
+        "subtitle": "Silver strap side-profile, pearly toe flex.",
+        "faceImage": "assets/generated/interactions/feet-check/npc-girl-silver-face.png",
+        "faceFrames": 12,
+        "faceFrameWidth": 640,
+        "faceFrameHeight": 720,
+        "faceFps": 10,
+        "stripImage": "assets/generated/interactions/feet-check/npc-girl-silver-heels-strip.png",
+        "frames": 10,
+        "frameWidth": 512,
+        "frameHeight": 512,
+        "fps": 16
       }
     },
     {
