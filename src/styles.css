@@ -526,7 +526,7 @@ button {
   position: absolute;
   left: 50%;
   right: auto;
-  bottom: max(232px, calc(env(safe-area-inset-bottom) + 212px));
+  bottom: max(24px, calc(env(safe-area-inset-bottom) + 18px));
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr);
   gap: 13px;
@@ -935,7 +935,7 @@ button {
   .feet-check-button {
     left: 50%;
     right: auto;
-    bottom: max(198px, calc(env(safe-area-inset-bottom) + 176px));
+    bottom: max(16px, calc(env(safe-area-inset-bottom) + 12px));
     grid-template-columns: 46px minmax(0, 1fr);
     width: 216px;
     min-height: 68px;
@@ -1077,7 +1077,7 @@ button {
   .feet-check-button {
     left: 50%;
     right: auto;
-    bottom: max(150px, calc(env(safe-area-inset-bottom) + 132px));
+    bottom: max(8px, calc(env(safe-area-inset-bottom) + 8px));
     grid-template-columns: 38px minmax(0, 1fr);
     width: 184px;
     min-height: 58px;
