@@ -1676,8 +1676,8 @@
     {
       "character": "soi-six-hd-dao",
       "kind": "feet-check-face",
-      "path": "assets/generated/interactions/feet-check/soi-six-premium/soi-six-hd-dao-face.png",
-      "frames": 16,
+      "path": "assets/generated/interactions/feet-check/soi-six-hd-dao-face.png",
+      "frames": 12,
       "frameWidth": 640,
       "frameHeight": 720
     },
@@ -1692,8 +1692,8 @@
     {
       "character": "soi-six-hd-kanda",
       "kind": "feet-check-face",
-      "path": "assets/generated/interactions/feet-check/soi-six-premium/soi-six-hd-kanda-face.png",
-      "frames": 16,
+      "path": "assets/generated/interactions/feet-check/soi-six-hd-kanda-face.png",
+      "frames": 12,
       "frameWidth": 640,
       "frameHeight": 720
     },
@@ -1708,8 +1708,8 @@
     {
       "character": "soi-six-hd-mintra",
       "kind": "feet-check-face",
-      "path": "assets/generated/interactions/feet-check/soi-six-premium/soi-six-hd-mintra-face.png",
-      "frames": 16,
+      "path": "assets/generated/interactions/feet-check/soi-six-hd-mintra-face.png",
+      "frames": 12,
       "frameWidth": 640,
       "frameHeight": 720
     },
@@ -1740,8 +1740,8 @@
     {
       "character": "soi-six-hd-mew",
       "kind": "feet-check-face",
-      "path": "assets/generated/interactions/feet-check/soi-six-premium/soi-six-hd-mew-face.png",
-      "frames": 16,
+      "path": "assets/generated/interactions/feet-check/soi-six-hd-mew-face.png",
+      "frames": 12,
       "frameWidth": 640,
       "frameHeight": 720
     },
