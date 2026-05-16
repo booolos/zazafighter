@@ -1,0 +1,362 @@
+{
+  "input": "art-source/generated/user-dropped-portraits-20260516/source/soi-six-black-gold-bob-portrait-source.png",
+  "output": "art-source/generated/user-dropped-portraits-20260516/final/soi-six-hd-ploy-face-640x720-12f.png",
+  "sourceSize": [
+    2172,
+    724
+  ],
+  "sourceFrames": 8,
+  "cuts": [
+    14,
+    293,
+    557,
+    824,
+    1100,
+    1371,
+    1637,
+    1899,
+    2160
+  ],
+  "sequence": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    5,
+    6,
+    7,
+    7,
+    1,
+    0
+  ],
+  "frameWidth": 640,
+  "frameHeight": 720,
+  "targetSubjectHeight": 700,
+  "scale": 1.4767932489451476,
+  "warnings": [
+    "source frame 0: subject touches horizontal cell edge",
+    "source frame 1: subject touches horizontal cell edge",
+    "source frame 2: subject touches horizontal cell edge",
+    "source frame 3: subject touches horizontal cell edge",
+    "source frame 4: subject touches horizontal cell edge",
+    "source frame 5: subject touches horizontal cell edge",
+    "source frame 6: subject touches horizontal cell edge",
+    "source frame 7: subject touches horizontal cell edge"
+  ],
+  "frames": [
+    {
+      "runtimeFrame": 0,
+      "sourceFrame": 0,
+      "sourceCell": [
+        14,
+        0,
+        293,
+        724
+      ],
+      "sourceBbox": [
+        0,
+        147,
+        279,
+        620
+      ],
+      "packedBox": [
+        114,
+        10,
+        526,
+        709
+      ],
+      "scaledSize": [
+        412,
+        699
+      ]
+    },
+    {
+      "runtimeFrame": 1,
+      "sourceFrame": 1,
+      "sourceCell": [
+        293,
+        0,
+        557,
+        724
+      ],
+      "sourceBbox": [
+        0,
+        148,
+        264,
+        620
+      ],
+      "packedBox": [
+        125,
+        11,
+        515,
+        708
+      ],
+      "scaledSize": [
+        390,
+        697
+      ]
+    },
+    {
+      "runtimeFrame": 2,
+      "sourceFrame": 2,
+      "sourceCell": [
+        557,
+        0,
+        824,
+        724
+      ],
+      "sourceBbox": [
+        0,
+        148,
+        265,
+        620
+      ],
+      "packedBox": [
+        124,
+        11,
+        515,
+        708
+      ],
+      "scaledSize": [
+        391,
+        697
+      ]
+    },
+    {
+      "runtimeFrame": 3,
+      "sourceFrame": 3,
+      "sourceCell": [
+        824,
+        0,
+        1100,
+        724
+      ],
+      "sourceBbox": [
+        1,
+        149,
+        276,
+        620
+      ],
+      "packedBox": [
+        117,
+        12,
+        523,
+        708
+      ],
+      "scaledSize": [
+        406,
+        696
+      ]
+    },
+    {
+      "runtimeFrame": 4,
+      "sourceFrame": 4,
+      "sourceCell": [
+        1100,
+        0,
+        1371,
+        724
+      ],
+      "sourceBbox": [
+        0,
+        148,
+        271,
+        620
+      ],
+      "packedBox": [
+        120,
+        11,
+        520,
+        708
+      ],
+      "scaledSize": [
+        400,
+        697
+      ]
+    },
+    {
+      "runtimeFrame": 5,
+      "sourceFrame": 5,
+      "sourceCell": [
+        1371,
+        0,
+        1637,
+        724
+      ],
+      "sourceBbox": [
+        0,
+        148,
+        266,
+        622
+      ],
+      "packedBox": [
+        123,
+        10,
+        516,
+        710
+      ],
+      "scaledSize": [
+        393,
+        700
+      ]
+    },
+    {
+      "runtimeFrame": 6,
+      "sourceFrame": 5,
+      "sourceCell": [
+        1371,
+        0,
+        1637,
+        724
+      ],
+      "sourceBbox": [
+        0,
+        148,
+        266,
+        622
+      ],
+      "packedBox": [
+        123,
+        10,
+        516,
+        710
+      ],
+      "scaledSize": [
+        393,
+        700
+      ]
+    },
+    {
+      "runtimeFrame": 7,
+      "sourceFrame": 6,
+      "sourceCell": [
+        1637,
+        0,
+        1899,
+        724
+      ],
+      "sourceBbox": [
+        0,
+        152,
+        259,
+        621
+      ],
+      "packedBox": [
+        129,
+        13,
+        511,
+        706
+      ],
+      "scaledSize": [
+        382,
+        693
+      ]
+    },
+    {
+      "runtimeFrame": 8,
+      "sourceFrame": 7,
+      "sourceCell": [
+        1899,
+        0,
+        2160,
+        724
+      ],
+      "sourceBbox": [
+        0,
+        149,
+        261,
+        620
+      ],
+      "packedBox": [
+        127,
+        12,
+        512,
+        708
+      ],
+      "scaledSize": [
+        385,
+        696
+      ]
+    },
+    {
+      "runtimeFrame": 9,
+      "sourceFrame": 7,
+      "sourceCell": [
+        1899,
+        0,
+        2160,
+        724
+      ],
+      "sourceBbox": [
+        0,
+        149,
+        261,
+        620
+      ],
+      "packedBox": [
+        127,
+        12,
+        512,
+        708
+      ],
+      "scaledSize": [
+        385,
+        696
+      ]
+    },
+    {
+      "runtimeFrame": 10,
+      "sourceFrame": 1,
+      "sourceCell": [
+        293,
+        0,
+        557,
+        724
+      ],
+      "sourceBbox": [
+        0,
+        148,
+        264,
+        620
+      ],
+      "packedBox": [
+        125,
+        11,
+        515,
+        708
+      ],
+      "scaledSize": [
+        390,
+        697
+      ]
+    },
+    {
+      "runtimeFrame": 11,
+      "sourceFrame": 0,
+      "sourceCell": [
+        14,
+        0,
+        293,
+        724
+      ],
+      "sourceBbox": [
+        0,
+        147,
+        279,
+        620
+      ],
+      "packedBox": [
+        114,
+        10,
+        526,
+        709
+      ],
+      "scaledSize": [
+        412,
+        699
+      ]
+    }
+  ]
+}

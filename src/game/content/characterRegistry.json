@@ -2750,7 +2750,7 @@
         "faceFrames": 12,
         "faceFrameWidth": 640,
         "faceFrameHeight": 720,
-        "faceFps": 8,
+        "faceFps": 7,
         "stripImage": "assets/generated/interactions/feet-check/soi-six-hd-ploy-heels-strip.png",
         "frames": 10,
         "frameWidth": 512,

@@ -18,7 +18,7 @@ Imagegen output is source material. Runtime assets must be cut, filtered, aligne
 3. Generate one asset family at a time: full-body action, portrait expressions, or feet-check closeups.
 4. Use flat chroma key source art, usually `#00ff00`, with generous gutters and no shadows.
 5. Inspect the source sheet at full resolution before processing.
-6. Repack deterministic runtime strips with `scripts/pack_green_grid.py` or an equivalent project script.
+6. Repack deterministic runtime strips with `scripts/pack_green_grid.py`, `scripts/pack_green_portrait_strip.py`, or an equivalent project script.
 7. Update registry metadata to the actual output dimensions and frame counts.
 8. Run the project asset validator and build.
 9. Browser-check the live game surface, especially feet-check overlay and Soi Six runner behavior.
@@ -102,3 +102,4 @@ npm run build
 - Prompt recipes: `references/prompt-recipes.md`
 - Quality gates: `references/quality-gates.md`
 - Deterministic green-sheet packer: `scripts/pack_green_grid.py`
+- One-row portrait sheet packer: `scripts/pack_green_portrait_strip.py`
