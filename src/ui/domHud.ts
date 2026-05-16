@@ -105,13 +105,12 @@ export function setupDomHud() {
       </div>
       <div class="feet-check-overlay hidden" data-feet-check-overlay aria-hidden="true">
         <div class="feet-check-stage">
+          <div class="feet-check-copy">
+            <span data-feet-check-kicker>SOI 6</span>
+            <strong data-feet-check-title>FEET CHECK</strong>
+          </div>
           <section class="feet-check-face">
             <div class="feet-check-face-strip" data-feet-check-face alt="" aria-hidden="true"></div>
-            <div class="feet-check-copy">
-              <span data-feet-check-kicker>SOI 6</span>
-              <strong data-feet-check-title>FEET CHECK</strong>
-              <small data-feet-check-subtitle></small>
-            </div>
           </section>
           <section class="feet-check-foot">
             <div class="feet-check-foot-strip" data-feet-check-strip aria-hidden="true"></div>
@@ -424,10 +423,8 @@ async function renderFeetCheckOverlay(root: HTMLElement, detail: FeetCheckDetail
   const face = overlay.querySelector<HTMLElement>('[data-feet-check-face]');
   const strip = overlay.querySelector<HTMLElement>('[data-feet-check-strip]');
   const title = overlay.querySelector<HTMLElement>('[data-feet-check-title]');
-  const subtitle = overlay.querySelector<HTMLElement>('[data-feet-check-subtitle]');
   const kicker = overlay.querySelector<HTMLElement>('[data-feet-check-kicker]');
   if (title) title.textContent = detail.title;
-  if (subtitle) subtitle.textContent = detail.subtitle;
   if (kicker) kicker.textContent = detail.name.toUpperCase();
   overlay.classList.remove('hidden');
   overlay.setAttribute('aria-hidden', 'false');

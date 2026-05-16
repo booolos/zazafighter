@@ -634,7 +634,7 @@ button {
   display: grid;
   grid-template-columns: minmax(280px, 0.88fr) minmax(360px, 1.12fr);
   gap: clamp(12px, 2vw, 22px);
-  padding: clamp(12px, 2vw, 20px);
+  padding: clamp(76px, 9dvh, 92px) clamp(12px, 2vw, 20px) clamp(12px, 2vw, 20px);
   border: 2px solid rgba(255, 202, 58, 0.76);
   border-radius: 8px;
   background:
@@ -683,14 +683,20 @@ button {
 
 .feet-check-copy {
   position: absolute;
-  left: 14px;
-  right: 14px;
-  top: 12px;
+  left: 50%;
+  top: clamp(12px, 2dvh, 18px);
+  width: min(520px, calc(100% - 170px));
   display: grid;
-  gap: 4px;
-  padding: 10px 12px;
+  gap: 3px;
+  padding: 10px 16px 11px;
   border-radius: 8px;
-  background: linear-gradient(90deg, rgba(5, 6, 10, 0.92), rgba(5, 6, 10, 0.62));
+  background:
+    linear-gradient(90deg, rgba(255, 202, 58, 0), rgba(255, 202, 58, 0.28), rgba(255, 202, 58, 0)),
+    linear-gradient(180deg, rgba(5, 6, 10, 0.94), rgba(5, 6, 10, 0.68));
+  text-align: center;
+  transform: translateX(-50%);
+  z-index: 2;
+  pointer-events: none;
 }
 
 .feet-check-copy span {
@@ -701,11 +707,6 @@ button {
 .feet-check-copy strong {
   color: #ffffff;
   font: 900 clamp(24px, 4vw, 44px)/0.94 Impact, Arial Black, sans-serif;
-}
-
-.feet-check-copy small {
-  color: rgba(244, 244, 242, 0.9);
-  font: 800 12px/1.2 Arial, sans-serif;
 }
 
 .feet-check-foot {
@@ -819,13 +820,12 @@ button {
     height: min(90dvh, 760px);
     grid-template-columns: 1fr;
     grid-template-rows: minmax(220px, 0.9fr) minmax(260px, 1fr);
-    padding: 10px;
+    padding: 72px 10px 10px;
   }
 
   .feet-check-copy {
-    left: 10px;
-    right: 10px;
     top: 10px;
+    width: calc(100% - 24px);
   }
 
   .feet-check-exit {
@@ -963,11 +963,11 @@ button {
   .feet-check-stage {
     width: min(920px, 96vw);
     height: min(390px, 88dvh);
-    padding: 10px;
+    padding: 66px 10px 10px;
   }
 
   .feet-check-copy strong {
-    font-size: 26px;
+    font-size: 25px;
   }
 }
 
@@ -1115,6 +1115,21 @@ button {
     width: min(94vw, 760px);
     height: min(310px, 88dvh);
     gap: 8px;
+    padding: 58px 10px 10px;
+  }
+
+  .feet-check-copy {
+    top: 8px;
+    width: calc(100% - 126px);
+    padding: 8px 12px;
+  }
+
+  .feet-check-copy span {
+    font-size: 9px;
+  }
+
+  .feet-check-copy strong {
+    font-size: 21px;
   }
 
   .feet-check-exit {
