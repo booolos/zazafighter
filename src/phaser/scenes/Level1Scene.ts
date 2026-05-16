@@ -229,6 +229,27 @@ const AMBIENT_PERSONALITIES: Record<string, AmbientPersonality> = {
     walkTimeScale: [0.58, 0.78],
     runTimeScale: [0.82, 1.02]
   },
+  'soi-six-hd-luna': {
+    ...DEFAULT_AMBIENT_PERSONALITY,
+    idleActions: ['idle', 'talk', 'cheer'],
+    calloutActions: ['talk', 'cheer'],
+    runChance: 0.02,
+    returnRunChance: 0.02,
+    runBackChance: 0.04,
+    approachDelayMs: [9000, 15800],
+    restDelayMs: [9800, 16800],
+    gestureDelayMs: [3800, 8200],
+    gestureDurationMs: [1400, 2700],
+    lingerMs: [1700, 3100],
+    touchLingerMs: [820, 1350],
+    targetOffsetX: [64, 96],
+    targetOffsetY: [-10, 4],
+    walkSpeed: [50, 76],
+    runSpeed: [128, 166],
+    idleTimeScale: [0.54, 0.74],
+    walkTimeScale: [0.5, 0.68],
+    runTimeScale: [0.72, 0.9]
+  },
   'soi-six-thai-lada': {
     ...DEFAULT_AMBIENT_PERSONALITY,
     idleActions: ['idle', 'talk'],

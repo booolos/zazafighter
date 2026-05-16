@@ -222,7 +222,7 @@ export const levels: LevelDefinition[] = [
       { id: 'soi-six-hd-mintra', x: 910, y: 588, flipX: false, action: 'cheer' },
       { id: 'soi-six-hd-ploy', x: 1210, y: 574, flipX: true, action: 'idle' },
       { id: 'soi-six-hd-mew', x: 1515, y: 592, flipX: false, action: 'talk' },
-      { id: 'soi-six-hd-dao', x: 1810, y: 578, flipX: true, action: 'idle' }
+      { id: 'soi-six-hd-luna', x: 1810, y: 578, flipX: true, action: 'idle' }
     ],
     enemyStarts: [
       { id: 'indian-fighter-maroon', x: 1110, y: 620, engageDelay: 0 },

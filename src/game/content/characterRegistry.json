@@ -2871,6 +2871,120 @@
           "repeat": -1
         }
       }
+    },
+    {
+      "id": "soi-six-hd-luna",
+      "displayName": "Luna",
+      "handle": "Gold Dress Hostess",
+      "role": "npc",
+      "faction": "soi-six-nightlife",
+      "seed": {
+        "key": "character:soi-six-hd-luna:seed",
+        "path": "assets/generated/characters/npcs/soi-six-hd-luna.png"
+      },
+      "render": {
+        "scale": 0.38,
+        "originX": 0.5,
+        "originY": 0.95
+      },
+      "stats": {
+        "maxHp": 70,
+        "speed": 142,
+        "attackDamage": 0,
+        "superDamage": 0,
+        "weight": 0.82
+      },
+      "physics": {
+        "bodyWidth": 126,
+        "bodyHeight": 305,
+        "bodyOffsetX": 129,
+        "bodyOffsetY": 43
+      },
+      "combat": {
+        "canUseSuperSlap": false,
+        "hitboxProfile": "none",
+        "hurtboxProfile": "human-light",
+        "aiProfile": "idle-npc"
+      },
+      "feetCheck": {
+        "title": "FEET CHECK",
+        "subtitle": "Black ankle-strap heels, gold dress close-up.",
+        "faceImage": "assets/generated/interactions/feet-check/soi-six-hd-luna-face.png",
+        "faceFrames": 8,
+        "faceFrameWidth": 640,
+        "faceFrameHeight": 720,
+        "faceFps": 8,
+        "stripImage": "assets/generated/interactions/feet-check/soi-six-hd-luna-heels-strip.png",
+        "frames": 8,
+        "frameWidth": 512,
+        "frameHeight": 512,
+        "fps": 5
+      },
+      "animations": {
+        "idle": {
+          "key": "anim:soi-six-hd-luna:idle",
+          "file": "assets/generated/animations/soi-six-hd-luna/idle.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "talk": {
+          "key": "anim:soi-six-hd-luna:talk",
+          "file": "assets/generated/animations/soi-six-hd-luna/talk.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "walk": {
+          "key": "anim:soi-six-hd-luna:walk",
+          "file": "assets/generated/animations/soi-six-hd-luna/walk.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "run": {
+          "key": "anim:soi-six-hd-luna:run",
+          "file": "assets/generated/animations/soi-six-hd-luna/run.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "react": {
+          "key": "anim:soi-six-hd-luna:react",
+          "file": "assets/generated/animations/soi-six-hd-luna/react.png",
+          "frames": 4,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 8,
+          "repeat": 0
+        },
+        "cheer": {
+          "key": "anim:soi-six-hd-luna:cheer",
+          "file": "assets/generated/animations/soi-six-hd-luna/cheer.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 8,
+          "repeat": -1
+        },
+        "panic": {
+          "key": "anim:soi-six-hd-luna:panic",
+          "file": "assets/generated/animations/soi-six-hd-luna/panic.png",
+          "frames": 8,
+          "frameWidth": 384,
+          "frameHeight": 384,
+          "frameRate": 8,
+          "repeat": -1
+        }
+      }
     }
   ]
 }

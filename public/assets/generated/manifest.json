@@ -264,6 +264,13 @@
       "path": "assets/generated/characters/npcs/soi-six-hd-mew.png",
       "frameWidth": 384,
       "frameHeight": 384
+    },
+    {
+      "key": "soi-six-hd-luna",
+      "role": "npc",
+      "path": "assets/generated/characters/npcs/soi-six-hd-luna.png",
+      "frameWidth": 384,
+      "frameHeight": 384
     }
   ],
   "props": [
