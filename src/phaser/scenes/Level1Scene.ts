@@ -668,20 +668,12 @@ export class Level1Scene extends Phaser.Scene {
     const source = texture.getSourceImage() as HTMLImageElement | HTMLCanvasElement | undefined;
     const sourceWidth = source?.width || worldWidth;
     const sourceHeight = source?.height || worldHeight;
-    const scale = worldHeight / sourceHeight;
-    const tileWidth = sourceWidth * scale;
-    const stage = this.add.container(0, 0)
+    const scale = Math.max(worldWidth / sourceWidth, worldHeight / sourceHeight);
+    return this.add.image(worldWidth / 2, worldHeight, key)
+      .setOrigin(0.5, 1)
+      .setScale(scale)
       .setScrollFactor(1)
       .setDepth(depth);
-
-    for (let x = tileWidth / 2; x < worldWidth + tileWidth; x += tileWidth) {
-      stage.add(this.add.image(x, worldHeight / 2, key)
-        .setOrigin(0.5)
-        .setScale(scale)
-        .setDepth(depth));
-    }
-
-    return stage;
   }
 
   private createLevelDressing() {
