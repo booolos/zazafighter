@@ -2313,7 +2313,7 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-dao.png"
       },
       "render": {
-        "scale": 0.38,
+        "scale": 0.285,
         "originX": 0.5,
         "originY": 0.95
       },
@@ -2427,7 +2427,7 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-kanda.png"
       },
       "render": {
-        "scale": 0.38,
+        "scale": 0.285,
         "originX": 0.5,
         "originY": 0.95
       },
@@ -2541,7 +2541,7 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-mintra.png"
       },
       "render": {
-        "scale": 0.38,
+        "scale": 0.285,
         "originX": 0.5,
         "originY": 0.95
       },
@@ -2655,7 +2655,7 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-ploy.png"
       },
       "render": {
-        "scale": 0.38,
+        "scale": 0.285,
         "originX": 0.5,
         "originY": 0.95
       },
@@ -2769,7 +2769,7 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-mew.png"
       },
       "render": {
-        "scale": 0.38,
+        "scale": 0.285,
         "originX": 0.5,
         "originY": 0.95
       },
@@ -2883,7 +2883,7 @@
         "path": "assets/generated/characters/npcs/soi-six-hd-luna.png"
       },
       "render": {
-        "scale": 0.38,
+        "scale": 0.285,
         "originX": 0.5,
         "originY": 0.95
       },
