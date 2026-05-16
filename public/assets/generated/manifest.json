@@ -1745,6 +1745,102 @@
       "frames": 10,
       "frameWidth": 512,
       "frameHeight": 512
+    },
+    {
+      "character": "soi-six-ruby",
+      "kind": "feet-check-face",
+      "path": "assets/generated/interactions/feet-check/soi-six-ruby-face.png",
+      "frames": 12,
+      "frameWidth": 640,
+      "frameHeight": 720
+    },
+    {
+      "character": "soi-six-ruby",
+      "kind": "feet-check-heels",
+      "path": "assets/generated/interactions/feet-check/soi-six-ruby-heels-strip.png",
+      "frames": 10,
+      "frameWidth": 512,
+      "frameHeight": 512
+    },
+    {
+      "character": "soi-six-nina",
+      "kind": "feet-check-face",
+      "path": "assets/generated/interactions/feet-check/soi-six-nina-face.png",
+      "frames": 12,
+      "frameWidth": 640,
+      "frameHeight": 720
+    },
+    {
+      "character": "soi-six-nina",
+      "kind": "feet-check-heels",
+      "path": "assets/generated/interactions/feet-check/soi-six-nina-heels-strip.png",
+      "frames": 10,
+      "frameWidth": 512,
+      "frameHeight": 512
+    },
+    {
+      "character": "npc-girl-red",
+      "kind": "feet-check-face",
+      "path": "assets/generated/interactions/feet-check/npc-girl-red-face.png",
+      "frames": 12,
+      "frameWidth": 640,
+      "frameHeight": 720
+    },
+    {
+      "character": "npc-girl-red",
+      "kind": "feet-check-heels",
+      "path": "assets/generated/interactions/feet-check/npc-girl-red-heels-strip.png",
+      "frames": 10,
+      "frameWidth": 512,
+      "frameHeight": 512
+    },
+    {
+      "character": "npc-girl-black",
+      "kind": "feet-check-face",
+      "path": "assets/generated/interactions/feet-check/npc-girl-black-face.png",
+      "frames": 12,
+      "frameWidth": 640,
+      "frameHeight": 720
+    },
+    {
+      "character": "npc-girl-black",
+      "kind": "feet-check-heels",
+      "path": "assets/generated/interactions/feet-check/npc-girl-black-heels-strip.png",
+      "frames": 10,
+      "frameWidth": 512,
+      "frameHeight": 512
+    },
+    {
+      "character": "npc-girl-denim",
+      "kind": "feet-check-face",
+      "path": "assets/generated/interactions/feet-check/npc-girl-denim-face.png",
+      "frames": 12,
+      "frameWidth": 640,
+      "frameHeight": 720
+    },
+    {
+      "character": "npc-girl-denim",
+      "kind": "feet-check-heels",
+      "path": "assets/generated/interactions/feet-check/npc-girl-denim-heels-strip.png",
+      "frames": 10,
+      "frameWidth": 512,
+      "frameHeight": 512
+    },
+    {
+      "character": "npc-girl-silver",
+      "kind": "feet-check-face",
+      "path": "assets/generated/interactions/feet-check/npc-girl-silver-face.png",
+      "frames": 12,
+      "frameWidth": 640,
+      "frameHeight": 720
+    },
+    {
+      "character": "npc-girl-silver",
+      "kind": "feet-check-heels",
+      "path": "assets/generated/interactions/feet-check/npc-girl-silver-heels-strip.png",
+      "frames": 10,
+      "frameWidth": 512,
+      "frameHeight": 512
     }
   ]
 }
