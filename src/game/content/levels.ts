@@ -207,7 +207,7 @@ export const levels: LevelDefinition[] = [
   {
     id: 'pattaya-soi-six',
     title: 'Pattaya Soi Six',
-    briefing: 'Neon barfronts press close on the lane. Keep moving while the sidewalk girls dart in and back.',
+    briefing: 'Neon barfronts press close on the lane. Keep moving while the sidewalk girls pose between idle beats.',
     exitLabel: 'SOI 6',
     clearTitle: 'SOI SIX CLEAR',
     theme: { accent: 0xff2e9a, haze: 0x281026, signText: 'PATTAYA SOI 6', signColor: 0xff2e9a },

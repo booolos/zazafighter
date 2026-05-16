@@ -97,13 +97,14 @@ type FeetCheckDetail = {
 };
 
 const AMBIENT_GIRL_MOTION_SCALE = 0.45;
-const AMBIENT_GIRL_ANIM_SCALE = 0.62;
-const AMBIENT_GIRL_STRIP_TIME_SCALE_MIN = 0.42;
-const AMBIENT_GIRL_STRIP_TIME_SCALE_MAX = 0.68;
-const AMBIENT_GIRL_TTS_MIN = 0.2;
+const AMBIENT_GIRL_ANIM_SCALE = 0.48;
+const AMBIENT_GIRL_STRIP_TIME_SCALE_MIN = 0.24;
+const AMBIENT_GIRL_STRIP_TIME_SCALE_MAX = 0.38;
+const AMBIENT_GIRL_TTS_MIN = 0.14;
+const AMBIENT_GIRL_VISUAL_SCALE = 1.25;
 const SOI_SIX_AMBIENT_MIN = 4;
 const SOI_SIX_AMBIENT_MAX = 5;
-const SOI_SIX_MAX_ACTIVE_MOVERS = 1;
+const SOI_SIX_MAX_ACTIVE_MOVERS = 0;
 const SOI_SIX_MAX_ACTIVE_GESTURES = 1;
 
 const DEFAULT_AMBIENT_PERSONALITY: AmbientPersonality = {
@@ -812,6 +813,9 @@ export class Level1Scene extends Phaser.Scene {
         flipX: ambient.flipX
       });
       sprite.body.enable = false;
+      if (this.isAmbientGirlId(ambient.id)) {
+        sprite.setScale(sprite.scaleX * AMBIENT_GIRL_VISUAL_SCALE, sprite.scaleY * AMBIENT_GIRL_VISUAL_SCALE);
+      }
       sprite.setAlpha(1);
       sprite.y = startY;
       sprite.setDepth(this.getAmbientSidewalkBottom() - 2);
@@ -860,8 +864,7 @@ export class Level1Scene extends Phaser.Scene {
       }
       playCharacterAnimation(sprite, characterId, animAction, false);
       sprite.anims.timeScale = Phaser.Math.FloatBetween(AMBIENT_GIRL_STRIP_TIME_SCALE_MIN, AMBIENT_GIRL_STRIP_TIME_SCALE_MAX);
-      sprite.anims.setProgress(Phaser.Math.FloatBetween(0, 0.85));
-      npc.stripHoldTimer = this.time.delayedCall(Phaser.Math.Between(850, 1500), holdStill);
+      npc.stripHoldTimer = this.time.delayedCall(Phaser.Math.Between(1200, 1850), holdStill);
     };
 
     const holdStill = () => {
@@ -870,8 +873,9 @@ export class Level1Scene extends Phaser.Scene {
         this.clearAmbientGirlStripTimers(npc);
         return;
       }
-      sprite.anims.pause();
-      npc.stripHoldTimer = this.time.delayedCall(Phaser.Math.Between(3000, 4200), begin);
+      this.playOptionalCharacterAnimation(sprite, characterId, 'idle', true, 'idle');
+      sprite.anims.timeScale = npc.idleTimeScale;
+      npc.stripHoldTimer = this.time.delayedCall(Phaser.Math.Between(2600, 4200), begin);
     };
 
     if (startDelayMs > 0) {
@@ -1570,7 +1574,7 @@ export class Level1Scene extends Phaser.Scene {
     for (const prop of this.destructibleProps) {
       if (!prop.active) continue;
       prop.sprite.setDepth(prop.occludes ? prop.sprite.y + 4 : this.scaleWorldY(LARGE_PROP_DEPTH));
-      prop.sprite.setAlpha(prop.occludes && this.isActorBehindProp(prop) ? 0.42 : 1);
+      prop.sprite.setAlpha(1);
     }
     for (const pickup of this.pickups) {
       if (!pickup.collected) pickup.sprite.setDepth(pickup.sprite.y + 24);

@@ -115,7 +115,7 @@ export class LevelSelectScene extends Phaser.Scene {
       : navY - buttonH / 2 - Phaser.Math.Clamp(height * 0.02, 8, 16);
     const gapX = Phaser.Math.Clamp(width * 0.018, 12, 22);
     const gapY = Phaser.Math.Clamp(height * 0.014, 6, 12);
-    const columns = width < 720 && height >= width ? 1 : 2;
+    const columns = width < 720 && height >= width ? 1 : width >= 760 && height < 560 ? 3 : 2;
     const rowCount = Math.ceil(levels.length / columns);
     const availableW = width - marginX * 2 - gapX * (columns - 1);
     const availableH = Math.max(1, gridBottom - gridTop - gapY * (rowCount - 1));
@@ -184,12 +184,18 @@ export class LevelSelectScene extends Phaser.Scene {
     const card = this.add.container(x, y);
     const accent = level.theme.accent;
     const state = this.getLevelState(index);
+    const compact = width < 285;
+    const indexX = -width / 2 + (compact ? 30 : 37);
+    const indexW = compact ? 42 : 50;
+    const titleX = -width / 2 + (compact ? 58 : 76);
+    const statusW = compact ? 58 : 80;
+    const statusX = width / 2 - (compact ? 12 : 18);
     const panel = this.add.rectangle(0, 0, width, height, 0x0d1018, 0.78)
       .setStrokeStyle(2, accent, 0.52)
       .setInteractive({ useHandCursor: true });
-    const indexBack = this.add.rectangle(-width / 2 + 37, 0, 50, height - 14, accent, 0.2)
+    const indexBack = this.add.rectangle(indexX, 0, indexW, height - 14, accent, 0.2)
       .setStrokeStyle(1, accent, 0.7);
-    const indexLabel = this.add.text(-width / 2 + 37, -1, `${index + 1}`, {
+    const indexLabel = this.add.text(indexX, -1, `${index + 1}`, {
       color: '#ffca3a',
       fontFamily: 'Impact, Arial Black, sans-serif',
       fontSize: `${Phaser.Math.Clamp(height * 0.46, 17, 24)}px`,
@@ -197,19 +203,20 @@ export class LevelSelectScene extends Phaser.Scene {
       strokeThickness: 4
     }).setOrigin(0.5);
     const titleSize = Phaser.Math.Clamp(height * 0.32, 13, 20);
-    const title = fitTextToWidth(this.add.text(-width / 2 + 76, 0, level.title.toUpperCase(), {
+    const titleWidth = Math.max(76, width - (compact ? 130 : 188));
+    const title = fitTextToWidth(this.add.text(titleX, 0, level.title.toUpperCase(), {
       color: '#ffffff',
       fontFamily: 'Arial Black, Arial, sans-serif',
       fontSize: `${titleSize}px`,
-      wordWrap: { width: width - 186, useAdvancedWrap: true }
-    }).setOrigin(0, 0.5), width - 188, 12);
+      wordWrap: { width: titleWidth, useAdvancedWrap: true }
+    }).setOrigin(0, 0.5), titleWidth, 12);
     const statusLabel = state === 'cleared' ? 'CLEARED' : 'OPEN';
     const statusColor = state === 'cleared' ? '#75ff43' : '#ffca3a';
-    const status = fitTextToWidth(this.add.text(width / 2 - 18, 0, statusLabel, {
+    const status = fitTextToWidth(this.add.text(statusX, 0, statusLabel, {
       color: statusColor,
       fontFamily: 'Arial Black, Arial, sans-serif',
       fontSize: `${Phaser.Math.Clamp(height * 0.23, 11, 14)}px`
-    }).setOrigin(1, 0.5), 80, 10);
+    }).setOrigin(1, 0.5), statusW, 10);
     const rail = this.add.rectangle(-width / 2 + 5, 0, 6, height - 12, accent, 0.72);
     card.add([panel, rail, indexBack, indexLabel, title, status]);
     card.setData('cardData', { panel, indexLabel, title, rail, status, accent, state } satisfies LevelCardData);
