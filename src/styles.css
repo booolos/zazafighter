@@ -963,6 +963,8 @@ button {
   .feet-check-stage {
     width: min(920px, 96vw);
     height: min(390px, 88dvh);
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-rows: 1fr;
     padding: 66px 10px 10px;
   }
 
@@ -1114,6 +1116,8 @@ button {
   .feet-check-stage {
     width: min(94vw, 760px);
     height: min(310px, 88dvh);
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-rows: 1fr;
     gap: 8px;
     padding: 58px 10px 10px;
   }
