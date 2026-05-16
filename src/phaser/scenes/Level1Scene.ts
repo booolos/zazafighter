@@ -55,6 +55,8 @@ type AmbientNpc = {
   targetX: number;
   targetY: number;
   speed: number;
+  stripBeginTimer?: Phaser.Time.TimerEvent;
+  stripHoldTimer?: Phaser.Time.TimerEvent;
 };
 
 type AmbientPersonality = {
@@ -84,11 +86,25 @@ type FeetCheckDetail = {
   subtitle: string;
   faceImage: string;
   faceFrames?: number;
+  faceFrameWidth?: number;
+  faceFrameHeight?: number;
   faceFps?: number;
   stripImage: string;
   frames: number;
+  frameWidth?: number;
+  frameHeight?: number;
   fps: number;
 };
+
+const AMBIENT_GIRL_MOTION_SCALE = 0.45;
+const AMBIENT_GIRL_ANIM_SCALE = 0.62;
+const AMBIENT_GIRL_STRIP_TIME_SCALE_MIN = 0.42;
+const AMBIENT_GIRL_STRIP_TIME_SCALE_MAX = 0.68;
+const AMBIENT_GIRL_TTS_MIN = 0.2;
+const SOI_SIX_AMBIENT_MIN = 4;
+const SOI_SIX_AMBIENT_MAX = 5;
+const SOI_SIX_MAX_ACTIVE_MOVERS = 1;
+const SOI_SIX_MAX_ACTIVE_GESTURES = 1;
 
 const DEFAULT_AMBIENT_PERSONALITY: AmbientPersonality = {
   idleActions: ['idle', 'talk'],
@@ -776,7 +792,9 @@ export class Level1Scene extends Phaser.Scene {
     const girlPool = getCharactersByRole('npc')
       .filter((character) => this.isAmbientGirlId(character.id));
     const usesRunnerBehavior = this.level.ambientBehavior === 'soi-six-runner';
-    const randomGirlCount = Phaser.Math.Between(usesRunnerBehavior ? 6 : 4, 8);
+    const randomGirlCount = usesRunnerBehavior
+      ? Phaser.Math.Between(SOI_SIX_AMBIENT_MIN, SOI_SIX_AMBIENT_MAX)
+      : Phaser.Math.Between(4, 7);
     const runnerCandidateIds = new Set((this.level.ambientNpcs ?? []).map((ambient) => ambient.id));
     const runnerPool = usesRunnerBehavior && runnerCandidateIds.size > 0
       ? girlPool.filter((character) => runnerCandidateIds.has(character.id))
@@ -790,9 +808,11 @@ export class Level1Scene extends Phaser.Scene {
     for (const ambient of ambientNpcs) {
       const character = getCharacter(ambient.id);
       const personality = this.getAmbientPersonality(character.id);
-      const action = hasAnimation(character.id, ambient.action ?? '')
-        ? ambient.action ?? 'idle'
-        : this.pickAmbientAction(character.id, personality.idleActions, 'idle');
+      const action = usesRunnerBehavior
+        ? 'idle'
+        : hasAnimation(character.id, ambient.action ?? '')
+          ? ambient.action ?? 'idle'
+          : this.pickAmbientAction(character.id, personality.idleActions, 'idle');
       const startY = Phaser.Math.Clamp(this.scaleWorldY(ambient.y), this.getAmbientSidewalkTop(), this.getAmbientSidewalkBottom());
       const sprite = createCharacterSprite(this, character, ambient.x, startY, {
         action,
@@ -809,7 +829,7 @@ export class Level1Scene extends Phaser.Scene {
         action,
         idleAction: action,
         personality,
-        idleTimeScale: this.pickAmbientFloatRange(personality.idleTimeScale),
+        idleTimeScale: this.applyAmbientNpcIdleScale(this.pickAmbientFloatRange(personality.idleTimeScale), character.id),
         motionTimeScale: 1,
         homeX: ambient.x,
         homeY: startY,
@@ -817,8 +837,8 @@ export class Level1Scene extends Phaser.Scene {
         motion: this.pickAmbientMotion(personality.runChance),
         returnMotion: this.pickAmbientMotion(personality.returnRunChance),
         runBackAfterTouch: Phaser.Math.FloatBetween(0, 1) < personality.runBackChance,
-        nextActionAt: this.time.now + this.pickAmbientRange(personality.approachDelayMs),
-        nextGestureAt: this.time.now + this.pickAmbientRange(personality.gestureDelayMs),
+        nextActionAt: this.time.now + this.pickAmbientRange(personality.approachDelayMs) + Phaser.Math.Between(0, usesRunnerBehavior ? 7200 : 1600),
+        nextGestureAt: this.time.now + this.pickAmbientRange(personality.gestureDelayMs) + Phaser.Math.Between(0, usesRunnerBehavior ? 5200 : 1200),
         gestureUntil: 0,
         targetX: ambient.x,
         targetY: startY,
@@ -827,34 +847,57 @@ export class Level1Scene extends Phaser.Scene {
       this.ambientNpcs.push(npc);
       
       if (this.isAmbientGirlId(ambient.id) && !usesRunnerBehavior) {
-        this.startAmbientGirlStrip(sprite, character.id, action, Phaser.Math.Between(0, 2200));
+        this.startAmbientGirlStrip(npc, character.id, action, Phaser.Math.Between(0, 2200));
       } else if (this.isAmbientGirlId(ambient.id)) {
         playCharacterAnimation(sprite, character.id, npc.action, true);
+        sprite.anims.timeScale = npc.idleTimeScale;
       }
     }
   }
 
-  private startAmbientGirlStrip(sprite: ArcadeCharacterSprite, characterId: string, action: string, startDelayMs = 0) {
+  private startAmbientGirlStrip(npc: AmbientNpc, characterId: string, action: string, startDelayMs = 0) {
+    const sprite = npc.sprite;
     const animAction = hasAnimation(characterId, action) ? action : 'idle';
+    this.clearAmbientGirlStripTimers(npc);
+
     const begin = () => {
       if (!sprite.active) return;
+      if (this.feetCheckActive || this.state.paused) {
+        this.clearAmbientGirlStripTimers(npc);
+        return;
+      }
       playCharacterAnimation(sprite, characterId, animAction, false);
-      sprite.anims.timeScale = Phaser.Math.FloatBetween(0.72, 0.95);
+      sprite.anims.timeScale = Phaser.Math.FloatBetween(AMBIENT_GIRL_STRIP_TIME_SCALE_MIN, AMBIENT_GIRL_STRIP_TIME_SCALE_MAX);
       sprite.anims.setProgress(Phaser.Math.FloatBetween(0, 0.85));
-      this.time.delayedCall(Phaser.Math.Between(850, 1500), holdStill);
+      npc.stripHoldTimer = this.time.delayedCall(Phaser.Math.Between(850, 1500), holdStill);
     };
+
     const holdStill = () => {
       if (!sprite.active) return;
+      if (this.feetCheckActive || this.state.paused) {
+        this.clearAmbientGirlStripTimers(npc);
+        return;
+      }
       sprite.anims.pause();
-      this.time.delayedCall(Phaser.Math.Between(3000, 4200), begin);
+      npc.stripHoldTimer = this.time.delayedCall(Phaser.Math.Between(3000, 4200), begin);
     };
 
     if (startDelayMs > 0) {
       sprite.anims.pause();
-      sprite.setFrame(0);
-      this.time.delayedCall(startDelayMs, begin);
+      npc.stripBeginTimer = this.time.delayedCall(startDelayMs, begin);
     } else {
       begin();
+    }
+  }
+
+  private clearAmbientGirlStripTimers(npc: AmbientNpc) {
+    if (npc.stripBeginTimer) {
+      npc.stripBeginTimer.remove(false);
+      npc.stripBeginTimer = undefined;
+    }
+    if (npc.stripHoldTimer) {
+      npc.stripHoldTimer.remove(false);
+      npc.stripHoldTimer = undefined;
     }
   }
 
@@ -862,6 +905,8 @@ export class Level1Scene extends Phaser.Scene {
     if (this.level.ambientBehavior !== 'soi-six-runner') return;
     const now = this.time.now;
     const player = this.playerController.sprite;
+    let activeMovers = this.ambientNpcs.filter((npc) => npc.runnerState === 'stroll' || npc.runnerState === 'approach' || npc.runnerState === 'return').length;
+    let activeGestures = this.ambientNpcs.filter((npc) => npc.runnerState === 'idle' && npc.gestureUntil > now).length;
 
     for (const npc of this.ambientNpcs) {
       const { sprite, characterId } = npc;
@@ -871,11 +916,17 @@ export class Level1Scene extends Phaser.Scene {
         sprite.x = Phaser.Math.Linear(sprite.x, npc.homeX, Math.min(1, dt * 2.2));
         sprite.y = Phaser.Math.Linear(sprite.y, npc.homeY, Math.min(1, dt * 2.2));
         sprite.setFlipX(player.x < sprite.x);
-        this.updateAmbientIdlePose(npc, now);
+        const startedGesture = this.updateAmbientIdlePose(npc, now, activeGestures < SOI_SIX_MAX_ACTIVE_GESTURES);
+        if (startedGesture) activeGestures += 1;
         if (now < npc.nextActionAt) continue;
+        if (activeMovers >= SOI_SIX_MAX_ACTIVE_MOVERS) {
+          npc.nextActionAt = now + this.pickAmbientRange(npc.personality.restDelayMs);
+          continue;
+        }
 
-        const shouldApproachCasey = Phaser.Math.FloatBetween(0, 1) < 0.16;
+        const shouldApproachCasey = Phaser.Math.FloatBetween(0, 1) < 0.08;
         npc.runnerState = shouldApproachCasey ? 'approach' : 'stroll';
+        activeMovers += 1;
         npc.motion = shouldApproachCasey ? this.pickAmbientMotion(npc.personality.runChance) : 'walk';
         npc.returnMotion = this.pickAmbientMotion(npc.personality.returnRunChance);
         npc.runBackAfterTouch = Phaser.Math.FloatBetween(0, 1) < npc.personality.runBackChance;
@@ -915,7 +966,7 @@ export class Level1Scene extends Phaser.Scene {
           npc.nextActionAt = now + this.pickAmbientRange(npc.personality.lingerMs);
           const callout = this.pickAmbientAction(characterId, npc.personality.calloutActions, 'talk');
           this.playOptionalCharacterAnimation(sprite, characterId, callout, false, 'idle');
-          sprite.anims.timeScale = 1;
+          sprite.anims.timeScale = this.getAmbientNpcTimeScale(characterId);
         }
         continue;
       }
@@ -939,7 +990,7 @@ export class Level1Scene extends Phaser.Scene {
           npc.nextActionAt = now + this.pickAmbientRange(npc.runBackAfterTouch ? npc.personality.touchLingerMs : npc.personality.lingerMs);
           const callout = this.pickAmbientAction(characterId, npc.personality.calloutActions, 'talk');
           this.playOptionalCharacterAnimation(sprite, characterId, callout, false, 'idle');
-          sprite.anims.timeScale = 1;
+          sprite.anims.timeScale = this.getAmbientNpcTimeScale(characterId);
           continue;
         }
         if (this.moveAmbientNpcToward(npc, npc.targetX, npc.targetY, dt)) {
@@ -947,7 +998,7 @@ export class Level1Scene extends Phaser.Scene {
           npc.nextActionAt = now + this.pickAmbientRange(npc.runBackAfterTouch ? npc.personality.touchLingerMs : npc.personality.lingerMs);
           const callout = this.pickAmbientAction(characterId, npc.personality.calloutActions, 'talk');
           this.playOptionalCharacterAnimation(sprite, characterId, callout, false, 'idle');
-          sprite.anims.timeScale = 1;
+          sprite.anims.timeScale = this.getAmbientNpcTimeScale(characterId);
         }
         continue;
       }
@@ -970,7 +1021,7 @@ export class Level1Scene extends Phaser.Scene {
         sprite.setPosition(npc.homeX, npc.homeY);
         npc.nextActionAt = now + this.pickAmbientRange(npc.personality.restDelayMs);
         npc.idleAction = this.pickAmbientAction(characterId, npc.personality.idleActions, 'idle');
-        npc.idleTimeScale = this.pickAmbientFloatRange(npc.personality.idleTimeScale);
+        npc.idleTimeScale = this.applyAmbientNpcIdleScale(this.pickAmbientFloatRange(npc.personality.idleTimeScale), characterId);
         npc.gestureUntil = 0;
         npc.nextGestureAt = now + this.pickAmbientRange(npc.personality.gestureDelayMs);
         this.playOptionalCharacterAnimation(sprite, characterId, npc.idleAction, false, 'idle');
@@ -978,27 +1029,30 @@ export class Level1Scene extends Phaser.Scene {
     }
   }
 
-  private updateAmbientIdlePose(npc: AmbientNpc, now: number) {
+  private updateAmbientIdlePose(npc: AmbientNpc, now: number, canStartGesture = true) {
     const { sprite, characterId, personality } = npc;
+    let startedGesture = false;
 
     if (npc.gestureUntil > 0 && now >= npc.gestureUntil) {
       npc.gestureUntil = 0;
       npc.idleAction = this.pickAmbientAction(characterId, personality.idleActions, 'idle');
-      npc.idleTimeScale = this.pickAmbientFloatRange(personality.idleTimeScale);
+      npc.idleTimeScale = this.applyAmbientNpcIdleScale(this.pickAmbientFloatRange(personality.idleTimeScale), characterId);
       npc.nextGestureAt = now + this.pickAmbientRange(personality.gestureDelayMs);
       this.playOptionalCharacterAnimation(sprite, characterId, npc.idleAction, false, 'idle');
     }
 
-    if (npc.gestureUntil === 0 && now >= npc.nextGestureAt && now + 900 < npc.nextActionAt) {
+    if (canStartGesture && npc.gestureUntil === 0 && now >= npc.nextGestureAt && now + 900 < npc.nextActionAt) {
       npc.idleAction = this.pickAmbientAction(characterId, personality.calloutActions, 'talk');
-      npc.idleTimeScale = this.pickAmbientFloatRange(personality.idleTimeScale);
+      npc.idleTimeScale = this.applyAmbientNpcIdleScale(this.pickAmbientFloatRange(personality.idleTimeScale), characterId);
       npc.gestureUntil = now + this.pickAmbientRange(personality.gestureDurationMs);
       this.playOptionalCharacterAnimation(sprite, characterId, npc.idleAction, false, 'idle');
+      startedGesture = true;
     } else {
       this.playOptionalCharacterAnimation(sprite, characterId, npc.idleAction, true, 'idle');
     }
 
     sprite.anims.timeScale = npc.idleTimeScale;
+    return startedGesture;
   }
 
   private moveAmbientNpcToward(npc: AmbientNpc, targetX: number, targetY: number, dt: number) {
@@ -1021,11 +1075,37 @@ export class Level1Scene extends Phaser.Scene {
     if (refreshSpeed || npc.speed <= 0) {
       const speedRange = npc.motion === 'run' ? npc.personality.runSpeed : npc.personality.walkSpeed;
       const timeScale = npc.motion === 'run' ? npc.personality.runTimeScale : npc.personality.walkTimeScale;
-      npc.speed = this.pickAmbientRange(speedRange);
-      npc.motionTimeScale = this.pickAmbientFloatRange(timeScale);
+      const ambientScale = this.getAmbientNpcMotionScale(npc.characterId);
+      const timeScaleScale = this.getAmbientNpcTimeScale(npc.characterId);
+      npc.speed = Math.round(this.pickAmbientRange(speedRange) * ambientScale);
+      npc.motionTimeScale = Math.max(0.15, this.pickAmbientFloatRange(timeScale) * timeScaleScale);
     }
     playCharacterAnimation(npc.sprite, npc.characterId, action, true);
     npc.sprite.anims.timeScale = npc.motionTimeScale;
+  }
+
+  private pauseAmbientGirlStrips() {
+    for (const npc of this.ambientNpcs) {
+      this.clearAmbientGirlStripTimers(npc);
+      if (npc.sprite.anims.currentAnim && npc.sprite.anims.isPlaying) {
+        npc.sprite.anims.pause();
+      }
+    }
+  }
+
+  private resumeAmbientGirlStrips() {
+    if (this.level.ambientBehavior === 'soi-six-runner') {
+      for (const npc of this.ambientNpcs) {
+        if (npc.sprite.anims.currentAnim) {
+          npc.sprite.anims.resume();
+        }
+      }
+      return;
+    }
+    for (const npc of this.ambientNpcs) {
+      if (!this.isAmbientGirlId(npc.characterId) || !npc.sprite.active) continue;
+      this.startAmbientGirlStrip(npc, npc.characterId, npc.action, Phaser.Math.Between(180, 700));
+    }
   }
 
   private getAmbientPersonality(characterId: string) {
@@ -1034,6 +1114,18 @@ export class Level1Scene extends Phaser.Scene {
 
   private pickAmbientMotion(runChance: number): 'walk' | 'run' {
     return Phaser.Math.FloatBetween(0, 1) < runChance ? 'run' : 'walk';
+  }
+
+  private getAmbientNpcMotionScale(characterId: string) {
+    return this.isAmbientGirlId(characterId) ? AMBIENT_GIRL_MOTION_SCALE : 1;
+  }
+
+  private getAmbientNpcTimeScale(characterId: string) {
+    return this.isAmbientGirlId(characterId) ? AMBIENT_GIRL_ANIM_SCALE : 1;
+  }
+
+  private applyAmbientNpcIdleScale(value: number, characterId: string) {
+    return Math.max(AMBIENT_GIRL_TTS_MIN, value * this.getAmbientNpcTimeScale(characterId));
   }
 
   private pickAmbientRange(range: [number, number]) {
@@ -1116,6 +1208,7 @@ export class Level1Scene extends Phaser.Scene {
     this.playerController.sprite.setVelocity(0, 0);
     this.playOptionalCharacterAnimation(npc.sprite, npc.characterId, 'talk', false, 'idle');
     npc.sprite.anims.timeScale = 0.92;
+    this.pauseAmbientGirlStrips();
     window.dispatchEvent(new CustomEvent<FeetCheckDetail>('slap:feet-check-open', {
       detail: this.getFeetCheckDetail(character)
     }));
@@ -1132,6 +1225,7 @@ export class Level1Scene extends Phaser.Scene {
       this.setAmbientLocomotion(this.feetCheckNpc, true);
     }
     this.feetCheckNpc = undefined;
+    this.resumeAmbientGirlStrips();
     window.dispatchEvent(new CustomEvent('slap:feet-check-close'));
   }
 
@@ -1144,9 +1238,13 @@ export class Level1Scene extends Phaser.Scene {
         subtitle: 'No custom check loaded yet',
         faceImage: character.seed.path,
         faceFrames: 1,
+        faceFrameWidth: undefined,
+        faceFrameHeight: undefined,
         faceFps: 1,
         stripImage: character.seed.path,
         frames: 1,
+        frameWidth: undefined,
+        frameHeight: undefined,
         fps: 1
       };
     }
@@ -1156,9 +1254,13 @@ export class Level1Scene extends Phaser.Scene {
       subtitle: feetCheck.subtitle,
       faceImage: feetCheck.faceImage,
       faceFrames: feetCheck.faceFrames,
+      faceFrameWidth: feetCheck.faceFrameWidth,
+      faceFrameHeight: feetCheck.faceFrameHeight,
       faceFps: feetCheck.faceFps,
       stripImage: feetCheck.stripImage,
       frames: feetCheck.frames,
+      frameWidth: feetCheck.frameWidth,
+      frameHeight: feetCheck.frameHeight,
       fps: feetCheck.fps
     };
   }

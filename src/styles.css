@@ -639,13 +639,17 @@ button {
   width: 100%;
   height: 100%;
   background-repeat: no-repeat;
+  --feet-strip-end: 0%;
   background-position: 0 50%;
   background-size: 100% 100%;
-  transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
-  will-change: transform;
   user-select: none;
   pointer-events: none;
+}
+
+.feet-check-face-strip > img,
+.feet-check-foot-strip > img {
+  display: block;
 }
 
 .feet-check-face::after,
@@ -702,16 +706,6 @@ button {
   font: 900 16px/1 Arial Black, Arial, sans-serif;
   pointer-events: auto;
   touch-action: none;
-}
-
-@keyframes feet-check-strip {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-
-  to {
-    transform: translate3d(-100%, 0, 0);
-  }
 }
 
 #portrait-blocker {

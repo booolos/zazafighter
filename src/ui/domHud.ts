@@ -15,9 +15,13 @@ type FeetCheckDetail = {
   subtitle: string;
   faceImage: string;
   faceFrames?: number;
+  faceFrameWidth?: number;
+  faceFrameHeight?: number;
   faceFps?: number;
   stripImage: string;
   frames: number;
+  frameWidth?: number;
+  frameHeight?: number;
   fps: number;
 };
 
@@ -35,6 +39,7 @@ let hudIsActive = false;
 let gameplayControlsLocked = false;
 let feetCheckRenderToken = 0;
 const feetCheckImageCache = new Map<string, Promise<void>>();
+const feetCheckStripAnimators = new WeakMap<HTMLElement, { frame: number; frames: number; fps: number; rafId?: number; lastTime: number; rail: HTMLImageElement }>();
 
 export function setupDomHud() {
   const root = document.getElementById('hud-root');
@@ -402,16 +407,16 @@ async function renderFeetCheckOverlay(root: HTMLElement, detail: FeetCheckDetail
   const kicker = overlay.querySelector<HTMLElement>('[data-feet-check-kicker]');
   if (face) {
     const faceFrames = Math.max(1, detail.faceFrames ?? 1);
-    const faceFps = Math.max(1, Math.min(detail.faceFps ?? 10, 10));
-    configureFeetCheckStrip(face, detail.faceImage, faceFrames, faceFps);
+    const faceFps = Math.max(1, detail.faceFps ?? 10);
+    configureFeetCheckStrip(face, detail.faceImage, faceFrames, faceFps, detail.faceFrameWidth, detail.faceFrameHeight);
   }
   if (title) title.textContent = detail.title;
   if (subtitle) subtitle.textContent = detail.subtitle;
   if (kicker) kicker.textContent = detail.name.toUpperCase();
   if (strip) {
     const frames = Math.max(1, detail.frames);
-    const fps = Math.max(1, Math.min(detail.fps, 12));
-    configureFeetCheckStrip(strip, detail.stripImage, frames, fps);
+    const fps = Math.max(1, detail.fps ?? 12);
+    configureFeetCheckStrip(strip, detail.stripImage, frames, fps, detail.frameWidth, detail.frameHeight);
   }
   overlay.classList.remove('hidden');
   overlay.setAttribute('aria-hidden', 'false');
@@ -430,14 +435,60 @@ function preloadFeetCheckImage(src: string) {
   return load;
 }
 
-function configureFeetCheckStrip(element: HTMLElement, image: string, frames: number, fps: number) {
+function configureFeetCheckStrip(element: HTMLElement, image: string, frames: number, fps: number, frameWidth?: number, frameHeight?: number) {
+  stopFeetCheckStrip(element);
   element.style.animation = 'none';
-  element.style.transform = 'translate3d(0, 0, 0)';
-  element.style.width = `${frames * 100}%`;
-  element.style.backgroundImage = `url("${image}")`;
+  element.style.transform = '';
+  element.style.width = '100%';
+  element.style.backgroundPosition = '0 50%';
+  element.style.setProperty('--feet-strip-end', `${((frames - 1) / frames) * -100}%`);
+  element.style.backgroundImage = 'none';
   element.style.backgroundSize = '100% 100%';
-  element.getBoundingClientRect();
-  element.style.animation = frames > 1 ? `feet-check-strip ${frames / fps}s steps(${frames}, end) infinite` : '';
+  element.replaceChildren();
+
+  const rail = document.createElement('img');
+  rail.src = image;
+  rail.alt = '';
+  rail.draggable = false;
+  rail.setAttribute('aria-hidden', 'true');
+  rail.style.position = 'absolute';
+  rail.style.inset = '0 auto 0 0';
+  rail.style.width = `${frames * 100}%`;
+  rail.style.height = '100%';
+  rail.style.maxWidth = 'none';
+  rail.style.objectFit = 'fill';
+  rail.style.transform = 'translate3d(0, 0, 0)';
+  rail.style.backfaceVisibility = 'hidden';
+  rail.style.willChange = 'transform';
+  rail.style.userSelect = 'none';
+  rail.style.pointerEvents = 'none';
+  if (frameWidth && frameHeight) {
+    rail.style.aspectRatio = `${frames * frameWidth} / ${frameHeight}`;
+  }
+  element.appendChild(rail);
+  if (frames <= 1) return;
+
+  const state = {
+    frame: 0,
+    frames,
+    fps: Math.max(1, Math.round(fps)),
+    lastTime: performance.now(),
+    rafId: undefined as number | undefined,
+    rail
+  };
+  const step = (now: number) => {
+    const frameDurationMs = 1000 / state.fps;
+    const elapsedMs = now - state.lastTime;
+    const skip = Math.max(1, Math.floor(elapsedMs / frameDurationMs));
+    if (elapsedMs >= frameDurationMs) {
+      state.frame = (state.frame + skip) % state.frames;
+      state.lastTime += skip * frameDurationMs;
+      rail.style.transform = `translate3d(-${(state.frame * 100) / state.frames}%, 0, 0)`;
+    }
+    state.rafId = requestAnimationFrame(step);
+  };
+  state.rafId = requestAnimationFrame(step);
+  feetCheckStripAnimators.set(element, state);
 }
 
 function hideFeetCheckOverlay(root: HTMLElement) {
@@ -453,8 +504,20 @@ function hideFeetCheckOverlay(root: HTMLElement) {
 }
 
 function resetFeetCheckStrip(element: HTMLElement) {
+  stopFeetCheckStrip(element);
+  element.replaceChildren();
   element.style.animation = '';
   element.style.transform = '';
+  element.style.setProperty('--feet-strip-end', '0%');
+  element.style.backgroundPosition = '0 50%';
+  element.style.backgroundImage = '';
+}
+
+function stopFeetCheckStrip(element: HTMLElement) {
+  const state = feetCheckStripAnimators.get(element);
+  if (!state) return;
+  if (state.rafId !== undefined) cancelAnimationFrame(state.rafId);
+  feetCheckStripAnimators.delete(element);
 }
 
 function clearTouchState() {
