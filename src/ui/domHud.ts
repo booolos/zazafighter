@@ -430,7 +430,7 @@ async function renderFeetCheckOverlay(root: HTMLElement, detail: FeetCheckDetail
   overlay.setAttribute('aria-hidden', 'false');
   if (face) {
     const faceFrames = Math.max(1, detail.faceFrames ?? 1);
-    const faceFps = Math.max(1, Math.min(detail.faceFps ?? 14, 18));
+    const faceFps = Math.max(1, Math.min(detail.faceFps ?? 14, 24));
     configureFeetCheckStrip(face, faceImage, faceFrames, faceFps, detail.faceFrameWidth, detail.faceFrameHeight, 'contain');
   }
   if (strip) {
