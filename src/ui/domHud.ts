@@ -40,7 +40,7 @@ let lastHud: HudSnapshot | null = null;
 let hudIsActive = false;
 let gameplayControlsLocked = false;
 let feetCheckRenderToken = 0;
-const FEET_CHECK_ASSET_VERSION = '20260516-v11';
+const FEET_CHECK_ASSET_VERSION = '20260516-v12';
 const feetCheckImageCache = new Map<string, Promise<HTMLImageElement>>();
 const feetCheckStripAnimators = new WeakMap<HTMLElement, {
   frame: number;
