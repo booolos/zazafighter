@@ -186,6 +186,7 @@ export const levels: LevelDefinition[] = [
     playerStart: { x: 520, y: 634 },
     vendor: { id: 'weed-vendor', x: 1095, y: 570, flipX: true },
     exit: { x: 2075, y: 628 },
+    backgroundKey: assetKeys.backgroundWalkingStreet,
     ambientNpcs: [
       { id: 'soi-six-nina', x: 285, y: 598, flipX: false, action: 'idle' },
       { id: 'npc-girl-denim', x: 785, y: 606, flipX: true, action: 'talk' },
@@ -244,7 +245,7 @@ export const levels: LevelDefinition[] = [
     playerStart: { x: 440, y: 594 },
     vendor: { id: 'bar-promoter', x: 910, y: 586, flipX: true },
     exit: { x: 1980, y: 560 },
-    backgroundKey: assetKeys.backgroundWalkingStreet,
+    backgroundKey: assetKeys.backgroundBangkokSukhumvit,
     ambientNpcs: [
       { id: 'npc-girl-black', x: 635, y: 594, flipX: false, action: 'cheer' },
       { id: 'soi-six-nina', x: 830, y: 606, flipX: true, action: 'idle' },
@@ -272,7 +273,7 @@ export const levels: LevelDefinition[] = [
     playerStart: { x: 450, y: 600 },
     vendor: { id: 'scooter-mechanic', x: 1030, y: 596, flipX: true },
     exit: { x: 2050, y: 560 },
-    backgroundKey: assetKeys.backgroundSoiBuakhao,
+    backgroundKey: assetKeys.backgroundPhuketBanglaRoad,
     ambientNpcs: [
       { id: 'soi-six-nina', x: 630, y: 604, flipX: true, action: 'talk' },
       { id: 'npc-girl-denim', x: 850, y: 600, flipX: false, action: 'idle' },
@@ -299,6 +300,7 @@ export const levels: LevelDefinition[] = [
     playerStart: { x: 430, y: 590 },
     vendor: { id: 'street-food-vendor', x: 1040, y: 575, flipX: true },
     exit: { x: 2040, y: 560 },
+    backgroundKey: assetKeys.backgroundChiangMaiNimman,
     ambientNpcs: [
       { id: 'npc-girl-silver', x: 650, y: 602, flipX: false, action: 'idle' },
       { id: 'soi-six-nina', x: 860, y: 620, flipX: true, action: 'cheer' },
@@ -326,6 +328,7 @@ export const levels: LevelDefinition[] = [
     playerStart: { x: 460, y: 604 },
     vendor: { id: 'street-food-vendor', x: 920, y: 590, flipX: true },
     exit: { x: 2050, y: 560 },
+    backgroundKey: assetKeys.backgroundKrabiAoNang,
     ambientNpcs: [
       { id: 'soi-six-nina', x: 650, y: 594, flipX: false, action: 'idle' },
       { id: 'npc-girl-black', x: 790, y: 604, flipX: true, action: 'talk' },
@@ -353,7 +356,7 @@ export const levels: LevelDefinition[] = [
     playerStart: { x: 440, y: 592 },
     vendor: { id: 'weed-vendor', x: 970, y: 584, flipX: true },
     exit: { x: 2035, y: 560 },
-    backgroundKey: assetKeys.backgroundBeachRoad,
+    backgroundKey: assetKeys.backgroundKohSamuiChaweng,
     ambientNpcs: [
       { id: 'npc-girl-silver', x: 620, y: 606, flipX: true, action: 'cheer' }
     ],
@@ -378,7 +381,7 @@ export const levels: LevelDefinition[] = [
     playerStart: { x: 455, y: 602 },
     vendor: { id: 'street-food-vendor', x: 990, y: 590, flipX: true },
     exit: { x: 2045, y: 560 },
-    backgroundKey: assetKeys.backgroundSoiBuakhao,
+    backgroundKey: assetKeys.backgroundHuaHinNightMarket,
     ambientNpcs: [
       { id: 'npc-girl-denim', x: 610, y: 600, flipX: false, action: 'idle' },
       { id: 'npc-girl-silver', x: 830, y: 604, flipX: true, action: 'talk' },
@@ -405,7 +408,7 @@ export const levels: LevelDefinition[] = [
     playerStart: { x: 435, y: 592 },
     vendor: { id: 'thai-tattoo-artist', x: 1010, y: 584, flipX: true },
     exit: { x: 2030, y: 560 },
-    backgroundKey: assetKeys.backgroundBeachRoad,
+    backgroundKey: assetKeys.backgroundAyutthayaRiverside,
     ambientNpcs: [
       { id: 'npc-girl-silver', x: 590, y: 600, flipX: true, action: 'idle' },
       { id: 'soi-six-nina', x: 790, y: 604, flipX: false, action: 'talk' },
@@ -432,7 +435,7 @@ export const levels: LevelDefinition[] = [
     playerStart: { x: 450, y: 596 },
     vendor: { id: 'bar-promoter', x: 940, y: 586, flipX: true },
     exit: { x: 2050, y: 560 },
-    backgroundKey: assetKeys.backgroundWalkingStreet,
+    backgroundKey: assetKeys.backgroundKohPhanganHaadRin,
     ambientNpcs: [
       { id: 'npc-girl-silver', x: 620, y: 604, flipX: false, action: 'cheer' },
       { id: 'soi-six-nina', x: 820, y: 606, flipX: true, action: 'cheer' },

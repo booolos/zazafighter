@@ -1,0 +1,224 @@
+{
+  "generated": [
+    {
+      "character": "big-ink",
+      "action": "smoking-idle",
+      "path": "assets/generated/animations/big-ink/smoking-idle-v2.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 6,
+      "source": "art-source/_imagegen_review/big-ink/lighting-joint-source.png",
+      "sourceNote": "Casey lighting/smoking source sheet, renormalized to preserve heavy silhouette and avoid idle warp."
+    },
+    {
+      "character": "soi-dog",
+      "action": "walk",
+      "path": "assets/generated/animations/soi-dog/walk-run-v2.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 6,
+      "source": "art-source/_imagegen_review/soi-dog/walk-source.png",
+      "sourceNote": "Dang walk source sheet, scaled up about 30 percent with stable paw ground line."
+    },
+    {
+      "character": "soi-dog",
+      "action": "special-attack",
+      "path": "assets/generated/animations/soi-dog/rush-attack-v2.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 6,
+      "source": "art-source/_imagegen_review/soi-dog/special-attack-source.png",
+      "sourceNote": "Dang rush/special attack source sheet, scaled up and normalized for companion attack."
+    },
+    {
+      "character": "soi-dog",
+      "action": "return-to-owner",
+      "path": "assets/generated/animations/soi-dog/return-to-owner-v2.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 6,
+      "source": "public/assets/generated/animations/soi-dog/walk-run-v2.png",
+      "sourceNote": "Reverse timing variant of Dang walk-run-v2 for return movement."
+    },
+    {
+      "character": "indian-fighter-maroon",
+      "action": "idle",
+      "path": "assets/generated/animations/indian-fighter-maroon-v2/idle.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 4,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-maroon/idle.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-maroon",
+      "action": "walk",
+      "path": "assets/generated/animations/indian-fighter-maroon-v2/walk.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 6,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-maroon/walk.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-maroon",
+      "action": "attack",
+      "path": "assets/generated/animations/indian-fighter-maroon-v2/attack.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 4,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-maroon/attack.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-maroon",
+      "action": "hurt",
+      "path": "assets/generated/animations/indian-fighter-maroon-v2/hurt.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 3,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-maroon/hurt.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-maroon",
+      "action": "knockdown",
+      "path": "assets/generated/animations/indian-fighter-maroon-v2/knockdown.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 3,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-maroon/knockdown.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-maroon",
+      "action": "get-up",
+      "path": "assets/generated/animations/indian-fighter-maroon-v2/get-up.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 3,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-maroon/get-up.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-cream",
+      "action": "idle",
+      "path": "assets/generated/animations/indian-fighter-cream-v2/idle.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 4,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-cream/idle.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-cream",
+      "action": "walk",
+      "path": "assets/generated/animations/indian-fighter-cream-v2/walk.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 6,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-cream/walk.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-cream",
+      "action": "attack",
+      "path": "assets/generated/animations/indian-fighter-cream-v2/attack.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 4,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-cream/attack.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-cream",
+      "action": "hurt",
+      "path": "assets/generated/animations/indian-fighter-cream-v2/hurt.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 3,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-cream/hurt.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-cream",
+      "action": "knockdown",
+      "path": "assets/generated/animations/indian-fighter-cream-v2/knockdown.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 3,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-cream/knockdown.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-cream",
+      "action": "get-up",
+      "path": "assets/generated/animations/indian-fighter-cream-v2/get-up.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 3,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-cream/get-up.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-teal",
+      "action": "idle",
+      "path": "assets/generated/animations/indian-fighter-teal-v2/idle.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 4,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-teal/idle.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-teal",
+      "action": "walk",
+      "path": "assets/generated/animations/indian-fighter-teal-v2/walk.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 6,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-teal/walk.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-teal",
+      "action": "attack",
+      "path": "assets/generated/animations/indian-fighter-teal-v2/attack.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 4,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-teal/attack.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-teal",
+      "action": "hurt",
+      "path": "assets/generated/animations/indian-fighter-teal-v2/hurt.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 3,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-teal/hurt.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-teal",
+      "action": "knockdown",
+      "path": "assets/generated/animations/indian-fighter-teal-v2/knockdown.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 3,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-teal/knockdown.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    },
+    {
+      "character": "indian-fighter-teal",
+      "action": "get-up",
+      "path": "assets/generated/animations/indian-fighter-teal-v2/get-up.png",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "frameCount": 3,
+      "source": "art-source/_imagegen_review/indian-fighters/indian-fighter-teal/get-up.png",
+      "sourceNote": "Published v2 copy from user-provided Indian fighter sheet style; kept as fighter NPC runtime strip."
+    }
+  ]
+}

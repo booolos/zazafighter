@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { playCharacterAnimation } from '../../game/assets/loaders';
 import { getAiProfile, getHitboxProfile, type HitboxProfile, type AiProfile } from '../../game/content/combatProfiles';
 import { type CharacterDefinition } from '../../game/content/characters';
-import { LANE_TOP, LANE_BOTTOM, MAX_ADVANCING_ENEMIES, MAX_ATTACKING_ENEMIES, KNOCKBACK_COAST_SECONDS } from '../../game/constants';
+import { MAX_ADVANCING_ENEMIES, MAX_ATTACKING_ENEMIES, KNOCKBACK_COAST_SECONDS } from '../../game/constants';
 import type { ArcadeCharacterSprite } from '../factories/characterFactory';
 import type { Level1Scene } from '../scenes/Level1Scene';
 
@@ -47,7 +47,7 @@ export class EnemyController {
     const attack = getHitboxProfile(this.character.combat.hitboxProfile);
 
     this.sprite.setFlipX(dx < 0);
-    this.sprite.y = Phaser.Math.Clamp(this.sprite.y, LANE_TOP, LANE_BOTTOM);
+    this.sprite.y = Phaser.Math.Clamp(this.sprite.y, this.scene.getLaneTop(), this.scene.getLaneBottom());
 
     if (this.engageDelay > 0) {
       this.engageDelay = Math.max(0, this.engageDelay - dt);
@@ -93,7 +93,7 @@ export class EnemyController {
       playCharacterAnimation(this.sprite, this.character.id, 'idle');
     }
 
-    this.sprite.y = Phaser.Math.Clamp(this.sprite.y, LANE_TOP, LANE_BOTTOM);
+    this.sprite.y = Phaser.Math.Clamp(this.sprite.y, this.scene.getLaneTop(), this.scene.getLaneBottom());
 
     if (canAttack && attack.range > 0 && this.cooldown <= 0 && this.scene.profileHitsPlayer(this, attack)) {
       this.enemyAttack(attack, ai, playerX);
@@ -152,11 +152,14 @@ export class EnemyController {
       this.bar.clear();
       this.scene.tweens.add({
         targets: this.sprite,
-        alpha: 0.22,
+        alpha: 0,
         y: this.sprite.y + 24,
         angle: direction * -14,
-        duration: 320,
-        ease: 'Back.out'
+        duration: 260,
+        ease: 'Quad.out',
+        onComplete: () => {
+          this.sprite.setVisible(false);
+        }
       });
     }
   }

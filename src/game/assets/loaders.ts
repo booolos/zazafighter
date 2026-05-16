@@ -10,6 +10,14 @@ export function loadCoreAssets(scene: Phaser.Scene) {
   scene.load.image(assetKeys.backgroundBeachRoad, assetPaths.backgroundBeachRoad);
   scene.load.image(assetKeys.backgroundSoiBuakhao, assetPaths.backgroundSoiBuakhao);
   scene.load.image(assetKeys.backgroundSoiSix, assetPaths.backgroundSoiSix);
+  scene.load.image(assetKeys.backgroundBangkokSukhumvit, assetPaths.backgroundBangkokSukhumvit);
+  scene.load.image(assetKeys.backgroundPhuketBanglaRoad, assetPaths.backgroundPhuketBanglaRoad);
+  scene.load.image(assetKeys.backgroundChiangMaiNimman, assetPaths.backgroundChiangMaiNimman);
+  scene.load.image(assetKeys.backgroundKrabiAoNang, assetPaths.backgroundKrabiAoNang);
+  scene.load.image(assetKeys.backgroundKohSamuiChaweng, assetPaths.backgroundKohSamuiChaweng);
+  scene.load.image(assetKeys.backgroundHuaHinNightMarket, assetPaths.backgroundHuaHinNightMarket);
+  scene.load.image(assetKeys.backgroundAyutthayaRiverside, assetPaths.backgroundAyutthayaRiverside);
+  scene.load.image(assetKeys.backgroundKohPhanganHaadRin, assetPaths.backgroundKohPhanganHaadRin);
   scene.load.image(assetKeys.backgroundThumb, assetPaths.backgroundThumb);
   scene.load.image(assetKeys.uiObjectiveChip, assetPaths.uiObjectiveChip);
   scene.load.image(assetKeys.uiDialogueFrame, assetPaths.uiDialogueFrame);

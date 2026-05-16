@@ -1,0 +1,25 @@
+{
+  "created": [
+    "public/assets/generated/interactions/feet-check/soi-six-premium/soi-six-hd-dao-face.png",
+    "public/assets/generated/interactions/feet-check/soi-six-premium/soi-six-hd-kanda-face.png",
+    "public/assets/generated/interactions/feet-check/soi-six-premium/soi-six-hd-mew-face.png",
+    "public/assets/generated/interactions/feet-check/soi-six-premium/soi-six-hd-mintra-face.png",
+    "public/assets/generated/interactions/feet-check/soi-six-premium/soi-six-hd-ploy-face.png",
+    "public/assets/generated/interactions/feet-check/soi-six-premium/soi-six-hd-dao-heels-strip.png",
+    "public/assets/generated/interactions/feet-check/soi-six-premium/soi-six-hd-kanda-heels-strip.png",
+    "public/assets/generated/interactions/feet-check/soi-six-premium/soi-six-hd-mew-heels-strip.png",
+    "public/assets/generated/interactions/feet-check/soi-six-premium/soi-six-hd-mintra-heels-strip.png",
+    "public/assets/generated/interactions/feet-check/soi-six-premium/soi-six-hd-ploy-heels-strip.png"
+  ],
+  "faceFrameSize": [
+    640,
+    720
+  ],
+  "faceFrames": 16,
+  "footFrameSize": [
+    512,
+    512
+  ],
+  "footFrames": 16,
+  "review": "art-source/generated/soi-six-feet-check-20260515/premium-normalized-review.jpg"
+}

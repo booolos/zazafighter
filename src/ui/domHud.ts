@@ -33,6 +33,8 @@ const buttons: ButtonSpec[] = [
 let lastHud: HudSnapshot | null = null;
 let hudIsActive = false;
 let gameplayControlsLocked = false;
+let feetCheckRenderToken = 0;
+const feetCheckImageCache = new Map<string, Promise<void>>();
 
 export function setupDomHud() {
   const root = document.getElementById('hud-root');
@@ -64,8 +66,9 @@ export function setupDomHud() {
         </button>
       </div>
       <button class="feet-check-button hidden" data-action="feetCheck" type="button" aria-label="Feet check">
-        <span>FEET CHECK</span>
-        <strong data-feet-check-name></strong>
+        <span>TAP</span>
+        <strong>FEET CHECK</strong>
+        <small data-feet-check-name></small>
       </button>
       <div class="mobile-controls">
         <div class="joystick" data-joystick role="group" aria-label="Movement joystick">
@@ -84,7 +87,9 @@ export function setupDomHud() {
               <small data-feet-check-subtitle></small>
             </div>
           </section>
-          <section class="feet-check-foot" data-feet-check-strip aria-hidden="true"></section>
+          <section class="feet-check-foot">
+            <div class="feet-check-foot-strip" data-feet-check-strip aria-hidden="true"></div>
+          </section>
           <button class="feet-check-exit" data-feet-check-exit type="button">EXIT</button>
         </div>
       </div>
@@ -130,7 +135,7 @@ export function setupDomHud() {
   });
 
   window.addEventListener('slap:feet-check-open', (event) => {
-    renderFeetCheckOverlay(root, (event as CustomEvent<FeetCheckDetail>).detail);
+    void renderFeetCheckOverlay(root, (event as CustomEvent<FeetCheckDetail>).detail);
   });
 
   window.addEventListener('slap:feet-check-close', () => {
@@ -168,6 +173,12 @@ function bindButtons(root: HTMLElement) {
       event.preventDefault();
       event.stopPropagation();
       if (gameplayControlsLocked && action !== 'pause') return;
+      if (action === 'feetCheck') {
+        if (!isFeetCheckAvailable()) return;
+        touchState.feetCheck = true;
+        button.setPointerCapture?.(event.pointerId);
+        return;
+      }
       if (action === 'attackOrSuper') {
         if (isSuperReady()) touchState.super = true;
         else touchState.attack = true;
@@ -175,8 +186,6 @@ function bindButtons(root: HTMLElement) {
         if (isRushReady()) touchState.dodge = true;
       } else if (action === 'companionAttack') {
         if (isCompanionReady()) touchState.companionAttack = true;
-      } else if (action === 'feetCheck') {
-        if (isFeetCheckAvailable()) touchState.feetCheck = true;
       } else {
         touchState[action] = true;
       }
@@ -373,15 +382,19 @@ function renderFeetCheckButton(root: HTMLElement, hud: HudSnapshot | null) {
   button.disabled = !visible;
   const name = button.querySelector<HTMLElement>('[data-feet-check-name]');
   if (name) name.textContent = hud?.feetCheckName ?? '';
+  button.setAttribute('aria-label', hud?.feetCheckName ? `Feet check with ${hud.feetCheckName}` : 'Feet check');
 }
 
 function isFeetCheckAvailable() {
   return Boolean(lastHud?.feetCheckAvailable && !lastHud.feetCheckActive);
 }
 
-function renderFeetCheckOverlay(root: HTMLElement, detail: FeetCheckDetail) {
+async function renderFeetCheckOverlay(root: HTMLElement, detail: FeetCheckDetail) {
   const overlay = root.querySelector<HTMLElement>('[data-feet-check-overlay]');
   if (!overlay) return;
+  const renderToken = ++feetCheckRenderToken;
+  await Promise.all([preloadFeetCheckImage(detail.faceImage), preloadFeetCheckImage(detail.stripImage)]);
+  if (renderToken !== feetCheckRenderToken) return;
   const face = overlay.querySelector<HTMLElement>('[data-feet-check-face]');
   const strip = overlay.querySelector<HTMLElement>('[data-feet-check-strip]');
   const title = overlay.querySelector<HTMLElement>('[data-feet-check-title]');
@@ -389,34 +402,59 @@ function renderFeetCheckOverlay(root: HTMLElement, detail: FeetCheckDetail) {
   const kicker = overlay.querySelector<HTMLElement>('[data-feet-check-kicker]');
   if (face) {
     const faceFrames = Math.max(1, detail.faceFrames ?? 1);
-    const faceFps = Math.max(1, detail.faceFps ?? Math.min(10, faceFrames));
-    face.style.backgroundImage = `url("${detail.faceImage}")`;
-    face.style.backgroundSize = `${faceFrames * 100}% 100%`;
-    face.style.animation = faceFrames > 1 ? `feet-check-strip ${faceFrames / faceFps}s steps(${faceFrames}) infinite` : '';
+    const faceFps = Math.max(1, Math.min(detail.faceFps ?? 10, 10));
+    configureFeetCheckStrip(face, detail.faceImage, faceFrames, faceFps);
   }
   if (title) title.textContent = detail.title;
   if (subtitle) subtitle.textContent = detail.subtitle;
   if (kicker) kicker.textContent = detail.name.toUpperCase();
   if (strip) {
     const frames = Math.max(1, detail.frames);
-    const fps = Math.max(1, detail.fps);
-    strip.style.backgroundImage = `url("${detail.stripImage}")`;
-    strip.style.backgroundSize = `${frames * 100}% 100%`;
-    strip.style.animation = `feet-check-strip ${frames / fps}s steps(${frames}) infinite`;
+    const fps = Math.max(1, Math.min(detail.fps, 12));
+    configureFeetCheckStrip(strip, detail.stripImage, frames, fps);
   }
   overlay.classList.remove('hidden');
   overlay.setAttribute('aria-hidden', 'false');
 }
 
+function preloadFeetCheckImage(src: string) {
+  const cached = feetCheckImageCache.get(src);
+  if (cached) return cached;
+  const load = new Promise<void>((resolve) => {
+    const image = new Image();
+    image.onload = () => resolve();
+    image.onerror = () => resolve();
+    image.src = src;
+  });
+  feetCheckImageCache.set(src, load);
+  return load;
+}
+
+function configureFeetCheckStrip(element: HTMLElement, image: string, frames: number, fps: number) {
+  element.style.animation = 'none';
+  element.style.transform = 'translate3d(0, 0, 0)';
+  element.style.width = `${frames * 100}%`;
+  element.style.backgroundImage = `url("${image}")`;
+  element.style.backgroundSize = '100% 100%';
+  element.getBoundingClientRect();
+  element.style.animation = frames > 1 ? `feet-check-strip ${frames / fps}s steps(${frames}, end) infinite` : '';
+}
+
 function hideFeetCheckOverlay(root: HTMLElement) {
+  feetCheckRenderToken += 1;
   const overlay = root.querySelector<HTMLElement>('[data-feet-check-overlay]');
   if (!overlay) return;
   overlay.classList.add('hidden');
   overlay.setAttribute('aria-hidden', 'true');
   const strip = overlay.querySelector<HTMLElement>('[data-feet-check-strip]');
-  if (strip) strip.style.animation = '';
+  if (strip) resetFeetCheckStrip(strip);
   const face = overlay.querySelector<HTMLElement>('[data-feet-check-face]');
-  if (face) face.style.animation = '';
+  if (face) resetFeetCheckStrip(face);
+}
+
+function resetFeetCheckStrip(element: HTMLElement) {
+  element.style.animation = '';
+  element.style.transform = '';
 }
 
 function clearTouchState() {

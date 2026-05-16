@@ -45,7 +45,7 @@ type AmbientNpc = {
   motionTimeScale: number;
   homeX: number;
   homeY: number;
-  runnerState: 'idle' | 'approach' | 'linger' | 'return';
+  runnerState: 'idle' | 'stroll' | 'approach' | 'linger' | 'return';
   motion: 'walk' | 'run';
   returnMotion: 'walk' | 'run';
   runBackAfterTouch: boolean;
@@ -116,97 +116,101 @@ const AMBIENT_PERSONALITIES: Record<string, AmbientPersonality> = {
     ...DEFAULT_AMBIENT_PERSONALITY,
     idleActions: ['idle', 'talk', 'cheer'],
     calloutActions: ['cheer', 'talk'],
-    runChance: 0.72,
-    returnRunChance: 0.78,
-    runBackChance: 0.74,
-    approachDelayMs: [1200, 3600],
-    restDelayMs: [3000, 6200],
-    gestureDelayMs: [800, 2100],
-    gestureDurationMs: [800, 1500],
-    touchLingerMs: [120, 280],
-    targetOffsetX: [42, 60],
-    targetOffsetY: [-16, -4],
-    walkSpeed: [172, 220],
-    runSpeed: [340, 430],
-    idleTimeScale: [0.95, 1.18],
-    walkTimeScale: [1.08, 1.28],
-    runTimeScale: [1.62, 1.95]
+    runChance: 0.05,
+    returnRunChance: 0.04,
+    runBackChance: 0.06,
+    approachDelayMs: [7800, 13800],
+    restDelayMs: [8200, 14800],
+    gestureDelayMs: [3200, 7200],
+    gestureDurationMs: [1300, 2400],
+    touchLingerMs: [700, 1200],
+    targetOffsetX: [54, 82],
+    targetOffsetY: [-10, 4],
+    walkSpeed: [62, 92],
+    runSpeed: [150, 190],
+    idleTimeScale: [0.68, 0.88],
+    walkTimeScale: [0.58, 0.78],
+    runTimeScale: [0.82, 1.02]
   },
   'soi-six-hd-kanda': {
     ...DEFAULT_AMBIENT_PERSONALITY,
     idleActions: ['idle', 'talk'],
     calloutActions: ['talk', 'cheer'],
-    runChance: 0.28,
-    returnRunChance: 0.4,
-    runBackChance: 0.32,
-    approachDelayMs: [3600, 8400],
-    restDelayMs: [5800, 10800],
-    gestureDelayMs: [1500, 3400],
-    gestureDurationMs: [1200, 2200],
-    lingerMs: [1100, 1800],
-    targetOffsetX: [78, 118],
-    walkSpeed: [118, 160],
-    runSpeed: [250, 310],
-    idleTimeScale: [0.72, 0.92],
-    walkTimeScale: [0.82, 1.02],
-    runTimeScale: [1.22, 1.48]
+    runChance: 0.02,
+    returnRunChance: 0.02,
+    runBackChance: 0.04,
+    approachDelayMs: [9200, 16200],
+    restDelayMs: [9600, 16800],
+    gestureDelayMs: [4200, 8200],
+    gestureDurationMs: [1500, 2800],
+    lingerMs: [1800, 3200],
+    touchLingerMs: [900, 1400],
+    targetOffsetX: [74, 112],
+    walkSpeed: [50, 78],
+    runSpeed: [130, 172],
+    idleTimeScale: [0.58, 0.78],
+    walkTimeScale: [0.52, 0.7],
+    runTimeScale: [0.74, 0.94]
   },
   'soi-six-hd-mintra': {
     ...DEFAULT_AMBIENT_PERSONALITY,
     idleActions: ['idle', 'cheer', 'talk'],
     calloutActions: ['cheer', 'talk'],
-    runChance: 0.58,
-    returnRunChance: 0.68,
-    runBackChance: 0.7,
-    approachDelayMs: [1800, 5200],
-    restDelayMs: [3800, 7800],
-    gestureDelayMs: [900, 2400],
-    gestureDurationMs: [850, 1700],
-    lingerMs: [760, 1320],
-    targetOffsetX: [54, 80],
-    walkSpeed: [150, 198],
-    runSpeed: [304, 382],
-    idleTimeScale: [0.9, 1.12],
-    walkTimeScale: [0.98, 1.18],
-    runTimeScale: [1.48, 1.78]
+    runChance: 0.04,
+    returnRunChance: 0.04,
+    runBackChance: 0.06,
+    approachDelayMs: [7200, 13200],
+    restDelayMs: [7800, 14200],
+    gestureDelayMs: [3000, 6800],
+    gestureDurationMs: [1300, 2500],
+    lingerMs: [1500, 2600],
+    touchLingerMs: [720, 1200],
+    targetOffsetX: [56, 84],
+    walkSpeed: [58, 88],
+    runSpeed: [148, 188],
+    idleTimeScale: [0.66, 0.86],
+    walkTimeScale: [0.56, 0.76],
+    runTimeScale: [0.8, 1.0]
   },
   'soi-six-hd-ploy': {
     ...DEFAULT_AMBIENT_PERSONALITY,
     idleActions: ['idle', 'cheer', 'talk'],
     calloutActions: ['cheer', 'talk'],
-    runChance: 0.5,
-    returnRunChance: 0.6,
-    runBackChance: 0.58,
-    approachDelayMs: [2200, 6400],
-    restDelayMs: [4200, 8600],
-    gestureDelayMs: [1000, 2600],
-    gestureDurationMs: [900, 1800],
-    targetOffsetX: [58, 88],
-    walkSpeed: [142, 188],
-    runSpeed: [286, 356],
-    idleTimeScale: [0.86, 1.08],
-    walkTimeScale: [0.94, 1.14],
-    runTimeScale: [1.38, 1.66]
+    runChance: 0.03,
+    returnRunChance: 0.03,
+    runBackChance: 0.05,
+    approachDelayMs: [8200, 14800],
+    restDelayMs: [8800, 15400],
+    gestureDelayMs: [3400, 7200],
+    gestureDurationMs: [1300, 2600],
+    lingerMs: [1600, 2800],
+    touchLingerMs: [760, 1280],
+    targetOffsetX: [60, 90],
+    walkSpeed: [56, 84],
+    runSpeed: [140, 182],
+    idleTimeScale: [0.64, 0.84],
+    walkTimeScale: [0.54, 0.74],
+    runTimeScale: [0.78, 0.98]
   },
   'soi-six-hd-mew': {
     ...DEFAULT_AMBIENT_PERSONALITY,
     idleActions: ['idle', 'talk', 'cheer'],
     calloutActions: ['cheer', 'talk'],
-    runChance: 0.7,
-    returnRunChance: 0.78,
-    runBackChance: 0.76,
-    approachDelayMs: [1400, 3800],
-    restDelayMs: [2800, 6400],
-    gestureDelayMs: [700, 1800],
-    gestureDurationMs: [900, 1500],
-    touchLingerMs: [120, 260],
-    targetOffsetX: [40, 58],
-    targetOffsetY: [-16, -4],
-    walkSpeed: [170, 218],
-    runSpeed: [338, 426],
-    idleTimeScale: [0.9, 1.12],
-    walkTimeScale: [1.1, 1.3],
-    runTimeScale: [1.6, 1.92]
+    runChance: 0.05,
+    returnRunChance: 0.04,
+    runBackChance: 0.06,
+    approachDelayMs: [7600, 13600],
+    restDelayMs: [8200, 14600],
+    gestureDelayMs: [3000, 6800],
+    gestureDurationMs: [1300, 2400],
+    touchLingerMs: [700, 1180],
+    targetOffsetX: [50, 76],
+    targetOffsetY: [-10, 4],
+    walkSpeed: [60, 90],
+    runSpeed: [150, 190],
+    idleTimeScale: [0.66, 0.86],
+    walkTimeScale: [0.58, 0.78],
+    runTimeScale: [0.82, 1.02]
   },
   'soi-six-thai-lada': {
     ...DEFAULT_AMBIENT_PERSONALITY,
@@ -548,6 +552,8 @@ export class Level1Scene extends Phaser.Scene {
   private createWorld() {
     const worldWidth = this.getResponsiveWorldWidth();
     const worldHeight = this.getResponsiveWorldHeight();
+    const laneTop = this.getLaneTop();
+    const laneBottom = this.getLaneBottom();
     this.addCoveredWorldImage(assetKeys.backgroundFar, 0.2, -20, 0.5)
       .setScrollFactor(0.2)
       .setDepth(-20);
@@ -557,20 +563,22 @@ export class Level1Scene extends Phaser.Scene {
       .setDepth(-15)
       .setScrollFactor(1);
 
-    this.add.rectangle(worldWidth / 2, (LANE_TOP + LANE_BOTTOM) / 2, worldWidth, LANE_BOTTOM - LANE_TOP + 36, 0x050506, 0.08).setDepth(-5);
+    this.add.rectangle(worldWidth / 2, (laneTop + laneBottom) / 2, worldWidth, laneBottom - laneTop + this.scaleWorldYDelta(36), 0x050506, 0.08).setDepth(-5);
     this.createLevelDressing();
 
     for (const p of this.level.props) {
-      const img = this.add.image(p.x, p.y, p.key).setOrigin(0.5, 1).setScale(p.scale);
+      const propY = this.scaleWorldY(p.y);
+      const propDepth = p.depth === undefined || p.depth < 0 ? p.depth : this.scaleWorldY(p.depth);
+      const img = this.add.image(p.x, propY, p.key).setOrigin(0.5, 1).setScale(p.scale);
       const occludes = Boolean(p.occludes);
-      img.setDepth(p.depth ?? (occludes ? p.y + 4 : LARGE_PROP_DEPTH));
+      img.setDepth(propDepth ?? (occludes ? propY + 4 : this.scaleWorldY(LARGE_PROP_DEPTH)));
       if (p.flipX) img.setFlipX(true);
       if (p.destructible && p.fxKey && p.dropKind && p.hitbox) {
         this.destructibleProps.push({
           sprite: img,
           hitbox: new Phaser.Geom.Rectangle(
             p.x - p.hitbox.width / 2,
-            p.y + (p.hitbox.offsetY ?? -p.hitbox.height / 2) - p.hitbox.height / 2,
+            propY + (p.hitbox.offsetY ?? -p.hitbox.height / 2) - p.hitbox.height / 2,
             p.hitbox.width,
             p.hitbox.height
           ),
@@ -584,6 +592,7 @@ export class Level1Scene extends Phaser.Scene {
     }
 
     const exit = this.level.exit;
+    const exitY = this.scaleWorldY(exit.y);
     const portalBack = this.add.rectangle(0, 0, 168, 58, 0x050506, 0.56)
       .setStrokeStyle(3, this.level.theme.accent, 0.86);
     const portalText = this.add.text(0, -3, 'NEXT  ->', {
@@ -594,7 +603,7 @@ export class Level1Scene extends Phaser.Scene {
       strokeThickness: 6
     }).setOrigin(0.5);
     const portalRail = this.add.rectangle(0, 25, 132, 4, this.level.theme.accent, 0.82);
-    this.exitPortal = this.add.container(exit.x, exit.y - 78, [portalBack, portalText, portalRail])
+    this.exitPortal = this.add.container(exit.x, exitY - this.scaleWorldYDelta(78), [portalBack, portalText, portalRail])
       .setDepth(4)
       .setAlpha(0.88);
     this.tweens.add({
@@ -608,11 +617,11 @@ export class Level1Scene extends Phaser.Scene {
     });
     this.exitGlow = this.add.graphics().setDepth(3);
     this.exitGlow.lineStyle(5, this.level.theme.accent, 0.5);
-    this.exitGlow.lineBetween(exit.x, exit.y - 142, exit.x, exit.y + 16);
+    this.exitGlow.lineBetween(exit.x, exitY - this.scaleWorldYDelta(142), exit.x, exitY + this.scaleWorldYDelta(16));
     this.exitGlow.lineStyle(2, 0xf4f4f2, 0.32);
-    this.exitGlow.lineBetween(exit.x + 12, exit.y - 128, exit.x + 12, exit.y + 6);
+    this.exitGlow.lineBetween(exit.x + 12, exitY - this.scaleWorldYDelta(128), exit.x + 12, exitY + this.scaleWorldYDelta(6));
 
-    this.exitLabel = this.add.text(exit.x, exit.y - 156, `NEXT -> ${this.level.exitLabel}`, {
+    this.exitLabel = this.add.text(exit.x, exitY - this.scaleWorldYDelta(156), `NEXT -> ${this.level.exitLabel}`, {
       color: '#ffca3a',
       fontFamily: 'Impact, Arial Black, sans-serif',
       fontSize: '28px',
@@ -693,6 +702,42 @@ export class Level1Scene extends Phaser.Scene {
     return Math.max(WORLD_HEIGHT, Math.ceil(this.scale.height / this.getResponsiveCameraZoom()));
   }
 
+  private getWorldYScale() {
+    return this.getResponsiveWorldHeight() / WORLD_HEIGHT;
+  }
+
+  scaleWorldY(y: number) {
+    return y * this.getWorldYScale();
+  }
+
+  scaleWorldYDelta(y: number) {
+    return y * this.getWorldYScale();
+  }
+
+  getLaneTop() {
+    return this.scaleWorldY(LANE_TOP);
+  }
+
+  getLaneBottom() {
+    return this.scaleWorldY(LANE_BOTTOM);
+  }
+
+  private getAmbientSidewalkTop() {
+    return this.scaleWorldY(AMBIENT_SIDEWALK_TOP);
+  }
+
+  private getAmbientSidewalkBottom() {
+    return this.scaleWorldY(AMBIENT_SIDEWALK_BOTTOM);
+  }
+
+  private getAmbientSidewalkLeft() {
+    return 180;
+  }
+
+  private getAmbientSidewalkRight() {
+    return WORLD_WIDTH - 180;
+  }
+
   private getResponsiveCameraZoom() {
     const viewportWidth = window.innerWidth || this.scale.width;
     const viewportHeight = window.innerHeight || this.scale.height;
@@ -709,7 +754,7 @@ export class Level1Scene extends Phaser.Scene {
 
     this.createAmbientNpcs();
 
-    const playerStartY = Phaser.Math.Clamp(this.level.playerStart.y, LANE_TOP, LANE_BOTTOM);
+    const playerStartY = Phaser.Math.Clamp(this.scaleWorldY(this.level.playerStart.y), this.getLaneTop(), this.getLaneBottom());
     const playerSprite = createCharacterSprite(this, playerDef, this.level.playerStart.x, playerStartY, {
       action: 'idle',
       collideWorldBounds: true,
@@ -748,8 +793,8 @@ export class Level1Scene extends Phaser.Scene {
       const action = hasAnimation(character.id, ambient.action ?? '')
         ? ambient.action ?? 'idle'
         : this.pickAmbientAction(character.id, personality.idleActions, 'idle');
-      const startY = Phaser.Math.Clamp(ambient.y, AMBIENT_SIDEWALK_TOP, AMBIENT_SIDEWALK_BOTTOM);
-      const sprite = createCharacterSprite(this, character, ambient.x, ambient.y, {
+      const startY = Phaser.Math.Clamp(this.scaleWorldY(ambient.y), this.getAmbientSidewalkTop(), this.getAmbientSidewalkBottom());
+      const sprite = createCharacterSprite(this, character, ambient.x, startY, {
         action,
         immovable: true,
         flipX: ambient.flipX
@@ -757,7 +802,7 @@ export class Level1Scene extends Phaser.Scene {
       sprite.body.enable = false;
       sprite.setAlpha(1);
       sprite.y = startY;
-      sprite.setDepth(AMBIENT_SIDEWALK_BOTTOM - 2);
+      sprite.setDepth(this.getAmbientSidewalkBottom() - 2);
       const npc: AmbientNpc = {
         sprite,
         characterId: character.id,
@@ -823,25 +868,71 @@ export class Level1Scene extends Phaser.Scene {
       if (!sprite.active) continue;
 
       if (npc.runnerState === 'idle') {
-        sprite.x = Phaser.Math.Linear(sprite.x, npc.homeX, Math.min(1, dt * 6));
-        sprite.y = Phaser.Math.Linear(sprite.y, npc.homeY, Math.min(1, dt * 6));
+        sprite.x = Phaser.Math.Linear(sprite.x, npc.homeX, Math.min(1, dt * 2.2));
+        sprite.y = Phaser.Math.Linear(sprite.y, npc.homeY, Math.min(1, dt * 2.2));
         sprite.setFlipX(player.x < sprite.x);
         this.updateAmbientIdlePose(npc, now);
         if (now < npc.nextActionAt) continue;
 
-        npc.runnerState = 'approach';
-        npc.motion = this.pickAmbientMotion(npc.personality.runChance);
+        const shouldApproachCasey = Phaser.Math.FloatBetween(0, 1) < 0.16;
+        npc.runnerState = shouldApproachCasey ? 'approach' : 'stroll';
+        npc.motion = shouldApproachCasey ? this.pickAmbientMotion(npc.personality.runChance) : 'walk';
         npc.returnMotion = this.pickAmbientMotion(npc.personality.returnRunChance);
         npc.runBackAfterTouch = Phaser.Math.FloatBetween(0, 1) < npc.personality.runBackChance;
+        if (shouldApproachCasey) {
+          const side = sprite.x < player.x ? -1 : 1;
+          npc.targetX = Phaser.Math.Clamp(
+            player.x + side * this.pickAmbientRange(npc.personality.targetOffsetX),
+            npc.homeX - 360,
+            npc.homeX + 360
+          );
+          npc.targetX = Phaser.Math.Clamp(npc.targetX, this.getAmbientSidewalkLeft(), this.getAmbientSidewalkRight());
+          npc.targetY = Phaser.Math.Clamp(
+            npc.homeY + this.scaleWorldYDelta(this.pickAmbientRange(npc.personality.targetOffsetY)),
+            this.getAmbientSidewalkTop(),
+            this.getAmbientSidewalkBottom()
+          );
+        } else {
+          npc.targetX = Phaser.Math.Clamp(
+            npc.homeX + Phaser.Math.Between(-180, 180),
+            this.getAmbientSidewalkLeft(),
+            this.getAmbientSidewalkRight()
+          );
+          npc.targetY = Phaser.Math.Clamp(
+            npc.homeY + this.scaleWorldYDelta(Phaser.Math.Between(-10, 12)),
+            this.getAmbientSidewalkTop(),
+            this.getAmbientSidewalkBottom()
+          );
+          npc.returnMotion = 'walk';
+        }
         this.setAmbientLocomotion(npc, true);
+        continue;
+      }
+
+      if (npc.runnerState === 'stroll') {
+        if (this.moveAmbientNpcToward(npc, npc.targetX, npc.targetY, dt)) {
+          npc.runnerState = 'linger';
+          npc.nextActionAt = now + this.pickAmbientRange(npc.personality.lingerMs);
+          const callout = this.pickAmbientAction(characterId, npc.personality.calloutActions, 'talk');
+          this.playOptionalCharacterAnimation(sprite, characterId, callout, false, 'idle');
+          sprite.anims.timeScale = 1;
+        }
         continue;
       }
 
       if (npc.runnerState === 'approach') {
         const side = sprite.x < player.x ? -1 : 1;
-        npc.targetX = Phaser.Math.Clamp(player.x + side * this.pickAmbientRange(npc.personality.targetOffsetX), npc.homeX - 560, npc.homeX + 560);
-        npc.targetX = Phaser.Math.Clamp(npc.targetX, 180, WORLD_WIDTH - 180);
-        npc.targetY = Phaser.Math.Clamp(player.y + this.pickAmbientRange(npc.personality.targetOffsetY), LANE_TOP, LANE_BOTTOM - 10);
+        npc.targetX = Phaser.Math.Clamp(
+          player.x + side * this.pickAmbientRange(npc.personality.targetOffsetX),
+          npc.homeX - 360,
+          npc.homeX + 360
+        );
+        npc.targetX = Phaser.Math.Clamp(npc.targetX, this.getAmbientSidewalkLeft(), this.getAmbientSidewalkRight());
+        npc.targetY = Phaser.Math.Clamp(
+          npc.homeY + this.scaleWorldYDelta(this.pickAmbientRange(npc.personality.targetOffsetY)),
+          this.getAmbientSidewalkTop(),
+          this.getAmbientSidewalkBottom()
+        );
         const touchedCasey = Math.abs(sprite.x - player.x) < 78 && Math.abs(sprite.y - player.y) < 70;
         if (touchedCasey) {
           npc.runnerState = 'linger';
@@ -1081,7 +1172,7 @@ export class Level1Scene extends Phaser.Scene {
   private createCompanion() {
     const character = getCharacter(SOI_DOG_ID);
     const x = this.level.playerStart.x - this.playerController.facing * SOI_DOG_FOLLOW_OFFSET_X;
-    const y = Phaser.Math.Clamp(this.playerController.sprite.y + SOI_DOG_FOLLOW_OFFSET_Y, LANE_TOP, LANE_BOTTOM);
+    const y = Phaser.Math.Clamp(this.playerController.sprite.y + this.scaleWorldYDelta(SOI_DOG_FOLLOW_OFFSET_Y), this.getLaneTop(), this.getLaneBottom());
     const sprite = createCharacterSprite(this, character, x, y, {
       action: 'idle',
       collideWorldBounds: true,
@@ -1098,7 +1189,7 @@ export class Level1Scene extends Phaser.Scene {
 
   private makeEnemy(characterId: string, x: number, y: number, engageDelay: number): EnemyController {
     const character = getCharacter(characterId);
-    const sprite = createCharacterSprite(this, character, x, Phaser.Math.Clamp(y, LANE_TOP, LANE_BOTTOM), {
+    const sprite = createCharacterSprite(this, character, x, Phaser.Math.Clamp(this.scaleWorldY(y), this.getLaneTop(), this.getLaneBottom()), {
       action: 'idle',
       collideWorldBounds: true,
       drag: 900,
@@ -1378,12 +1469,13 @@ export class Level1Scene extends Phaser.Scene {
       this.companion.shadow.setDepth(this.companion.sprite.y - 2);
     }
     for (const npc of this.ambientNpcs) {
-      const onSidewalk = npc.sprite.y <= AMBIENT_SIDEWALK_BOTTOM + 4;
-      npc.sprite.setDepth(onSidewalk ? AMBIENT_SIDEWALK_BOTTOM - 2 : npc.sprite.y - 12);
+      const ambientSidewalkBottom = this.getAmbientSidewalkBottom();
+      const onSidewalk = npc.sprite.y <= ambientSidewalkBottom + 4;
+      npc.sprite.setDepth(onSidewalk ? ambientSidewalkBottom - 2 : npc.sprite.y - 12);
     }
     for (const prop of this.destructibleProps) {
       if (!prop.active) continue;
-      prop.sprite.setDepth(prop.occludes ? prop.sprite.y + 4 : LARGE_PROP_DEPTH);
+      prop.sprite.setDepth(prop.occludes ? prop.sprite.y + 4 : this.scaleWorldY(LARGE_PROP_DEPTH));
       prop.sprite.setAlpha(prop.occludes && this.isActorBehindProp(prop) ? 0.42 : 1);
     }
     for (const pickup of this.pickups) {
@@ -1398,8 +1490,9 @@ export class Level1Scene extends Phaser.Scene {
   private checkWin() {
     const enemiesLeft = this.enemies.filter((enemy) => enemy.active).length;
     const exit = this.level.exit;
+    const exitY = this.scaleWorldY(exit.y);
     if (enemiesLeft > 0) return;
-    if (Math.abs(this.playerController.sprite.x - exit.x) < 112 && Math.abs(this.playerController.sprite.y - exit.y) < 105) {
+    if (Math.abs(this.playerController.sprite.x - exit.x) < 112 && Math.abs(this.playerController.sprite.y - exitY) < 105) {
       this.completeRouteStop();
     }
   }

@@ -4,7 +4,7 @@ import { assetKeys } from '../../game/assets/manifest';
 import { getHitboxProfile, getHurtboxProfile } from '../../game/content/combatProfiles';
 import { hasAnimation, type CharacterDefinition, type PlayerId } from '../../game/content/characters';
 import {
-  WORLD_WIDTH, LANE_TOP, LANE_BOTTOM,
+  WORLD_WIDTH,
   PLAYER_DODGE_SECONDS, PLAYER_DODGE_COOLDOWN_SECONDS, PLAYER_DODGE_INVULN_SECONDS, PLAYER_DODGE_SPEED,
   RUSH_DAMAGE, RUSH_KNOCKBACK, RUSH_STUN_SECONDS,
   PLAYER_JUMP_SECONDS, PLAYER_JUMP_COOLDOWN_SECONDS, PLAYER_JUMP_HEIGHT, PLAYER_JUMP_PEAK_MIN, PLAYER_JUMP_PEAK_MAX
@@ -149,7 +149,7 @@ export class PlayerController {
 
   private clampToLane() {
     this.sprite.x = Phaser.Math.Clamp(this.sprite.x, 120, WORLD_WIDTH - 120);
-    this.sprite.y = Phaser.Math.Clamp(this.sprite.y, LANE_TOP, LANE_BOTTOM);
+    this.sprite.y = Phaser.Math.Clamp(this.sprite.y, this.scene.getLaneTop(), this.scene.getLaneBottom());
   }
 
   private updateInvulnAlpha() {

@@ -28,6 +28,51 @@
       "key": "soi-six-real-neon-v1-20260515",
       "path": "assets/generated/backgrounds/soi-six-real-neon-v1-20260515.jpg",
       "role": "generated Soi Six neon stage background"
+    },
+    {
+      "key": "walking-street",
+      "path": "assets/generated/backgrounds/walking-street.jpg",
+      "role": "existing Pattaya Walking Street stage background"
+    },
+    {
+      "key": "bangkok-sukhumvit",
+      "path": "assets/generated/backgrounds/bangkok-sukhumvit-2048x720.jpg",
+      "role": "generated Bangkok Sukhumvit stage background"
+    },
+    {
+      "key": "phuket-bangla-road",
+      "path": "assets/generated/backgrounds/phuket-bangla-road-2048x720.jpg",
+      "role": "generated Phuket Bangla Road stage background"
+    },
+    {
+      "key": "chiang-mai-nimman",
+      "path": "assets/generated/backgrounds/chiang-mai-nimman-2048x720.jpg",
+      "role": "generated Chiang Mai Nimman stage background"
+    },
+    {
+      "key": "krabi-ao-nang",
+      "path": "assets/generated/backgrounds/krabi-ao-nang-2048x720.jpg",
+      "role": "generated Krabi Ao Nang stage background"
+    },
+    {
+      "key": "koh-samui-chaweng",
+      "path": "assets/generated/backgrounds/koh-samui-chaweng-2048x720.jpg",
+      "role": "generated Koh Samui Chaweng stage background"
+    },
+    {
+      "key": "hua-hin-night-market",
+      "path": "assets/generated/backgrounds/hua-hin-night-market-2048x720.jpg",
+      "role": "generated Hua Hin Night Market stage background"
+    },
+    {
+      "key": "ayutthaya-riverside",
+      "path": "assets/generated/backgrounds/ayutthaya-riverside-2048x720.jpg",
+      "role": "generated Ayutthaya Riverside stage background"
+    },
+    {
+      "key": "koh-phangan-haad-rin",
+      "path": "assets/generated/backgrounds/koh-phangan-haad-rin-2048x720.jpg",
+      "role": "generated Koh Phangan Haad Rin stage background"
     }
   ],
   "characters": [
@@ -691,7 +736,7 @@
     {
       "character": "soi-dog",
       "action": "idle",
-      "path": "assets/generated/animations/soi-dog/idle-standing-stable.png",
+      "path": "assets/generated/animations/soi-dog/idle-sitting-stable.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 256
@@ -1625,7 +1670,7 @@
       "character": "soi-six-hd-dao",
       "kind": "feet-check-face",
       "path": "assets/generated/interactions/feet-check/soi-six-hd-dao-face.png",
-      "frames": 4,
+      "frames": 12,
       "frameWidth": 640,
       "frameHeight": 720
     },
@@ -1641,7 +1686,7 @@
       "character": "soi-six-hd-kanda",
       "kind": "feet-check-face",
       "path": "assets/generated/interactions/feet-check/soi-six-hd-kanda-face.png",
-      "frames": 4,
+      "frames": 12,
       "frameWidth": 640,
       "frameHeight": 720
     },
@@ -1657,7 +1702,7 @@
       "character": "soi-six-hd-mintra",
       "kind": "feet-check-face",
       "path": "assets/generated/interactions/feet-check/soi-six-hd-mintra-face.png",
-      "frames": 4,
+      "frames": 12,
       "frameWidth": 640,
       "frameHeight": 720
     },
@@ -1673,7 +1718,7 @@
       "character": "soi-six-hd-ploy",
       "kind": "feet-check-face",
       "path": "assets/generated/interactions/feet-check/soi-six-hd-ploy-face.png",
-      "frames": 4,
+      "frames": 12,
       "frameWidth": 640,
       "frameHeight": 720
     },
@@ -1689,7 +1734,7 @@
       "character": "soi-six-hd-mew",
       "kind": "feet-check-face",
       "path": "assets/generated/interactions/feet-check/soi-six-hd-mew-face.png",
-      "frames": 4,
+      "frames": 12,
       "frameWidth": 640,
       "frameHeight": 720
     },

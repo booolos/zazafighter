@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { playCharacterAnimation } from '../../game/assets/loaders';
 import { type CharacterDefinition } from '../../game/content/characters';
 import { 
-  WORLD_WIDTH, LANE_TOP, LANE_BOTTOM,
+  WORLD_WIDTH,
   SOI_DOG_FOLLOW_OFFSET_X, SOI_DOG_FOLLOW_OFFSET_Y, SOI_DOG_SPECIAL_COOLDOWN_SECONDS, 
   SOI_DOG_SPECIAL_SECONDS, SOI_DOG_SPECIAL_SPEED, SOI_DOG_SPECIAL_DAMAGE,
   SOI_DOG_SPECIAL_KNOCKBACK, SOI_DOG_SPECIAL_STUN_SECONDS, SOI_DOG_SPECIAL_LOCK_MS,
@@ -61,7 +61,7 @@ export class CompanionController {
 
     if (this.supportRush > 0) {
       const direction = playerFacing || 1;
-      const targetY = Phaser.Math.Clamp(playerY + SOI_DOG_FOLLOW_OFFSET_Y, LANE_TOP, LANE_BOTTOM);
+      const targetY = Phaser.Math.Clamp(playerY + this.scene.scaleWorldYDelta(SOI_DOG_FOLLOW_OFFSET_Y), this.scene.getLaneTop(), this.scene.getLaneBottom());
       this.sprite.setFlipX(direction < 0);
       this.sprite.setVelocity(direction * PLAYER_DODGE_SPEED * 0.96, (targetY - this.sprite.y) * 8);
       playCharacterAnimation(this.sprite, this.character.id, 'walk');
@@ -78,7 +78,7 @@ export class CompanionController {
     }
 
     const targetX = Phaser.Math.Clamp(playerX - playerFacing * SOI_DOG_FOLLOW_OFFSET_X, 120, WORLD_WIDTH - 120);
-    const targetY = Phaser.Math.Clamp(playerY + SOI_DOG_FOLLOW_OFFSET_Y, LANE_TOP, LANE_BOTTOM);
+    const targetY = Phaser.Math.Clamp(playerY + this.scene.scaleWorldYDelta(SOI_DOG_FOLLOW_OFFSET_Y), this.scene.getLaneTop(), this.scene.getLaneBottom());
     const dx = targetX - this.sprite.x;
     const dy = targetY - this.sprite.y;
     const distance = Math.hypot(dx, dy);
@@ -89,7 +89,7 @@ export class CompanionController {
       this.followMoving = false;
       this.parkedUntil = this.scene.time.now + 900;
       this.sprite.setVelocity(0, 0);
-      this.sprite.y = Phaser.Math.Clamp(this.sprite.y, LANE_TOP, LANE_BOTTOM);
+      this.sprite.y = Phaser.Math.Clamp(this.sprite.y, this.scene.getLaneTop(), this.scene.getLaneBottom());
       this.sprite.setFlipX(playerFacing < 0);
       playCharacterAnimation(this.sprite, this.character.id, 'idle');
       this.updateCompanionShadow();
@@ -117,7 +117,7 @@ export class CompanionController {
     const moving = playerMoving || this.followMoving || Math.abs(this.sprite.body.velocity.x) > 24 || Math.abs(this.sprite.body.velocity.y) > 18;
     const facing = moving && Math.abs(dx) > 4 ? Math.sign(dx) : playerFacing;
     this.sprite.setFlipX(facing < 0);
-    this.sprite.y = Phaser.Math.Clamp(this.sprite.y, LANE_TOP, LANE_BOTTOM);
+    this.sprite.y = Phaser.Math.Clamp(this.sprite.y, this.scene.getLaneTop(), this.scene.getLaneBottom());
     playCharacterAnimation(this.sprite, this.character.id, moving ? 'walk' : 'idle');
     this.updateCompanionShadow();
   }
@@ -139,7 +139,7 @@ export class CompanionController {
   startSupportRush(direction: number, playerX: number, playerY: number) {
     if (this.specialRush > 0) return;
     if (Math.abs(this.sprite.x - playerX) > 260) {
-      this.sprite.setPosition(playerX - direction * SOI_DOG_FOLLOW_OFFSET_X, playerY + SOI_DOG_FOLLOW_OFFSET_Y);
+      this.sprite.setPosition(playerX - direction * SOI_DOG_FOLLOW_OFFSET_X, playerY + this.scene.scaleWorldYDelta(SOI_DOG_FOLLOW_OFFSET_Y));
     }
     this.supportRush = PLAYER_DODGE_SECONDS;
     this.actionLockedUntil = Math.max(this.actionLockedUntil, this.scene.time.now + PLAYER_DODGE_SECONDS * 1000);

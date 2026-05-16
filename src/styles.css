@@ -523,40 +523,69 @@ button {
 
 .feet-check-button {
   position: absolute;
-  left: 50%;
-  bottom: max(130px, calc(env(safe-area-inset-bottom) + 116px));
+  right: max(28px, env(safe-area-inset-right));
+  bottom: max(178px, calc(env(safe-area-inset-bottom) + 156px));
   display: grid;
-  gap: 2px;
-  min-width: 156px;
-  padding: 10px 18px 11px;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  align-items: center;
+  min-width: 190px;
+  min-height: 62px;
+  padding: 9px 16px 10px 14px;
   border: 2px solid rgba(255, 202, 58, 0.86);
   border-radius: 8px;
   background:
-    linear-gradient(135deg, rgba(255, 46, 154, 0.86), rgba(160, 44, 255, 0.82) 52%, rgba(0, 223, 255, 0.72)),
+    linear-gradient(135deg, rgba(7, 8, 12, 0.94), rgba(18, 13, 28, 0.94)),
     rgba(5, 6, 10, 0.88);
   color: var(--paper);
   pointer-events: auto;
   cursor: pointer;
-  text-align: center;
-  transform: translateX(-50%);
-  box-shadow: 0 0 24px rgba(255, 46, 154, 0.34), 0 16px 34px rgba(0, 0, 0, 0.52);
+  text-align: left;
+  overflow: hidden;
+  box-shadow: 0 0 18px rgba(255, 202, 58, 0.22), 0 16px 34px rgba(0, 0, 0, 0.52);
   touch-action: none;
-  z-index: 4;
+  z-index: 5;
 }
 
 .feet-check-button.hidden {
   display: none;
 }
 
+.feet-check-button::before {
+  content: '!';
+  grid-row: 1 / 3;
+  display: grid;
+  width: 34px;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 2px solid rgba(255, 202, 58, 0.88);
+  border-radius: 50%;
+  background: rgba(255, 202, 58, 0.16);
+  color: #ffca3a;
+  font: 900 21px/1 Arial Black, Arial, sans-serif;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.55);
+}
+
 .feet-check-button span {
   color: #ffca3a;
-  font: 900 12px/1 Arial Black, Arial, sans-serif;
+  font: 900 10px/1 Arial Black, Arial, sans-serif;
 }
 
 .feet-check-button strong {
   color: #ffffff;
-  font: 900 20px/1 Impact, Arial Black, sans-serif;
+  font: 900 19px/1 Impact, Arial Black, sans-serif;
   text-shadow: 0 3px 0 rgba(0, 0, 0, 0.56);
+}
+
+.feet-check-button small {
+  grid-column: 2;
+  min-width: 0;
+  color: rgba(244, 244, 242, 0.84);
+  font: 800 11px/1 Arial, sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .feet-check-overlay {
@@ -603,14 +632,18 @@ button {
   background: rgba(0, 0, 0, 0.5);
 }
 
-.feet-check-face-strip {
+.feet-check-face-strip,
+.feet-check-foot-strip {
   position: absolute;
-  inset: 0;
+  inset: 0 auto 0 0;
   width: 100%;
   height: 100%;
   background-repeat: no-repeat;
   background-position: 0 50%;
   background-size: 100% 100%;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform;
   user-select: none;
   pointer-events: none;
 }
@@ -653,8 +686,6 @@ button {
 }
 
 .feet-check-foot {
-  background-repeat: no-repeat;
-  background-position: 0 50%;
   background-color: #090a10;
 }
 
@@ -675,11 +706,11 @@ button {
 
 @keyframes feet-check-strip {
   from {
-    background-position: 0 50%;
+    transform: translate3d(0, 0, 0);
   }
 
   to {
-    background-position: 100% 50%;
+    transform: translate3d(-100%, 0, 0);
   }
 }
 
@@ -892,13 +923,29 @@ button {
   }
 
   .feet-check-button {
-    bottom: max(86px, calc(env(safe-area-inset-bottom) + 76px));
-    min-width: 136px;
-    padding: 8px 14px 9px;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(150px, calc(env(safe-area-inset-bottom) + 128px));
+    min-width: 168px;
+    min-height: 54px;
+    padding: 8px 13px 9px 12px;
+    column-gap: 10px;
+  }
+
+  .feet-check-button::before {
+    width: 30px;
+    font-size: 18px;
+  }
+
+  .feet-check-button span {
+    font-size: 9px;
   }
 
   .feet-check-button strong {
-    font-size: 17px;
+    font-size: 16px;
+  }
+
+  .feet-check-button small {
+    font-size: 10px;
   }
 
   .feet-check-stage {
@@ -1010,17 +1057,29 @@ button {
   }
 
   .feet-check-button {
-    bottom: max(62px, calc(env(safe-area-inset-bottom) + 56px));
-    min-width: 118px;
-    padding: 6px 10px 7px;
+    right: max(8px, env(safe-area-inset-right));
+    bottom: max(106px, calc(env(safe-area-inset-bottom) + 96px));
+    min-width: 138px;
+    min-height: 46px;
+    padding: 6px 10px 7px 9px;
+    column-gap: 8px;
+  }
+
+  .feet-check-button::before {
+    width: 26px;
+    font-size: 15px;
   }
 
   .feet-check-button span {
-    font-size: 9px;
+    font-size: 8px;
   }
 
   .feet-check-button strong {
     font-size: 14px;
+  }
+
+  .feet-check-button small {
+    font-size: 9px;
   }
 
   .feet-check-stage {

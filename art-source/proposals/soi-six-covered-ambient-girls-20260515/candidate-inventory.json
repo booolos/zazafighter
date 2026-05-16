@@ -1,0 +1,106 @@
+{
+  "proposal": "soi-six-covered-ambient-girls-20260515",
+  "scope": "docs/art-source planning and candidate inventory only",
+  "runtimeTouched": false,
+  "selectionStandard": [
+    "adult-only",
+    "non-nude",
+    "non-pornographic",
+    "covered or repaintable nightlife silhouettes",
+    "full-body sprite-strip potential"
+  ],
+  "contactSheets": {
+    "advance": "art-source/proposals/soi-six-covered-ambient-girls-20260515/covered-ambient-girls-advance-contact-sheet.png",
+    "screenedHold": "art-source/proposals/soi-six-covered-ambient-girls-20260515/covered-ambient-girls-screened-hold-contact-sheet.png"
+  },
+  "candidates": [
+    {
+      "id": "mintra",
+      "status": "advance",
+      "originalSource": "public/assets/generated/source-sheets/soi-six-hd-mintra-source-v1-20260515.png",
+      "proposalCopy": "art-source/proposals/soi-six-covered-ambient-girls-20260515/source-candidates/advance/mintra-hd-source.png",
+      "sourceSize": "1774x887",
+      "notes": "Strong HD sheet; covered enough for publishable nightlife NPC if frame QA passes."
+    },
+    {
+      "id": "kanda",
+      "status": "advance",
+      "originalSource": "public/assets/generated/source-sheets/soi-six-hd-kanda-source-v1-20260515.png",
+      "proposalCopy": "art-source/proposals/soi-six-covered-ambient-girls-20260515/source-candidates/advance/kanda-hd-source.png",
+      "sourceSize": "1774x887",
+      "notes": "Strong VIP hostess silhouette; review lower-row crop before chopping."
+    },
+    {
+      "id": "dao",
+      "status": "advance",
+      "originalSource": "public/assets/generated/source-sheets/soi-six-hd-dao-source-v1-20260515.png",
+      "proposalCopy": "art-source/proposals/soi-six-covered-ambient-girls-20260515/source-candidates/advance/dao-hd-source.png",
+      "sourceSize": "1774x887",
+      "notes": "Best covered streetwear candidate; moto jacket and sneakers fit the pass well."
+    },
+    {
+      "id": "ploy",
+      "status": "advance",
+      "originalSource": "public/assets/generated/source-sheets/soi-six-hd-ploy-source-v1-20260515.png",
+      "proposalCopy": "art-source/proposals/soi-six-covered-ambient-girls-20260515/source-candidates/advance/ploy-hd-source.png",
+      "sourceSize": "1751x898",
+      "notes": "Most covered HD candidate; pants and boots make a clear sprite silhouette."
+    },
+    {
+      "id": "npc-girl-denim",
+      "status": "advance-idle-reference",
+      "originalSource": "art-source/_ambient_girl_normalized/npc-girl-denim/idle-256x256.png",
+      "proposalCopy": "art-source/proposals/soi-six-covered-ambient-girls-20260515/source-candidates/advance/npc-girl-denim-idle-256x256.png",
+      "sourceSize": "1536x256",
+      "notes": "Already normalized idle strip; useful for scale and foot-anchor reference."
+    },
+    {
+      "id": "npc-girl-silver",
+      "status": "advance-with-coverage-check",
+      "originalSource": "art-source/_ambient_girl_normalized/npc-girl-silver/idle-256x256.png",
+      "proposalCopy": "art-source/proposals/soi-six-covered-ambient-girls-20260515/source-candidates/advance/npc-girl-silver-idle-256x256.png",
+      "sourceSize": "1536x256",
+      "notes": "Potential idle baseline; final production should check outfit read at game scale."
+    },
+    {
+      "id": "npc-girl-black",
+      "status": "advance-with-coverage-check",
+      "originalSource": "art-source/_ambient_girl_normalized/npc-girl-black/idle-256x256.png",
+      "proposalCopy": "art-source/proposals/soi-six-covered-ambient-girls-20260515/source-candidates/advance/npc-girl-black-idle-256x256.png",
+      "sourceSize": "1536x256",
+      "notes": "Potential silhouette and anchor reference; may need repaint for the more-covered target."
+    },
+    {
+      "id": "mew",
+      "status": "screened-hold-repaint-for-coverage",
+      "originalSource": "public/assets/generated/source-sheets/soi-six-hd-mew-source-v1-20260515.png",
+      "proposalCopy": "art-source/proposals/soi-six-covered-ambient-girls-20260515/source-candidates/screened-hold/mew-hd-source.png",
+      "sourceSize": "1619x972",
+      "notes": "Do not advance as-is for this pass; repaint with jacket, skirt, shorts, pants, or opaque layers."
+    },
+    {
+      "id": "nina",
+      "status": "screened-hold-repaint-for-coverage",
+      "originalSource": "art-source/_imagegen_review/soi-six-nina/idle-imported.png",
+      "proposalCopy": "art-source/proposals/soi-six-covered-ambient-girls-20260515/source-candidates/screened-hold/nina-idle-imported.png",
+      "sourceSize": "1024x256",
+      "notes": "Timing/reference value only; increase coverage before advancing."
+    },
+    {
+      "id": "ruby",
+      "status": "screened-hold-repaint-for-coverage",
+      "originalSource": "art-source/_imagegen_review/soi-six-ruby/idle-imported.png",
+      "proposalCopy": "art-source/proposals/soi-six-covered-ambient-girls-20260515/source-candidates/screened-hold/ruby-idle-imported.png",
+      "sourceSize": "1024x256",
+      "notes": "Timing/reference value only; styling is not aligned with the covered ambient pass."
+    },
+    {
+      "id": "microbikini-runners",
+      "status": "rejected-not-copied",
+      "originalSource": "public/assets/generated/source-sheets/soi-six-microbikini-runners-v1.png",
+      "proposalCopy": null,
+      "sourceSize": "1536x1024",
+      "notes": "Outside the more-covered direction; do not advance for this pass."
+    }
+  ]
+}
