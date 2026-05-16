@@ -106,7 +106,7 @@ export class LevelSelectScene extends Phaser.Scene {
     const headerY = marginY + headerH / 2;
     const showDetail = false;
     const detailH = showDetail ? Phaser.Math.Clamp(height * 0.125, 70, 96) : 0;
-    const buttonH = Phaser.Math.Clamp(height * 0.078, 46, 62);
+    const buttonH = Phaser.Math.Clamp(height * 0.09, 58, 72);
     const navY = height - marginY - buttonH / 2;
     const detailY = showDetail ? navY - buttonH / 2 - 10 - detailH / 2 : navY;
     const gridTop = headerY + headerH / 2 + Phaser.Math.Clamp(height * 0.038, 18, 30);
@@ -120,10 +120,10 @@ export class LevelSelectScene extends Phaser.Scene {
     const availableW = width - marginX * 2 - gapX * (columns - 1);
     const availableH = Math.max(1, gridBottom - gridTop - gapY * (rowCount - 1));
     const cardW = Math.floor(Phaser.Math.Clamp(availableW / columns, columns === 1 ? 300 : 260, columns === 1 ? 680 : 560));
-    const cardH = Math.floor(Phaser.Math.Clamp(availableH / rowCount, 46, height < 500 ? 64 : 86));
+    const cardH = Math.floor(Phaser.Math.Clamp(availableH / rowCount, 52, height < 500 ? 68 : 92));
     const gridW = cardW * columns + gapX * (columns - 1);
     const startXGrid = width / 2 - gridW / 2 + cardW / 2;
-    const buttonW = Phaser.Math.Clamp(width * 0.19, 150, 232);
+    const buttonW = Phaser.Math.Clamp(width * 0.21, 170, 260);
 
     return {
       marginX,

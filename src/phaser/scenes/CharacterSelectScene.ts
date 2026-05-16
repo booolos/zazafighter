@@ -77,8 +77,8 @@ export class CharacterSelectScene extends Phaser.Scene {
     const marginY = Phaser.Math.Clamp(height * 0.045, 18, 34);
     const headerH = Phaser.Math.Clamp(height * 0.078, 44, 58);
     const headerY = marginY + headerH / 2;
-    const buttonH = Phaser.Math.Clamp(height * 0.078, 46, 64);
-    const buttonW = Phaser.Math.Clamp(width * 0.17, 148, 220);
+    const buttonH = Phaser.Math.Clamp(height * 0.092, 58, 74);
+    const buttonW = Phaser.Math.Clamp(width * 0.2, 170, 250);
     const navY = height - marginY - buttonH / 2;
     const showHint = height >= 520;
     const hintY = navY - buttonH / 2 - 42;

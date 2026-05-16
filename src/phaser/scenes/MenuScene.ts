@@ -39,8 +39,8 @@ export class MenuScene extends Phaser.Scene {
       strokeThickness: 6
     }).setOrigin(0.5);
 
-    const buttonW = Phaser.Math.Clamp(width * 0.28, 220, 340);
-    const buttonH = Phaser.Math.Clamp(height * 0.095, 56, 72);
+    const buttonW = Phaser.Math.Clamp(width * 0.34, 260, 420);
+    const buttonH = Phaser.Math.Clamp(height * 0.115, 68, 88);
     this.makeButton(width / 2, height - Phaser.Math.Clamp(height * 0.22, 104, 150), buttonW, buttonH, 'START', arcadeRed, () => this.startGame());
 
     this.input.keyboard?.once('keydown-ENTER', () => this.startGame());
